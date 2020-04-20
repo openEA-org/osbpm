@@ -1,0 +1,152 @@
+@charset "UTF-8";
+/*app_grid*/
+/*==============================================*/
+a {
+  font-size: $common-font-size;
+  font-family: $common-font-family;
+  color: $app_gird-a-font-color;  //a链接的颜色
+  text-decoration: $datagrid-selected-line;  //选中行的划线类型，即text-decoration属性
+  &:hover {
+    color: $app_gird-a-font-color-hover;   // a链接鼠标飘过的字体颜色
+    text-decoration: underline;;
+    font-family: $common-font-family;
+  }
+}
+.toptoolbar {
+  padding: $toptoolbar-padding;
+  background: $app_gird-toptoolbar-background;  // 视图工具条背景颜色
+  border: $app_gird-toptoolbar-border-color;   // 表格边框的线的颜色
+  color:$app_gird-toptoolbar-color;           //搜索框“搜索”文字颜色
+}
+.toptoolbarhr {
+  height: $toptoolbarhr-height;
+}
+legend,body,form,td {
+  font-size: $common-font-size;
+}
+//p { 20171215 change
+//height: 0px;
+//}
+/*chrome  */
+input,button,select,textarea,div,span,td {
+  outline: none;
+}
+/*UI*/
+body {
+  margin: 0px 0px 0px 0px;
+}
+/*
+#dgframe .datagrid-view tr:nth-child(odd){
+    background-color: $datagrid-selected-row-odd-background; //单行选中背景颜色
+}
+#centerFrame .datagrid-view tr:nth-child(odd){
+    background-color: $datagrid-selected-row-odd-background; //单行选中背景颜色
+}
+*/
+.datagrid-cell {
+.datagrid-view {
+    tr {
+      &:nth-child(odd) {
+        background: $datagrid-selected-row-odd-background; //detail 单行背景颜色
+      }
+      &:nth-child(even) {
+      background: $datagrid-selected-row-even-background; //detail 双行背景颜色
+    }
+}
+}
+}
+//.datagrid-view {
+//tr {
+//  &:nth-child(even) {
+//    background: $datagrid-row-even-background; //detail 双行背景颜色
+//  }
+//}
+//}
+.datagrid-row {
+  &:hover {
+    text-decoration: underline; //下划线
+  }
+}
+.datagrid-row-over {
+  background: none;
+}
+.datagrid-row-selected {
+  //background: $app-gird-a-hover-color;
+  text-decoration:underline; //下划线
+//&:nth-child(odd) {
+//  background: $datagrid-selected-row-odd-background;; //单行选中
+//}
+//&:nth-child(even) {
+//  background: $datagrid-selected-row-even-background; //多行选中
+//}
+}
+.searchbox-button {
+  background: $searchbox-button-backgroundnew;
+  &:hover {
+    background-color: $common-background2;
+  }
+}
+//.searchbox {
+//border-radius: $searchbox-border-radius;
+//}
+iframe[id="centerFrame"] {
+  .datagrid-header {
+    td {
+    }
+  }
+}
+.datagrid-view1 {
+  .datagrid-header {
+    td {
+      //border-left: $common-border;
+      background-color: $datagrid-first-row-background; //detail 表格标题行(第一行)的背景颜色
+    }
+  }
+  .datagrid-td-rownumber {
+    //border-left: $common-border;
+  }
+}
+.datagrid-view2 {
+  .datagrid-header {
+    td {
+      background-color: $datagrid-first-row-background;  //detail
+    }
+  }
+}
+.datagrid-header-inner {
+  background-color: $app_gird-toptoolbar-background; //detail
+}
+.datagrid-row-alt {
+  background: $datagrid-row-alt-background;
+}
+
+.datagrid-row {
+  height: 36px;
+  background: $datagrid-body-color;
+}
+
+.datagrid-header-row {
+  height: 40px;
+  background: #fcfcfc;
+  font-weight: bold;
+  font-size: 20px;
+  //color:$datagrid-first-row-color;  //detail 第一行文字颜色
+}
+.datagrid-pager {
+  background: $datagrid-pager-backgroundc;  //detail 视图分页条背景
+  margin: 10px;
+  padding: 6px;
+}
+.datagrid-td-rownumber {
+  background: $datagrid-body-color; //视图内容行的背景颜色
+}
+.datagrid-cell-rownumber {
+  width: 40px;
+}
+.datagrid-header-rownumber {
+  width: 40px;
+}
+
+
+
+

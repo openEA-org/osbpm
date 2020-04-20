@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebRoot/linkey/bpm/editor/ueditor/umeditor/jsp/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/linkey/bpm/editor/ueditor/umeditor/jsp/ueditor-mini.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-anim.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-awt-util.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-bridge.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-codec.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-css.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-dom.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-ext.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-extension.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-gui-util.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-gvt.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-parser.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-script.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-svg-dom.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-svggen.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-swing.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-transcoder.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-util.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/batik-xml.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bsh-2.0b2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/c3p0-0.9.5-pre6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cas-client-core-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-fileupload-1.3.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang3-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.1.35.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.3.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxen-1.1-beta-6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsf-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsf-impl.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jstl-impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="WebRoot/WEB-INF/lib/stand-copyright.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lkcore160406V82.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail_activation.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail_additionnal.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail_bpm.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mchange-commons-java-0.2.6.3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.32-bin.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/oraclejdbc6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-schemas-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/quartz-2.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sapjco.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-api-1.6.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/slf4j-log4j12-1.6.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sqljdbc.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/svg_xml-apis-ext.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ueditor.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/webservices-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/webservices-extra-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/webservices-extra.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/webservices-rt.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/casclient.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-httpclient-3.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>

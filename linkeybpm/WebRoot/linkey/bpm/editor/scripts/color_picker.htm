@@ -1,0 +1,484 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments[0].sLangDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/color.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+//******* COLOR ARRAY *********
+var dialogArg=dialogArguments[0];
+var sName=dialogArguments[1];//color object name
+
+var arrColCustoms = eval("dialogArg."+sName).customColors;
+
+//******* ONLOAD *********
+function bodyOnLoad()
+	{
+	sHex=eval("dialogArg."+sName).color;
+	//alert(sHex)//#cccccc
+	idCurrent.style.backgroundColor=sHex;
+	//alert(idCurrent.style.backgroundColor)//#cccccc
+	nRed=convertHexToDec(idCurrent.style.backgroundColor.substr(1,2))+"";
+	nGreen=convertHexToDec(idCurrent.style.backgroundColor.substr(3,2))+"";
+	nBlue=convertHexToDec(idCurrent.style.backgroundColor.substr(5,2))+"";
+	if(idCurrent.style.backgroundColor=="")
+		{
+		nRed="";nGreen="";nBlue="";
+		}
+	idCurrent.title = "Red: "+nRed+"\nGreen: "+nGreen+"\nBlue: "+nBlue+"\nHex: "+idCurrent.style.backgroundColor;
+	}
+
+//******* APPLY COLOR *********
+function doApply()
+	{
+	if(chkUseColorName.checked && idColorName.innerText!="")
+		eval("dialogArg."+sName).color=idColorName.innerText;
+	else
+		eval("dialogArg."+sName).color=inpHex.value;
+
+	eval("dialogArg."+sName).onPickColor();	
+	}
+function doRemove()
+	{
+	eval("dialogArg."+sName).color="";
+	
+	eval("dialogArg."+sName).onPickColor()
+	}
+
+//******* REFRESH CUSTOM COLOR *********
+function applyCustomColor()
+	{
+	for(var i=0;i<22;i++)
+		{
+		var cellCustom=eval("cellCustom"+i)
+		if(cellCustom.style.backgroundColor!="transparent")	
+			arrColCustoms[i]=cellCustom.style.backgroundColor;
+		}
+	//eval("dialogArg."+sName).customColors=arrColCustoms;//[CUSTOM]
+	if(dialogArg.dialogArguments.oUtil)//[CUSTOM]
+		dialogArg.dialogArguments.oUtil.obj.customColors=arrColCustoms;//[CUSTOM] (apply to public definition)
+	else//text2.htm [CUSTOM]
+		dialogArg.dialogArguments[0].oUtil.obj.customColors=arrColCustoms;//[CUSTOM] (apply to public definition)
+	
+	eval("dialogArg."+sName).refreshCustomColor();//spy kalo msh show lgs ter-apply
+	}
+
+//******* TABS *********
+var oActiveTab;
+function tabClick(n)
+	{
+	if(!oActiveTab) oActiveTab=tab0;
+	var oEl=eval("tab"+n);
+	if(oActiveTab==oEl)return;
+	oEl.style.cssText="font-weight:bold;font-size:11px;color:gray;padding:5px;padding-left:7;padding-right:7;cursor:default;border:#e0e0e0 2 solid;border-bottom:#FCFCFC 2 solid;background:#FCFCFC";
+	oActiveTab.style.cssText="font-weight:bold;font-size:11px;color:gray;padding:5px;padding-left:7;padding-right:7;cursor:hand;border:#e0e0e0 2 solid;"
+	oActiveTab=oEl;
+	
+	if(n==0)
+		{
+		idWebPallete.style.display="block";
+		idNamedColors.style.display="none";
+		idWebSafe.style.display="none";
+		}
+	if(n==1)
+		{
+		idWebPallete.style.display="none";
+		idNamedColors.style.display="block";
+		idWebSafe.style.display="none";
+		}
+	if(n==2)
+		{
+		idWebPallete.style.display="none";
+		idNamedColors.style.display="none";
+		idWebSafe.style.display="block";
+		}
+	}
+
+//******* UTILITY *********
+function updateHex()
+	{
+	if(inpRed.value==""||inpGreen.value==""||inpBlue.value=="")
+		{
+		idPreview.style.backgroundColor="";
+		inpHex.value="";
+		return;
+		}
+	try
+		{
+		inpHex.value=""+
+			convertDecToHex(inpRed.value)+
+			convertDecToHex(inpGreen.value)+
+			convertDecToHex(inpBlue.value);
+		idPreview.style.backgroundColor=inpHex.value;
+		idColorName.innerText="";
+		}
+	catch(e){;}
+	}
+function updateRGB()
+	{
+	if(inpHex.value=="")
+		{
+		inpRed.value="";
+		inpGreen.value="";
+		inpBlue.value="";
+		return;
+		}
+	try
+		{
+		idPreview.style.backgroundColor=inpHex.value;		
+		inpRed.value=convertHexToDec(idPreview.style.backgroundColor.substr(1,2));
+		inpGreen.value=convertHexToDec(idPreview.style.backgroundColor.substr(3,2));
+		inpBlue.value=convertHexToDec(idPreview.style.backgroundColor.substr(5,2));
+		idColorName.innerText="";
+		}
+	catch(e){;}
+	}
+function convertHexToDec(hex)
+	{
+	return parseInt(hex,16);
+	}
+function convertDecToHex(dec)
+	{
+ 	var tmp = parseInt(dec).toString(16);
+ 	if(tmp.length == 1) tmp = ("0" +tmp);
+ 	return tmp;//.toUpperCase();
+	}
+function convertDecToHex2(dec)
+	{
+ 	var tmp = parseInt(dec).toString(16);
+
+ 	if(tmp.length == 1) tmp = ("00000" +tmp);
+ 	if(tmp.length == 2) tmp = ("0000" +tmp);
+ 	if(tmp.length == 3) tmp = ("000" +tmp);
+ 	if(tmp.length == 4) tmp = ("00" +tmp);
+ 	if(tmp.length == 5) tmp = ("0" +tmp);
+
+ 	tmp = tmp.substr(4,1) + tmp.substr(5,1) + tmp.substr(2,1) + tmp.substr(3,1) + tmp.substr(0,1) + tmp.substr(1,1)
+ 	return tmp;//.toUpperCase();
+	}
+
+//******* INIT *********
+function init()
+	{
+	var sHTML="";	
+	
+	//******* Web Pallete *********
+	var arrColors=[
+			["#ef001b","#cc0017","#a60012","#83000e","#5c000a","#ef0078","#ce0067","#ad0057","#8b0045","#6a0035","#e301ed","#c501ce","#a401ab","#88018e","#610066","#6716ef","#5913ce","#4b10af","#3e0d90","#2d0a6a"],
+			["#f13449","#d52437","#bb1d2e","#980b1a","#70000c","#f32a8f","#d5207a","#b21162","#970c51","#710039","#e624ef","#cc20d4","#ad10b4","#900995","#6f0374","#7b38ed","#6c2fd2","#5c27b5","#471a94","#391379"],
+			["#f67684","#e36875","#ca5965","#b34e59","#933c45","#f563ac","#de599b","#cc5490","#b24d7f","#96416c","#ee68f4","#db5fe1","#c759cc","#b255b6","#964799","#a779f5","#976cdf","#8d68cc","#7f5eb7","#6f539c"],
+			["#fcc0c6","#eea8af","#dd959c","#ce8c93","#bc858b","#fec7e2","#f4b8d6","#e5a6c6","#d495b4","#bb85a0","#fabffd","#eeaff1","#e19fe4","#cf90d2","#b985bb","#e0c3fd","#d1b1f1","#c1a0e2","#b192d1","#a489c0"],
+			["#fef5f6","#fdeced","#f7dee0","#eacedc","#dec1d0","#fef3f8","#fbe8f1","#efd0e0","#e6c7d6","#d9b8c8","#fef2fe","#fae6fb","#f1d3f2","#e3c1e4","#d8bad9","#f5edfe","#f0e5fb","#e1d3ef","#d9cbe7","#cdbfdc"],
+			["#028b6c","#02775d","#02644e","#015441","#013b2e","#1882ed","#1574d4","#115eab","#0e4f90","#0a3764","#0040eb","#0039d0","#0030b1","#002892","#001b64","#50509e","#46468b","#3a3a73","#303060","#222245"],
+			["#279980","#1c856e","#15705b","#0b5b49","#054637","#3c95ee","#3283d5","#286fb8","#1b5997","#0c3e71","#2a61f3","#1d4ed3","#1640b2","#113699","#022072","#6d6db0","#5d5d99","#4c4c82","#373763","#29294d"],
+			["#69baa7","#61a898","#57998a","#508b7d","#47776c","#7bb8f5","#6ea7e0","#6195c9","#5684b2","#4c7298","#6d92f5","#5f82e0","#5675c9","#4d68b2","#495f9a","#9b9bc9","#8b8bb6","#7e7ea5","#747496","#5f5f7a"],
+			["#d0eae4","#b3d7cf","#9bc4ba","#8fb4ac","#86a49d","#c3dffc","#aacdf0","#9bbde0","#97b4d1","#94acc4","#bdcdfb","#a8bbef","#96aae1","#8a9bcb","#8393c0","#d8d8eb","#c7c7dc","#b5b5cc","#a5a5bc","#9898ac"],
+			["#f0f8f6","#deedea","#d7e6e2","#ceddda","#c8d6d2","#f1f7fe","#e5f0fb","#d8e5f2","#cfdbe7","#c3cfda","#eff3fe","#e5eafa","#dde3f4","#d2d8ea","#c3cadd","#f4f4f9","#e5e5ef","#dbdbe5","#d6d6df","#d1d1d9"],
+			["#00a000","#008d00","#007700","#006000","#004500","#86d800","#73ba00","#629e00","#528400","#395c00","#eded00","#cece00","#afaf00","#909000","#737300","#e3ab00","#c79600","#aa8000","#856400","#604800"],
+			["#27b127","#229c22","#1b881b","#0f6e0f","#085408","#96dc24","#84c220","#6ea515","#5c8b0f","#3f6600","#f1f12c","#d3d31b","#b2b211","#959509","#747403","#e8b827","#cda220","#b18a15","#8c6c0a","#6e5300"],
+			["#68c868","#5cb65c","#56a456","#4b924b","#488248","#b7e768","#a8d45f","#97c056","#86aa4d","#718e41","#f1f164","#e1e15d","#caca58","#b2b24d","#979746","#eecc65","#dabc5e","#c7ac59","#b09850","#948044"],
+			["#c6ecc6","#addead","#96cd96","#87b987","#87b087","#e1f6c0","#d0eba6","#c1d99a","#b1c88c","#a4b786","#fbfbad","#f1f194","#e2e28e","#cece8c","#b9b982","#faeaba","#f2dfa7","#e6d090","#cbbb8b","#b6a778"],
+			["#eef9ee","#dff1df","#d5e8d5","#c6dbc6","#bed1be","#f1fbe2","#e9f5d5","#dfebcd","#d4e1c0","#c9d5b6","#fefef0","#fafae3","#f0f0cb","#e4e4c5","#dadaba","#fdf8ea","#f9f2de","#eee4c7","#dfd7bf","#d6cfb7"],
+			["#818181","#676767","#494949","#272727","#000000","#783c00","#673300","#562b00","#472300","#341a00","#eb4600","#cd3d00","#ad3300","#8f2a00","#671e00","#ed7700","#d26900","#af5800","#904800","#643200"],
+			["#989898","#838383","#646464","#515151","#2f2f2f","#8c5927","#7c4f23","#673f19","#583616","#402408","#eb5f26","#d1521e","#b34315","#95330a","#702303","#f08c28","#d47a20","#b96816","#954f09","#713902"],
+			["#c9c9c9","#a9a9a9","#919191","#787878","#565656","#af8b68","#a28264","#917458","#856d55","#715c49","#f19068","#dd8561","#c97654","#b47053","#985d45","#f5ac63","#e1a05f","#ca9259","#b78451","#966b41"],
+			["#efefef","#dcdcdc","#c1c1c1","#9d9d9d","#828282","#dbcab9","#ccb8a5","#bda792","#a3917f","#9a8979","#fbcebc","#f1bba5","#e1aa93","#ce9f8b","#b18b7b","#fcd7b3","#f3caa2","#e7b98c","#c8a078","#b29171"],
+			["#ffffff","#f7f7f7","#ededed","#dddddd","#c9c9c9","#f4efeb","#efe8e1","#e6ded6","#dbd3cc","#d0c9c2","#fef5f2","#fae8e1","#f0dbd3","#e1cbc2","#d6beb5","#fef7f0","#faecde","#f1e2d3","#e3d3c3","#dacaba"]	
+			]
+	
+	sHTML+="<table cellpadding=0 cellspacing=0 border=0 style=\"border-collapse:collapse\">";
+	for(var i=0;i<arrColors.length;i++)
+		{
+		sHTML+="<tr>";
+		for(var j=0;j<arrColors[i].length;j++)
+			{
+			sHTML+="<td id=\"cell"+i+j+"\" onclick=\"setColor(this)\" style=\"cursor:hand;width:17px;height:12px;background:"+arrColors[i][j]+"\"></td>";
+			}
+		sHTML+="</tr>";		
+		}
+	sHTML+="</table>";
+	
+	idWebPallete.innerHTML=sHTML;	
+	
+	//******* 22 Custom Colors *********	
+	sHTML="<table cellpadding=0 cellspacing=0 border=0>";
+	sHTML+="<tr>";
+	for(var i=0;i<22;i++)
+		{
+		sHTML+="<td style='border:white 1px solid;padding:1px'>";
+		if(i<arrColCustoms.length)
+			sHTML+="<table cellpadding=0 cellspacing=0 id=\"cellCustom"+i+"\" onclick=\"setCustomColor(this)\" style=\"cursor:hand;width:12;height:12;background:"+arrColCustoms[i]+"\"><tr><td></td></tr></table>";
+		else
+			sHTML+="<table cellpadding=0 cellspacing=0 id=\"cellCustom"+i+"\" onclick=\"setCustomColor(this)\" style=\"width:12;height:12;background-color:transparent\"><tr><td></td></tr></table>";
+		sHTML+="</td>";
+		}
+	sHTML+="</tr>";	
+	sHTML+="</table>";
+	
+	idColorCustom.innerHTML=sHTML;	
+	
+	//******* Named Colors *********
+	var arrNamedColors=[
+				["#000000","#800000","#ff0000","#8b4513","#d2b48c","#b8860b","#556b2f","#006400","#2e8b57","#2f4f4f","#5f9ea0","#191970","#483d8b","#4b0082","#800080","#dc143c"],
+				["#696969","#8b0000","#ff4500","#a0522d","#deb887","#daa520","#6b8e23","#008000","#3cb371","#008080","#00ced1","#000080","#4682b4","#8a2be2","#8b008b","#c71585"],
+				["#808080","#a52a2a","#ff6347","#d2691e","#f5deb3","#bdb76b","#808000","#228b22","#8fbc8f","#008b8b","#00bfff","#00008b","#708090","#9932cc","#da70d6","#db7093"],
+				["#a9a9a9","#b22222","#ff7f50","#cd853f","#ffdead","#f0e68c","#9acd32","#32cd32","#66cdaa","#20b2aa","#87cefa","#0000cd","#778899","#9400d3","#ee82ee","#ff1493"],
+				["#c0c0c0","#cd5c5c","#ff8c00","#bc8f8f","#ffe4b5","#eee8aa","#ffd700","#00ff00","#00ff7f","#48d1cc","#87ceeb","#0000ff","#6a5acd","#ba55d3","#ff00ff","#ff69b4"],
+				["#d3d3d3","#f08080","#f4a460","#e9967a","#ffebcd","#fffacd","#ffff00","#7cfc00","#00fa9a","#40e0d0","#add8e6","#4169e1","#7b68ee","#dda0dd","#ff00ff","#ffb6c1"],
+				["#dcdcdc","#fa8072","#ffa500","#ffe4e1","#ffefd5","#fff8dc","#fafad2","#7fff00","#90ee90","#00ffff","#b0e0e6","#1e90ff","#9370db","#d8bfd8","#e6e6fa","#ffc0cb"],
+				["#f5f5f5","#ffa07a","#ffdab9","#faebd7","#fdf5e6","#fffaf0","#ffffe0","#adff2f","#98fb98","#00ffff","#afeeee","#6495ed","#b0c4de","#f0ffff","#f8f8ff","#fff0f5"],
+				["#fffafa","#ffffff","#ffe4c4","#fff5ee","#faf0e6","#fffff0","#f5f5dc","#f5fffa","#f0fff0","#7fffd4","#e0ffff","#f0f8ff","","","",""]
+				]
+
+	var arrNamedColors2=[
+				["Black","Maroon","Red","SaddleBrown","Tan","DarkGoldenrod","DarkOliveGreen","DarkGreen","SeaGreen","DarkSlateGray","CadetBlue","MidnightBlue","DarkSlateBlue","Indigo","Purple","Crimson"],
+				["DimGray","DarkRed","OrangeRed","Sienna","Burlywood","Goldenrod","OliveDrab","Green","MediumSeaGreen","Teal","DarkTurquoise","Navy","SteelBlue","BlueViolet","DarkMagenta","MediumVioletRed"],
+				["Gray","Brown","Tomato","Chocolate","Wheat","DarkKhaki","Olive","ForestGreen","DarkSeaGreen","DarkCyan","DeepSkyBlue","DarkBlue","SlateGray","DarkOrchid","Orchid","PaleVioletRed"],
+				["DarkGray","FireBrick","Coral","Peru","NavajoWhite","Khaki","YellowGreen","LimeGreen","MediumAquamarine","LightSeaGreen","LightSkyBlue","MediumBlue","LightSlateGray","DarkViolet","Violet","DeepPink"],
+				["Silver","IndianRed","DarkOrange","RosyBrown","Moccasin","PaleGoldenrod","Gold","Lime","SpringGreen","MediumTurquoise","SkyBlue","Blue","SlateBlue","MediumOrchid","Fuchsia","HotPink"],
+				["LightGrey","LightCoral","SandyBrown","DarkSalmon","BlanchedAlmond","LemonChiffon","Yellow","LawnGreen","MediumSpringGreen","Turquoise","LightBlue","RoyalBlue","MediumSlateBlue","Plum","Fuchsia","LightPink"],
+				["Gainsboro","Salmon","Orange","MistyRose","PapayaWhip","Cornsilk","LightGoldenrodYellow","Chartreuse","LightGreen","Aqua","PowderBlue","DodgerBlue","MediumPurple","Thistle","Lavender","Pink"],
+				["WhiteSmoke","LightSalmon","PeachPuff","AntiqueWhite","Oldlace","FloralWhite","LightYellow","GreenYellow","PaleGreen","Aqua","PaleTurquoise","CornflowerBlue","LightSteelBlue","Azure","GhostWhite","LavenderBlush"],
+				["Snow","White","Bisque","Seashell","Linen","Ivory","Beige","MintCream","Honeydew","Aquamarine","LightCyan","AliceBlue","","","",""]
+				]
+
+	sHTML="<table align=center cellpadding=0 cellspacing=0 style=\"border-collapse:collapse\">";
+	for(var i=0;i<arrNamedColors.length;i++)
+		{
+		sHTML+="<tr>";
+		for(var j=0;j<arrNamedColors[i].length;j++)
+			{
+			if(arrNamedColors[i][j]=="")
+				sHTML+="<td></td>"
+			else
+				sHTML+="<td id=\"cellNamed"+i+j+"\" onclick=\"setColor2(this,'"+arrNamedColors2[i][j]+"')\" style=\"cursor:hand;width:22px;height:20px;background:"+arrNamedColors[i][j]+";border:white 5px solid;\"></td>";
+			}
+		sHTML+="</tr>";		
+		}
+	sHTML+="</table>";
+	
+	sHTML+="<table width=100% cellpadding=0 cellspacing=0>";
+	sHTML+="<tr><td align=right>Use color name <input type=checkbox name=chkUseColorName onclick=useColorName()><br>";
+	sHTML+="<span id=idColorName style='font-weight:bold;padding-right:2px;display:none'></span>";
+	sHTML+="</td></tr></table>";
+	
+	idNamedColors.innerHTML=sHTML;	
+	
+	//******* Safe Colors *********
+	show()
+	}
+
+//******* SET COLOR *********
+function setColor(oEl)
+	{
+	inpHex.value=oEl.style.backgroundColor.substring(1);
+	updateRGB();//sekaligus preview
+	
+	idColorName.innerText="";
+	}
+function setColor2(oEl,sColorName)
+	{
+	inpHex.value=oEl.style.backgroundColor.substring(1);
+	updateRGB();//sekaligus preview
+	
+	idColorName.innerText=sColorName;
+	
+	if(chkUseColorName.checked)
+		idColorName.style.display="block";
+	else
+		idColorName.style.display="none";
+	}
+function useColorName()
+	{
+	if(chkUseColorName.checked)
+		idColorName.style.display="block";
+	else
+		idColorName.style.display="none";
+	}
+
+//******* CUSTOM COLORS *********
+var oActiveCustomColor;
+var iActiveCustomColor=arrColCustoms.length;
+function setCustomColor(oEl)
+	{
+	if(oEl.style.backgroundColor=="transparent")return;
+	
+	//toggle:
+	
+	if(oEl.parentElement.style.border=="gray 1px solid")
+		{
+		oEl.parentElement.style.border= "white 1px solid";
+		oActiveCustomColor=null;
+		return;
+		}
+	
+	if(oActiveCustomColor)oActiveCustomColor.parentElement.style.border="white 1px solid";
+	oEl.parentElement.style.border="gray 1px solid";
+	oActiveCustomColor=oEl
+	setColor(oEl)
+	}
+function addToCustomColors()
+	{
+	if(oActiveCustomColor)
+		oActiveCustomColor.style.backgroundColor=idPreview.style.backgroundColor;
+	else
+		{
+		if(iActiveCustomColor==22)iActiveCustomColor=0;
+		var cellCustom=eval("cellCustom"+iActiveCustomColor)
+		cellCustom.style.backgroundColor=idPreview.style.backgroundColor;
+		cellCustom.style.cursor="hand";
+		iActiveCustomColor++;
+		}
+	}
+
+//******* WEB SAFE COMPOSITION *********
+function show()
+	{
+	nTopInt=15;
+	nLeftInt=15;
+	nTopInt2=18;
+	nLeftInt2=39;
+	nTop=100;
+	nLeft=100;
+	
+	var sHTML="";
+
+	sHTML+=drawPlate("00FF",nLeft+(5*nLeftInt),nTop+(-5*nTopInt),"11");
+
+	sHTML+=drawPlate("00CC",nLeft+(4*nLeftInt),nTop+(-4*nTopInt),"10");
+	sHTML+=drawPlate("33FF",nLeft+(4*nLeftInt)+(1*nLeftInt2),nTop+(-4*nTopInt)+(1*nTopInt2),"");	
+
+	sHTML+=drawPlate("0099",nLeft+(3*nLeftInt),nTop+(-3*nTopInt),"9");
+	sHTML+=drawPlate("33CC",nLeft+(3*nLeftInt)+(1*nLeftInt2),nTop+(-3*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("66FF",nLeft+(3*nLeftInt)+(2*nLeftInt2),nTop+(-3*nTopInt)+(2*nTopInt2),"");
+
+	sHTML+=drawPlate("0066",nLeft+(2*nLeftInt),nTop+(-2*nTopInt),"8");
+	sHTML+=drawPlate("3399",nLeft+(2*nLeftInt)+(1*nLeftInt2),nTop+(-2*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("66CC",nLeft+(2*nLeftInt)+(2*nLeftInt2),nTop+(-2*nTopInt)+(2*nTopInt2),"");
+	sHTML+=drawPlate("99FF",nLeft+(2*nLeftInt)+(3*nLeftInt2),nTop+(-2*nTopInt)+(3*nTopInt2),"");	
+
+	sHTML+=drawPlate("0033",nLeft+(1*nLeftInt),nTop+(-1*nTopInt),"7");
+	sHTML+=drawPlate("3366",nLeft+(1*nLeftInt)+(1*nLeftInt2),nTop+(-1*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("6699",nLeft+(1*nLeftInt)+(2*nLeftInt2),nTop+(-1*nTopInt)+(2*nTopInt2),"");
+	sHTML+=drawPlate("99CC",nLeft+(1*nLeftInt)+(3*nLeftInt2),nTop+(-1*nTopInt)+(3*nTopInt2),"");
+	sHTML+=drawPlate("CCFF",nLeft+(1*nLeftInt)+(4*nLeftInt2),nTop+(-1*nTopInt)+(4*nTopInt2),"");	
+
+	sHTML+=drawPlate("0000",nLeft,nTop,"6");
+	sHTML+=drawPlate("3333",nLeft+(1*nLeftInt2),nTop+(1*nTopInt2),"");
+	sHTML+=drawPlate("6666",nLeft+(2*nLeftInt2),nTop+(2*nTopInt2),"");
+	sHTML+=drawPlate("9999",nLeft+(3*nLeftInt2),nTop+(3*nTopInt2),"");
+	sHTML+=drawPlate("CCCC",nLeft+(4*nLeftInt2),nTop+(4*nTopInt2),"");
+	sHTML+=drawPlate("FFFF",nLeft+(5*nLeftInt2),nTop+(5*nTopInt2),"");
+
+	sHTML+=drawPlate("3300",nLeft+(-1*nLeftInt),nTop+(1*nTopInt),"5");
+	sHTML+=drawPlate("6633",nLeft+(-1*nLeftInt)+(1*nLeftInt2),nTop+(1*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("9966",nLeft+(-1*nLeftInt)+(2*nLeftInt2),nTop+(1*nTopInt)+(2*nTopInt2),"");
+	sHTML+=drawPlate("CC99",nLeft+(-1*nLeftInt)+(3*nLeftInt2),nTop+(1*nTopInt)+(3*nTopInt2),"");
+	sHTML+=drawPlate("FFCC",nLeft+(-1*nLeftInt)+(4*nLeftInt2),nTop+(1*nTopInt)+(4*nTopInt2),"");	
+
+	sHTML+=drawPlate("6600",nLeft+(-2*nLeftInt),nTop+(2*nTopInt),"4");
+	sHTML+=drawPlate("9933",nLeft+(-2*nLeftInt)+(1*nLeftInt2),nTop+(2*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("CC66",nLeft+(-2*nLeftInt)+(2*nLeftInt2),nTop+(2*nTopInt)+(2*nTopInt2),"");
+	sHTML+=drawPlate("FF99",nLeft+(-2*nLeftInt)+(3*nLeftInt2),nTop+(2*nTopInt)+(3*nTopInt2),"");
+
+	sHTML+=drawPlate("9900",nLeft+(-3*nLeftInt),nTop+(3*nTopInt),"3");
+	sHTML+=drawPlate("CC33",nLeft+(-3*nLeftInt)+(1*nLeftInt2),nTop+(3*nTopInt)+(1*nTopInt2),"");
+	sHTML+=drawPlate("FF66",nLeft+(-3*nLeftInt)+(2*nLeftInt2),nTop+(3*nTopInt)+(2*nTopInt2),"");	
+
+	sHTML+=drawPlate("CC00",nLeft+(-4*nLeftInt),nTop+(4*nTopInt),"2");
+	sHTML+=drawPlate("FF33",nLeft+(-4*nLeftInt)+(1*nLeftInt2),nTop+(4*nTopInt)+(1*nTopInt2),"");
+
+	sHTML+=drawPlate("FF00",nLeft+(-5*nLeftInt),nTop+(5*nTopInt),"1");
+	
+	idWebSafe.innerHTML=sHTML;
+	}
+	
+function drawPlate(C,nLeft,nTop,num)
+	{
+	var sHTML="";
+	arrC = new Array("FF","CC","99","66","33","00");
+	sHTML+="<table id='id"+C+"' cellpadding=0 cellspacing=0 style='table-layout: fixed;position:absolute;top:"+nTop+";left:"+nLeft+"'>";
+	for(var i=0;i<arrC.length;i++)
+		{
+		if(C=="FF99"||C=="CC99"||C=="9999"||C=="99CC"||C=="99FF"|| C=="FFCC"||C=="CCCC"||C=="CCFF"||C=="FFFF")
+			sHTML+="<tr><td onclick=\"setColor(this)\" style='cursor:hand;width:25;height:8;background:#"+C+arrC[i]+";'>&nbsp;</td></tr>";
+		else
+			sHTML+="<tr><td onclick=\"setColor(this)\" style='cursor:hand;width:25;height:8;background:#"+C+arrC[i]+";'>&nbsp;</td></tr>";
+		}
+	sHTML+="</table>";
+	return sHTML;
+	}	
+</script>
+</head>
+<body onload="loadTxt();init();bodyOnLoad()" style="margin:5;margin-top:11;margin-right:8">
+
+<table cellpadding=0 cellspacing=0 border=0>
+<tr>
+<td></td>
+<td>
+	<table align=right cellpadding=0 cellspacing=0 style="border-collapse:collapse">
+	<tr>
+	<td width=100% style="border-bottom:#e0e0e0 2 solid;"></td>
+	<td id=tab0 onclick="tabClick(0)" nowrap style="font-weight:bold;font-size:11px;color:gray;padding:5px;padding-left:7;padding-right:7;cursor:default;border:#e0e0e0 2 solid;border-bottom:#FCFCFC 2 solid;background:#FCFCFC"><span id=txtLang name=txtLang>Web Pallete</span></td>
+	<td id=tab1 onclick="tabClick(1)" nowrap style="font-weight:bold;font-size:11px;color:gray;padding:5px;padding-left:7;padding-right:7;cursor:hand;border:#e0e0e0 2 solid;"><span id=txtLang name=txtLang>Named Colors</span></td>
+	<td id=tab2 onclick="tabClick(2)" nowrap style="font-weight:bold;font-size:11px;color:gray;padding:5px;padding-left:7;padding-right:7;cursor:hand;border:#e0e0e0 2 solid;"><span id=txtLang name=txtLang>216 Web Safe</span></td>
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td valign=top style="padding-right:2">
+	<table>
+	<tr><td align=right>R:<INPUT type="text" NAME="inpRed" class=inpTxt style="text-align:right" size=1 onblur="updateHex()"></td></tr>
+	<tr><td align=right>G:<INPUT type="text" NAME="inpGreen" class=inpTxt style="text-align:right" size=1 onblur="updateHex()"></td></tr>
+	<tr><td align=right>B:<INPUT type="text" NAME="inpBlue" class=inpTxt style="text-align:right" size=1 onblur="updateHex()"></td></tr>
+	<tr><td nowrap># <INPUT type="text" NAME="inpHex" class=inpTxt style="text-align:right;width:37px" onblur="updateRGB()"></td></tr>
+	<tr><td style="height:5px"></td></tr>
+	<tr><td align=right><div style="width:40px" align=center id=txtLang name=txtLang>New</div></td></tr>
+	<tr><td align=right><div style="padding:3;background:white;width:40px;height:33px;padding:3"><span id=idPreview style="width:37px;height:30px;background-color:white"></span></div></td></tr>
+	<tr><td align=right><div style="padding:3;background:white;width:40px;height:33px;padding:3"><span id=idCurrent style="width:37px;height:30px;background-color:white"></span></div></td></tr>
+	<tr><td align=right><div style="width:40px" align=center id=txtLang name=txtLang>Current</div></td></tr>
+	</table>
+</td>
+<td>
+	<div id="idWebPallete" style="padding:5;background:#FCFCFC;border:#e0e0e0 2 solid;border-top:none;width:354;height:252"></div>
+	
+	<div id="idNamedColors" style="display:none;padding:5;background:#FCFCFC;border:#e0e0e0 2 solid;border-top:none;width:354;height:252"></div>
+	
+	<div id="idWebSafe" style="display:none;overflow:auto;padding:5;background:#FCFCFC;border:#e0e0e0 2 solid;border-top:none;width:354;height:252"></div>
+</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>
+		<table width=100% cellpadding=0 cellspacing=0>
+		<tr>
+		<td style="padding:3;padding-bottom:4" valign=bottom><span id=txtLang name=txtLang>Custom colors</span>:</td>
+		<td style="padding:3;padding-right:0" align=right><INPUT type="button" style="width:240px" name=btnAddToCustom id=btnAddToCustom value="Add to Custom Colors" onclick="addToCustomColors()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'"></td>
+		</tr>
+		</table>	
+	</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+	<div style="padding:1;background:white">
+	<div id="idColorCustom"></div>
+	</div>
+</td>
+</tr>
+<tr>
+<td colspan=2 style="padding-top:10" align=right>
+<INPUT type="button" name=btnCancel id=btnCancel onclick="self.close()" value=" cancel " class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+<INPUT type="button" name=btnRemove id=btnRemove onclick="doRemove();self.close()" value=" remove color " class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+<INPUT type="button" name=btnApply id=btnApply style="display:none" onclick="applyCustomColor();doApply()" value=" apply " class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+<INPUT type="button" name=btnOk id=btnOk onclick="applyCustomColor();doApply();self.close()" value=" ok " class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

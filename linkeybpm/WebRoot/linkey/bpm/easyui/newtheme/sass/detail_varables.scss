@@ -1,0 +1,196 @@
+@charset "UTF-8";
+
+//图标
+$common-icon-font-color:$common-all-main-text-color!important;          //图标颜色切换 
+
+$linkeytable-control-border: 1px $common-all-main-text-color solid;     //控件的边框
+
+//app_grid
+//===========================================================
+$app_gird-a-font-color:$common-all-main-text-color;           //a链接文字的颜色
+$app_gird-a-font-color-hover:$common-all-main-text-color2;    //a链接文字的颜色(移动时)
+$app_gird-toptoolbar-background:$common-all-main-background;  //视图工具条背景颜色
+$app_gird-toptoolbar-border-color:$common-all-main-background;//视图工具条边框颜色
+$app_gird-toptoolbar-color:$common-all-main-background2;      //搜索框“搜索”文字颜色
+//$datagrid-row-odd-background : $common-all-main-background;   //单行背景颜色
+//$datagrid-row-even-background : $common-all-main-background;  //双行背景颜色
+$datagrid-selected-row-odd-background : $common-all-main-background2; //单行背景颜色(选中)
+$datagrid-selected-row-even-background : $common-all-main-background2; //双行背景颜色(选中)
+$datagrid-first-row-background:$common-all-main-background3;         //视图(第一行)的背景颜色
+$datagrid-pager-backgroundc:$common-all-main-background2;            //视图分页背景颜色
+$datagrid-body-color:$common-all-main-background2;                   //视图内容行背景颜色
+
+//app_openform
+//=============================================================
+$linkeytable-background: $common-all-main-background;          //表单的内容项背景颜色
+$linkeytable-font: $common-all-main-text-color;                //表单的内容项文字颜色
+$linkeytable-title-background: $common-all-main-background;    //表单的标题项背景颜色
+$linkeytable-title-font:$common-all-main-text-color2;          //表单的标题项文字颜色
+$app_openform-input-background:$common-all-main-background;    //输入框，文本域背景颜色
+$app_openform-input-color:$common-all-main-text-color;         //输入框，文本域字体颜色
+$linkeyform-background1:$common-all-main-background;           //表单背景颜色
+
+//app_page_theme
+//app_page
+
+//custom_theme
+//=============================================================
+$dev-main-first-background-color:$common-all-main-background;  //开发端左侧导航栏第一行背景颜色
+$left-tree-li-treenode:$common-all-main-background2;           //左侧导航栏背景颜色、收起时颜色
+$page_logo-background:$common-all-main-background3;            //用户端头部背景颜色
+$page_logo-color:$common-all-main-text-color2;                 //用户端头部字体颜色
+//$left-tree-li-treenode-select:$common-all-main-background;     //左侧导航栏背景颜色(鼠标停放时/选择时)
+$left-tree-li-treenode-select:$common-all-main-background3;     //左侧导航栏背景颜色(鼠标停放时/选择时)
+$left-tree-text-color-select:$common-all-main-text-color2;     //左侧导航栏文字颜色(鼠标停放时/选择时)
+$left-tree-text-color:$common-all-main-text-color;             //左侧导航栏文字颜色
+$main-tab-color:$common-all-main-text-color;                   //tab栏文字颜色
+$custom-layout-split-west:$common-all-main-background;         //用户端左侧导航树分割线
+$left-tree-li-treenode-border:$common-all-main-background;     //左侧导航栏收缩是边框颜色
+$main-tab-background:$common-all-main-background4;             //开发端tab栏背景颜色 
+$common-font-color:$common-all-main-text-color;                //通用字体颜色
+$custom_l-btn-icon-left:$common-all-main-text-color;           //表单按钮字体颜色
+
+//engine_openform
+//=============================================================
+$engine_openform-body-background:$common-all-main-background;  //表单的背景颜色，包括body hml img等元素的背景颜色
+$easyui-tabs-border-color:$common-all-main-background2;        //表单边界颜色
+$Approvaltable-border-color:$common-all-main-background;       //流转记录边框颜色
+
+
+//=================================================================================================================
+//accordion
+
+//calendar calendar1
+
+//combo
+//-------------------------------------------------------------
+$combo-arrow-background-color:$common-all-main-text-color;     //时间控件文字颜色
+$combo-background:$common-all-main-background;                 //时间控件背景颜色
+
+
+//combobox
+//datagrid
+//-------------------------------------------------------------
+$datagrid-cell-rownumber-color:$common-all-main-text-color;    //表格编号栏的编号颜色
+$datagrid-body-background1:$common-all-main-background;        //表单视图背景颜色
+$datagrid-border-color:$common-all-main-background;            //视图边框的线的颜色
+$datagrid-body-font-color:$common-all-main-text-color;         //视图内容行的字体默认颜色
+$datagrid-over-font-color:$common-all-main-text-color2;        //视图行鼠标飘过时的字体颜色
+$datagrid-row-selected-font-color:$common-all-main-text-color2;//视图行被选中时的字体颜色
+$datagrid-first-row-color:$common-all-main-text-color2;        //视图(第一行)的文字颜色
+$datagrid-editable-input-border-color:$common-all-main-text-color;//视图输入框边框颜色
+$datagrid-editable-input-text-color:$common-all-main-text-color; //可编辑视图字体颜色
+
+//datebox
+//dialog
+
+//easy_custom
+//-------------------------------------------------------------
+$back_logo_table-background-color:$common-all-main-background3;//开发端头部背景颜色
+$dev-header-background:$common-all-main-background2!important; //开发端tab栏背景颜色
+$dev-div-mm-border-color:$common-all-main-background2!important;//开发端tab栏边框颜色
+$sysinfo-color:$common-all-main-text-color;                    //系统信息页面字体颜色
+$soapage-color:$common-all-main-text-color;                    //soa页面字体颜色
+
+//layout
+//-------------------------------------------------------------
+$layount-background:$common-all-main-background2;              //layout背景颜色
+
+//button2
+//-------------------------------------------------------------
+$button2-l-btn-color:$common-all-main-text-color;              //按钮字体颜色
+$button2-l-btn-background:$common-all-main-background2;        //按钮背景颜色
+$button2-l-btn-border-color:$common-all-main-background;        //按钮边框颜色
+$button2-l-btn-color-hover:$common-all-main-text-color2;       //按钮字体颜色(移动或选中时)
+$button2-l-btn-background-hover:$common-all-main-background3;  //按钮背景颜色(移动或选中时)
+$dev-header-text-color:$common-all-main-text-color;            //开发端菜单栏文字顏色
+$dev-header-text-color2:$common-all-main-text-color;           //开发端菜单栏选中时两条竖线颜色
+
+
+//menu
+//-------------------------------------------------------------
+$menu-background-color:$common-all-main-background2;           //菜单背景颜色
+$menu-menu-line-border-left:$common-all-main-background;       //菜单栏竖直边框颜色
+$menu-menu-line-border-right:$common-all-main-background;      //菜单栏横边框颜色
+$menu-border-color:$common-all-main-background;                //菜单外围边框颜色
+$menu-menu-active-color:$common-all-main-text-color2;          //菜单被选中时字体颜色
+$menu-menu-active-background:$common-all-main-background;      //菜单被选中时背景颜色
+$menu-color: $common-all-main-text-color;                      //菜单栏字体颜色
+$menu-active-border-color:$common-all-main-background;         //菜单边框颜色
+
+//menubutton
+//messager
+
+//pagination
+//-------------------------------------------------------------
+$pagination-page-text-color:$common-all-main-text-color;       //分页底部工具栏(选页)处的分割线与按钮颜色
+
+//panel
+//-------------------------------------------------------------
+$panel-header_panel-body-border-color:$common-all-main-background;//panel边框颜色
+$panel-body-background-color:$common-all-main-background2;        //用户端主窗口最底层背景颜色、开发端背景
+$panel-body-noheader-border-color:$common-all-main-background;    //panel边框颜色(noheader)
+$panel-body-border-left1:$common-all-main-background;             //panel 左边框颜色
+$panel-first-background-color:$common-all-main-background;        //开发端左侧导航栏第一行背景颜色
+$panel-panel-title-color:$common-all-main-text-color;             //panel的标题字体颜色、如应用列表标题
+
+//progressbar
+//propertygrid
+
+//searchbox
+//-------------------------------------------------------------
+$searchbox-border-color:$common-all-main-background3;          //搜索框背景
+$searchbox-background-color:$common-all-main-background3;      //搜索框右边背景
+$searchbox-background-color2:$common-all-main-background3;     //搜索框左边背景
+$searchbox-text-font-color:$common-all-main-text-color;        //搜索框输入时文字颜色
+$searchbox-searchbox-prompt-color:$common-all-main-background; //搜索框文字颜色
+
+//slider
+//spinner
+
+//splitbutton
+//-------------------------------------------------------------
+$splitbutton-s-btn-plain-active:$common-all-main-background;   //鼠标移动时背景颜色
+$splitbutton-s-btn-plain-active2:$common-all-main-text-color2; //鼠标移动时文字颜色
+$splitbutton-s-btn-plain-active3:$common-all-main-background;  //鼠标移动时边框颜色
+
+//tabs
+//-------------------------------------------------------------
+$tabs-selected_tabs-inner-color:$common-all-main-text-color;   //tab文字颜色
+$tabs-selected_tabs-inner-l-g1:$common-all-main-background3;   //tab背景颜色 
+$tabs-selected_a_tabs-inner-border-color: $common-all-main-background;//tab边框颜色
+$tabs-header-left-li-tabs-inner-background:$common-all-main-background3;//按钮tab背景颜色
+$tabs-header-left-li-tabs-inner-color:$common-all-main-text-color;//进入设计页面的左边tab按钮字体颜色
+$tabs-header-left-li-tabs-inner-background-selected:$common-all-main-background;//进入设计页面的左边tab按钮背景颜色(选择时)
+$tabs-header-left-li-tabs-inner-color-selected:$common-all-main-text-color2;//进入设计页面的左边tab按钮字体颜色(选择时)
+$tab-li-a-tabs-inner1:$common-all-main-background;               //进入设计页面的上面tab背景，如表单设计、规则等
+$tab-li-a-tabs-inner2:$common-all-main-text-color;               //进入设计页面的上面tab字体，如表单设计、规则等
+$tab-li-a-tabs-inner1-select:$common-all-main-background3;        //进入设计页面的上面tab背景(移动或选择时)，如表单设计、规则等
+$tab-li-a-tabs-inner2-select:$common-all-main-text-color2;        //进入设计页面的上面tab字体(移动或选择时)，如表单设计、规则等
+
+
+//tooltip
+
+//tree tree2
+//-------------------------------------------------------------
+$dev-left-tree-text-color:$common-all-main-text-color;         //开发端左侧导航栏文字颜色
+$tree_style-background-color: $common-all-main-background2;    //用户端首页左侧菜单栏下面空白背景
+$tree-node-hover-background: $common-all-main-background;      //左侧菜单栏鼠标移动时背景颜色
+$tree-node-hover-color: $common-all-main-text-color2;          //左侧菜单栏鼠标移动时文字颜色
+$tree-node-selected-background: $common-all-main-background;   //左侧菜单栏鼠标选择时背景颜色  
+$tree-node-selected-color: $common-all-main-text-color2;       //左侧菜单栏鼠标选择时背景颜色
+
+//validatebox
+//window
+
+//@page//-------------------------------------------------------
+$page-body-background:$common-all-main-background;              //page页背景颜色
+$page-boder-border-color:$common-all-main-background2;          //page页分割线
+$page-flow-text-color:$common-all-main-text-color;              //流程中心流程文字颜色
+$page-flow-text-background:$common-all-main-background;         //流程中心流程文字背景
+$page-flow-background:$common-all-main-background5;             //流程中心流程图案背景
+$page-flow-background-hover:$common-all-main-background3;       //流程中心流程图案背景（鼠标移动时）
+$page-flowclassname-text-color:$common-all-main-text-color;     //流程中心分类文字颜色
+$page-flowclassname-text-color-hover:$common-all-main-text-color2;//流程中心分类文字颜色（鼠标移动时）
+$body-background: $common-all-main-background;                  //body背景颜色
+

@@ -1,0 +1,352 @@
+﻿html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td{margin:0;padding:0;font-size:9pt;font-family:"微软雅黑","宋体";}
+img,body,html{border:0;background-color:#fff;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+.fieldShow{color:blue}
+body{
+  margin: 0px !important;
+}
+/*chrome 样式定义 */
+ input,button,select,textarea,div,span,td{outline:none}
+ textarea{resize:none}
+
+a {font-size:9pt;font-family:"微软雅黑","宋体";color: #575765; text-decoration: none}
+a:hover {color: #6389c7; text-decoration: none;font-family:"微软雅黑","宋体"}
+textarea{overflow:auto;border:1px solid #ccc;}
+select {border:1px solid #929292;}
+input[size]{height:25px;border: 1px solid #929292;}
+form{
+  margin: 0px 185px 0px 185px;
+  padding: 0px 40px 0px 40px;
+  background-color: #ffffff;
+  background-color: f8f8f8 0px 65px;
+}
+.toptoolbar{padding:2px;border:1px solid #ddd;background:#F8F8F8;}
+.toptoolbarhr{height:2px;}
+.lschk_ie6{border:0px;height:13px;width:13px}
+.linkeytable{border-collapse:collapse;border: 1px solid #eee;width:100%;font-size:9pt;margin-top: -1px;}
+.linkeytable td{color: #575765;border-collapse:collapse;border: 1px solid #000000;padding:4px;font-size:9pt;font-family:"微软雅黑","宋体";min-height:28px}
+.linkeytable td.texttd{
+  text-align:center;
+  /*background:#fafcff;*/
+  font-size:9pt;
+  font-family:"微软雅黑","宋体";
+}
+.linkeytable td.texttdl{text-align:left;background:#fafcff;font-size:9pt;font-family:"微软雅黑","宋体";}
+
+.CollapseSubForm{
+  color:#0099FF;
+  padding-left:20px;
+  font-size:9pt;
+  cursor:pointer;
+  background:url(../images/icons/collapse.gif) no-repeat left top;
+  background-position-y: 53%;
+  display: block;
+  border: 1px #000000 solid;
+  position: relative;
+  top: -1px;
+  height: 38px;
+  line-height: 38px;
+}
+.ExpandSubForm{
+  color:#0099FF;
+  padding-left:20px;
+  font-size:9pt;
+  cursor:pointer;
+  background:url(../images/icons/ns-expand.gif) no-repeat left top;
+  background-position-y: 53%;
+  display: block;
+  border: 1px #000000 solid;
+  position: relative;
+  top: -1px;
+  height: 38px;
+  line-height: 38px;
+}
+.ApprovalForm{
+  padding-top:0px;
+  position: relative;
+  top: 0px;
+  /*border-top: 1px #000000 solid;*/
+  margin-top: -1px;
+}
+.ApprovalForm .panel-body{
+  position: relative;
+  top: -1px;
+}
+.ApprovalForm select{
+  width: 100% !important;
+}
+.ApprovalForm textarea{
+  width: 99% !important;
+}
+/*审批处理单样式定义*/
+.ApprovalMsg{padding-left:15px;color:#0099FF;width:90%;font-size:9pt;cursor:pointer;font-family:"微软雅黑","宋体";background:url(../images/icons/ns-expand.gif) no-repeat left}
+.ApprovalBottom{
+  background-color: #f8f8f8;
+  text-align: center;
+  padding-top:25px;
+  padding-right:5px;
+  padding-bottom:35px;
+  font-size:9pt;
+  font-family:"微软雅黑","宋体";
+  margin: 0px -40px 0px -40px;
+}
+.ApprovalBottom a{text-decoration: none;font-family:"Myriad Pro","Myriad Web","Tahoma","Helvetica","Arial",sans-serif;}
+.ApprovalBottom a:hover{color: #000000;text-decoration: underline;font-family:"Myriad Pro","Myriad Web","Tahoma","Helvetica","Arial",sans-serif;}
+.Approvaltable{border-collapse:collapse;border: 1px solid #eee;width:100%;font-size:9pt;font-family:"微软雅黑","宋体"}
+.Approvaltable td{color: #575765;border-collapse:collapse;border: 1px solid #000;padding:4px;font-size:9pt;font-family:"微软雅黑","宋体";height:31px}
+.Approvaltable td.texttd{
+  text-align:center;
+  /*background:#fafcff;*/
+  font-family:"微软雅黑","宋体";
+  width: 130px;
+}
+.ApprovalToptable td{color: #575765;font-size:9pt;font-family:"微软雅黑","宋体";}
+.ApprovalToptable a{color: #cc3300; text-decoration: underline;font-family:"微软雅黑","宋体";}
+.ApprovalCurNode{color:#0066cc;}
+.ApprovalTopBtn td{color:#ffffff;font-size:12px;font-weight:bold; font-family:"微软雅黑","宋体";}
+.ApprovalTopBtn a{color: #FFFFFF;font-size:12px; font-weight:bold; cursor:pointer; text-decoration:none;font-family:"微软雅黑","宋体"}
+
+/*UI*/
+.engine_title{
+  font-weight: 900;//流程表单标题加粗class
+}
+.top_logo{
+  height: 65px;
+  width: 100%;
+  background-color: #f8f8f8;
+  margin-bottom: 55px;
+}
+.top_img1{
+  height: 26px;
+  width: 129px;
+  background-image: url("images/logo.jpg");
+  background-repeat: no-repeat;
+  position: relative;
+  top: 30px;
+  left: 75px;
+}
+.top_img2{
+  height: 25px;
+  width: 1px;
+  background-image: url("images/line.jpg");
+  background-repeat: no-repeat;
+  position: relative;
+  top: 5px;
+  left: 215px;
+}
+.top_logo span{
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  position: relative;
+  top: -22px;
+  left: 226px;
+}
+.linkeytable tr{
+  height: 40px;
+}
+.ApprovalForm .panel-header{
+  border: 1px #000000 solid;
+  background: transparent;
+  height: 28px;
+  /*border-top: none;*/
+}
+.ApprovalForm .panel-header .panel-title{
+  height: 40px;
+  line-height: 30px;
+  color: red;
+}
+.ApprovalForm .panel-header .panel-icon{
+  display: none;
+}
+.ApprovalForm .panel-header .panel-tool{
+  display: none;
+}
+input[type="radio"] {
+  margin: 0px 5px 0px 5px;
+  position: relative;
+  top: 2px;
+}
+input[type="checkbox"] {
+  margin: 0px 5px 0px 5px;
+  position: relative;
+  top: 2px;
+}
+input[id="text0"], input[id="Number"],
+input[id="YearNum"], input[id="text1"],
+input[id="SubUserList"], input[id="HJNum"],
+input[id="HTNO"], input[id="CtdName"],
+input[id="UserName"], input[id="DataTest"], input[id="TotalNum"]{
+  width: 99.6%;
+}
+.linkeytable .combo{
+  border-color: #929292;
+  /*width: 100% !important;*/
+}
+.linkeytable .combo-arrow{
+  /*width: 100%;*/
+}
+.linkeytable .combo .validatebox-text{
+  /*width: 89% !important;*/
+}
+ .linkeytable .combo .combo-text{
+   /*width: 97% !important;*/
+ }
+.easyui-tabs{
+  border: 1px #000000 solid;
+  margin-top: -1px;
+}
+.top_outer{
+  margin: 0px -40px 15px -40px;
+}
+.top_inner{
+  margin: 0px 40px 0px 40px;
+}
+.ApprovalForm .combo{
+  border-color: #929292;
+  width: 99.6% !important;
+}
+.ApprovalForm .combo .combo-text {
+  width: 97% !important;
+}
+.ApprovalForm textarea{
+  border-color: #929292;
+}
+.linkeytable textarea{
+  border-color: #929292;
+  width: 99% !important;
+}
+body{
+  background-color: #b4b4b4;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+input,textarea,select{
+  background-color: #ffffff;
+}
+#BU1001, #BU1002, #BU1003, #BU1004,
+#BU1005, #BU1006, #BU1007, #BU1008,
+#BU1009, #BU1010, #BU1011, #BU1012,
+#BU1013, #BU1014, #BU1015, #BU1016,
+#BU1017, #BU1018, #BU1019, #BU1020,
+#BU1021, #BU1022, #BU1023, #BU1024,
+#BU1025, #BU1026, #BU1027, #BU1028{
+  border: none;
+  border-radius: 0px;
+  background: #6389c8;
+  margin: 10px 0px;
+  width: 145px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#6389c8,endColorstr=#6389c8,GradientType=0) !important;
+}
+#BU1001:hover, #BU1002:hover, #BU1003:hover, #BU1004:hover,
+#BU1005:hover, #BU1006:hover, #BU1007:hover, #BU1008:hover,
+#BU1009:hover, #BU1010:hover, #BU1011:hover, #BU1012:hover,
+#BU1013:hover, #BU1014:hover, #BU1015:hover, #BU1016:hover,
+#BU1017:hover, #BU1018:hover, #BU1019:hover, #BU1020:hover,
+#BU1021:hover, #BU1022:hover, #BU1023:hover, #BU1024:hover,
+#BU1025:hover, #BU1026:hover, #BU1027:hover, #BU1028:hover{
+  background: #969696 !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#969696,endColorstr=#969696,GradientType=0) !important;
+}
+#BU1001 span, #BU1002 span, #BU1003 span, #BU1004 span,
+#BU1005 span, #BU1006 span, #BU1007 span, #BU1008 span,
+#BU1009 span, #BU1010 span, #BU1011 span, #BU1012 span,
+#BU1013 span, #BU1014 span, #BU1015 span, #BU1016 span,
+#BU1017 span, #BU1018 span, #BU1019 span, #BU1020 span,
+#BU1021 span, #BU1022 span, #BU1023 span, #BU1024 span,
+#BU1025 span, #BU1026 span, #BU1027 span, #BU1028 span{
+  color: #FFFFFF;
+  background: none;
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+@-moz-document url-prefix(){
+	/*这段区域的样式代码只在firefox起作用*/  
+	top: -12px;
+}
+#uploadtext{
+	-moz-top: -10px;
+}
+.ApprovalForm #ToolbarTr{
+  text-align: center;
+}
+.ApprovalForm #ToolbarTr a{
+  margin-right: 10px;
+}
+#ToolbarTr td:first-child{
+  /*display: none;*/
+}
+#tabs .tabs-header{
+  background-color: #FFFFFF;
+}
+#ToolbarTr{
+  border: 1px #000000 solid;
+}
+iframe[id="view1"]{
+   border: 1px #000000 solid !important;
+   position: relative;
+   top: -1px;
+}
+iframe[id="view"]{
+  border: 1px #000000 solid !important;
+  position: relative;
+  top: -1px;
+}
+input[id="HTName"]{
+  width: 100%;
+}
+.datebox .combo-arrow {
+  background-image: url('images/riqi.png');
+  background-position: center center;
+  padding: 0 3px;
+  position: relative;
+  left: -6px;
+}
+.validatebox-invalid {
+  background-image: url('images/icon-attention.png');
+  background-repeat: no-repeat;
+  background-position: 99.6% center;
+}
+.calendar-selected {
+  background-color: #6389c7;
+  color: #fff;
+  border: 0px solid #0070a9;
+  border-radius: 50%;
+}
+.calendar-header {
+  background: #FFFFFF;
+}
+.calendar-sunday, .calendar-saturday{
+  color: #000000;
+}
+.calendar-other-month {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.calendar-today {
+  background-color: #e2e2e2;
+  color: #000000;
+  border: 0px solid #0070a9;
+  border-radius: 50%;
+}
+.calendar-body th:first-child, .calendar-body th:last-child{
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+.calendar-hover {
+  border: 0px solid #ccc;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #6389c7;
+  color: #FFFFFF;
+}
+.CollapseSubFormBody iframe{border-collapse:collapse;border: 1px solid #000000;width:100%;margin-top: -18px;}
+.CollapseSubFormBody iframe td{border-collapse:collapse;border: 1px solid #000000 !important;width:100%;}
+#bottom1,#bottom2{
+  color: #6389c7;
+}
+#linkeyform hr{
+  display: none;
+}

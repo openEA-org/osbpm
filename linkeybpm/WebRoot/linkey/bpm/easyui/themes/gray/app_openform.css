@@ -1,0 +1,107 @@
+﻿a {font-size:9pt;font-family:"微软雅黑","宋体";color: #00457D; text-decoration: none}
+a:hover {color: #a3b9de; text-decoration: none;font-family:"微软雅黑","宋体"}
+legend,body,form,td{font-size:9pt}
+.toptoolbar{
+  padding:2px;
+  border:0px solid #eee;
+  background:#FFFFFF;
+  color: transparent;
+}
+.toptoolbarhr{height:2px;}
+form{margin:0px}
+.p{height:0px;}
+.fieldShow{color:blue}
+textarea{overflow:auto;border:1px solid #ccc;}
+select {border:1px solid #ccc;}
+input[size]{height:20px;border:1px solid #ccc;}
+
+fieldset{border:1px solid #eee;}
+
+/*自定义的样式表*/
+
+.linkeytable{border-collapse:collapse;border: 1px solid #e8e8e8;width:100%;font-size:9pt;}
+.linkeytable td{
+  border-collapse:collapse;
+  border: 1px solid #e8e8e8;
+  padding:4px;
+  font-size:9pt;
+}
+.linkeytable td.texttd{
+  text-align:right;
+  background:#f9f9f9;
+  font-size:9pt;
+  min-width:100px;
+}
+.linkeytable td.texttdl{text-align:left;background:#f9f9f9;font-size:9pt;min-width:100px;}
+
+/*chrome 样式定义 */
+ input,button,select,textarea,div,span,td{outline:none}
+
+ /*ui*/
+.datagrid-pager {
+  background: #FFFFFF;
+}
+.datagrid-header{
+  background-color: #FFFFFF;
+  background: none;
+}
+#linkeyform .panel-header {
+  background-color: #FFFFFF;
+  background: none;
+  border: none;
+}
+#linkeyform .panel-header .panel-title{
+  padding-left: 10px;
+  color: #324b74;
+  font-weight: 500;
+}
+.datebox .combo-arrow {
+  background-image: url('images/riqi.png');
+  background-position: center center;
+  padding: 0 2px;
+  position: relative;
+  left: -4px;
+}
+.icon-flow {
+  background: url('images/icon-process.png') no-repeat center center;
+}
+.calendar-selected {
+  background-color: #a3b9de;
+  color: #fff;
+  border: 0px solid #0070a9;
+  border-radius: 50%;
+}
+.calendar-header {
+  background: #FFFFFF;
+}
+.calendar-sunday, .calendar-saturday{
+  color: #000000;
+}
+.calendar-other-month {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.calendar-today {
+  background-color: #e2e2e2;
+  color: #000000;
+  border: 0px solid #0070a9;
+  border-radius: 50%;
+}
+.calendar-body th:first-child, .calendar-body th:last-child{
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+.calendar-hover {
+  border: 0px solid #ccc;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #a3b9de;
+  color: #FFFFFF;
+}
+input[type="checkbox"]{
+  position: relative;
+  top: 2px;
+}
+.validatebox-invalid {
+  background-image: url('images/icon-attention.png') !important;
+}

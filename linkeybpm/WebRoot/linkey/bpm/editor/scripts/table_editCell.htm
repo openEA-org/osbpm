@@ -1,0 +1,716 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/table_editCell.js'></scr"+"ipt>");
+</script>
+<script language="JavaScript" src="color_picker.js"></script>
+<script>writeTitle()</script>
+<script language="JavaScript" src="table.js"></script>
+<script>
+document.onclick=hideAll;
+function hideAll()
+	{
+	oColor1.hide();
+	}
+
+function tabClick(n)
+	{
+	switch(n)
+		{
+		case 1:			
+			tab1.style.border="#D6D6E2 2 solid";
+			tab1.style.borderBottom="none";	
+			tab1.style.background="#F2F1F8";	
+			tab1.style.cursor="";
+			
+			tab2.style.border="#D6D6E2 2 solid";
+			tab2.style.borderLeft="none";
+			tab2.style.background="#E9E8F2";
+			tab2.style.cursor="hand";
+			
+			tab3.style.border="#D6D6E2 2 solid";
+			tab3.style.borderLeft="none";
+			tab3.style.background="#E9E8F2";
+			tab3.style.cursor="hand";				
+			
+			
+			divAutoFit.style.display="block"
+			divProperties.style.display="none"
+			divStyle.style.display="none"	
+						
+			break;
+		case 2:
+			tab1.style.border="#D6D6E2 2 solid";
+			tab1.style.borderRight="none";
+			tab1.style.background="#E9E8F2";
+			tab1.style.cursor="hand";
+			
+			tab2.style.border="#D6D6E2 2 solid";
+			tab2.style.borderBottom="none";	
+			tab2.style.background="#F2F1F8";
+			tab2.style.cursor="";	
+			
+			tab3.style.border="#D6D6E2 2 solid";
+			tab3.style.borderLeft="none";
+			tab3.style.background="#E9E8F2";
+			tab3.style.cursor="hand";					
+			
+			divAutoFit.style.display="none"
+			divProperties.style.display="block"
+			divStyle.style.display="none"				
+					
+			break;
+		case 3:			
+			tab1.style.border="#D6D6E2 2 solid";
+			tab1.style.borderRight="none";
+			tab1.style.background="#E9E8F2";
+			tab1.style.cursor="hand";
+			
+			tab2.style.border="#D6D6E2 2 solid";
+			tab2.style.borderRight="none";
+			tab2.style.background="#E9E8F2";
+			tab2.style.cursor="hand";
+			
+			tab3.style.border="#D6D6E2 2 solid";
+			tab3.style.borderBottom="none";
+			tab3.style.background="#F2F1F8";
+			tab3.style.cursor="";				
+
+			divAutoFit.style.display="none"
+			divProperties.style.display="none"
+			divStyle.style.display="block"
+									
+			break;				
+		}
+	}	
+
+/************************
+	COMMON
+************************/
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+	
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	tabClick(1);
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	realTime()
+	}
+	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+		
+	var oTable = (oSel.parentElement != null ? GetElement(oSel.parentElement(),"TABLE") : GetElement(oSel.item(0),"TABLE"));
+	var oTD = (oSel.parentElement != null ? GetElement(oSel.parentElement(),"TD") : GetElement(oSel.item(0),"TD"))
+	if (oTD == null) return;
+	
+	divPreview.style.cssText=oTD.style.cssText; //PREVIEW
+
+	//AUTOFIT
+	inpWidth.value=="";//reset
+	if(oTD.style.width == "")inpAutoFit1[0].checked=true;
+	else
+		{
+		if(oTD.style.width.substr(oTD.style.width.length-2,2)=="px")
+			{
+			inpAutoFit1[1].checked=true;			
+			inpAutoFitMeasure1.value = "px";
+			inpWidth.value = oTD.style.width.substr(0,oTD.style.width.length-2);
+			}		
+		if(oTD.style.width.substr(oTD.style.width.length-1,1)=="%")
+			{
+			inpAutoFit1[1].checked=true;
+			inpAutoFitMeasure1.value = "%";
+			inpWidth.value = oTD.style.width.substr(0,oTD.style.width.length-1)
+			}
+		}
+	
+	inpHeight.value=="";//reset
+	if(oTD.style.height == "")inpAutoFit2[0].checked=true;
+	else
+		{
+		if(oTD.style.height.substr(oTD.style.height.length-2,2)=="px")
+			{
+			inpAutoFit2[1].checked=true;			
+			inpAutoFitMeasure2.value = "px";
+			inpHeight.value = oTD.style.height.substr(0,oTD.style.height.length-2);
+			}		
+		if(oTD.style.height.substr(oTD.style.height.length-1,1)=="%")
+			{
+			inpAutoFit2[1].checked=true;
+			inpAutoFitMeasure2.value = "%";
+			inpHeight.value = oTD.style.height.substr(0,oTD.style.height.length-1)
+			}
+		}	
+		
+	//STYLE
+	inpCSSText.value = oTD.style.cssText
+	
+	//PROPERTIES
+	/**** Align ****/   //=>OK
+	if(oTD.style.textAlign=="")
+		{
+		if(oTD.align!="") 
+			{
+			inpAlign.value=oTD.align;
+			divPreview.style.textAlign=oTD.align; //PREVIEW (not standard)
+			}
+		else
+			{//Not Set
+			inpAlign.value="";
+			}
+		}
+	else 
+		{
+		inpAlign.value=oTD.style.textAlign;
+		}
+	
+	/**** Vertical Align ****/   //=>OK
+	if(oTD.style.verticalAlign=="")
+		{
+		if(oTD.vAlign!="") 
+			{
+			inpVAlign.value=oTD.vAlign;
+			divPreview.style.verticalAlign=oTD.vAlign; //PREVIEW (not standard)
+			}
+		else 
+			{//Not Set
+			inpVAlign.value = "";
+			}
+		}
+	else 
+		{
+		inpVAlign.value=oTD.style.verticalAlign;
+		}	
+
+	/**** No Wrap (White Space) ****/   //=>OK
+	if(oTD.style.whiteSpace=="")
+		{
+		if(oTD.noWrap)
+			{
+			inpWhtSpace.value="nowrap";
+			divPreview.style.whiteSpace="nowrap"; //PREVIEW (not standard)
+			}
+		else
+			{
+			inpWhtSpace.value="";
+			}
+		}
+	else 
+		{
+		inpWhtSpace.value=oTD.style.whiteSpace;
+		}
+
+	/**** background ****/   //=>OK (harus lebih dulu dari background color)
+	if(oTD.style.background=="")
+		{
+		if(oTD.background)
+			{
+			divPreview.style.background="url('"+oTD.background+"')"; //PREVIEW (not standard)
+			}
+		else
+			{
+			divPreview.style.background=""
+			}
+		}
+	else 
+		{
+		divPreview.style.background=oTD.style.background;
+		}	
+		
+	/**** backgroundColor ****/   //=>OK
+	if(oTD.style.backgroundColor=="")
+		{
+		if(oTD.bgColor)
+			{
+			inpBackgroundColor.style.backgroundColor=oTD.bgColor;
+			divPreview.style.backgroundColor=oTD.bgColor; //PREVIEW (not standard)
+			oColor1.color=oTD.bgColor;
+			}
+		else
+			{
+			inpBackgroundColor.style.backgroundColor="";
+			oColor1.color="";
+			}
+		}
+	else 
+		{
+		inpBackgroundColor.style.backgroundColor=oTD.style.backgroundColor;
+		oColor1.color=oTD.style.backgroundColor;
+		}
+	
+	/**** Padding (default: selalu ketambahan px kalo satuan gak diset) ****/   //=>OK
+	//Berkaitan dgn "Not Available"
+	if(oTD.style.paddingLeft!="")
+		{
+		if(oTD.style.paddingLeft.substr(oTD.style.paddingLeft.length-2,2)!="px") inpPaddingLeft.value="na";
+		else inpPaddingLeft.value = oTD.style.paddingLeft.substring(0,oTD.style.paddingLeft.length-2);
+		}
+	else inpPaddingLeft.value="";
+	
+	if(oTD.style.paddingRight!="")
+		{
+		if(oTD.style.paddingRight.substr(oTD.style.paddingRight.length-2,2)!="px") inpPaddingRight.value="na";
+		else inpPaddingRight.value = oTD.style.paddingRight.substring(0,oTD.style.paddingRight.length-2);
+		}
+	else inpPaddingRight.value="";
+	
+	if(oTD.style.paddingTop!="")
+		{
+		if(oTD.style.paddingTop.substr(oTD.style.paddingTop.length-2,2)!="px") inpPaddingTop.value="na";
+		else inpPaddingTop.value = oTD.style.paddingTop.substring(0,oTD.style.paddingTop.length-2);
+		}
+	else inpPaddingTop.value="";
+	
+	if(oTD.style.paddingBottom!="")
+		{
+		if(oTD.style.paddingBottom.substr(oTD.style.paddingBottom.length-2,2)!="px") inpPaddingBottom.value="na";
+		else inpPaddingBottom.value = oTD.style.paddingBottom.substring(0,oTD.style.paddingBottom.length-2);
+		}
+	else inpPaddingBottom.value="";	
+	}
+	
+function refresh()
+	{
+	divPreview.style.textAlign=inpAlign.value;
+	divPreview.style.verticalAlign=inpVAlign.value;
+	divPreview.style.whiteSpace=inpWhtSpace.value;
+
+	//Berkaitan dgn "Not Available"
+	if(inpPaddingLeft.value!="na") divPreview.style.paddingLeft = inpPaddingLeft.value; //by default satuanya pixel
+	if(inpPaddingRight.value!="na") divPreview.style.paddingRight = inpPaddingRight.value;
+	if(inpPaddingTop.value!="na") divPreview.style.paddingTop = inpPaddingTop.value;
+	if(inpPaddingBottom.value!="na") divPreview.style.paddingBottom = inpPaddingBottom.value;
+
+	//Tdk bisa seperti ini: (akan menghapus backgroundImage)
+	//divPreview.style.backgroundColor=inpBackgroundColor.style.backgroundColor;
+
+	//Harus spt ini:
+	if(divPreview.style.backgroundImage!=""&&
+		inpBackgroundColor.style.backgroundColor=="") 
+		divPreview.style.background = divPreview.style.backgroundImage+" "+ divPreview.style.backgroundRepeat + " "+divPreview.style.backgroundPosition;
+	else if(divPreview.style.backgroundImage==""&&
+		inpBackgroundColor.style.backgroundColor!="") 
+		divPreview.style.backgroundColor=inpBackgroundColor.style.backgroundColor;
+	else if(divPreview.style.backgroundImage==""&&
+		inpBackgroundColor.style.backgroundColor=="") 
+		divPreview.style.background="";
+	else
+		divPreview.style.background = divPreview.style.backgroundImage+" " + inpBackgroundColor.style.backgroundColor + " " + divPreview.style.backgroundRepeat + " "+divPreview.style.backgroundPosition;
+	}
+	
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+		
+	var oTable = (oSel.parentElement != null ? GetElement(oSel.parentElement(),"TABLE") : GetElement(oSel.item(0),"TABLE"));
+	var oTD = (oSel.parentElement != null ? GetElement(oSel.parentElement(),"TD") : GetElement(oSel.item(0),"TD"))
+	if (oTD == null) return;
+	
+	if(inpApplyTo.value=="Current Cell")
+		{
+		format(oTD)
+		}
+	if(inpApplyTo.value=="Current Row")
+		{
+		var arrCells=rowOperation(true,false,false,false);
+		for (var i=0;i<arrCells.length;i++)
+			{
+			format(oTable.rows[arrCells[i][0]].childNodes[arrCells[i][1]])
+			}
+		}
+	if(inpApplyTo.value=="Current Column")
+		{
+		var arrCells=colOperation(true,false,false,false);
+		for (var i=0;i<arrCells.length;i++)
+			{			
+			format(oTable.rows[arrCells[i][0]].childNodes[arrCells[i][1]])
+			}
+		}
+	if(inpApplyTo.value=="Whole Table")
+		{
+		for (var i=0;i<oTable.rows.length;i++) 	
+			{
+			var oRow = oTable.rows[i];
+			for(var j=0;j<oRow.childNodes.length;j++)
+				{
+				var oCell=oRow.childNodes[j];
+				format(oCell);
+				}
+			}
+		}
+		
+	realTime()
+	
+	//*** RUNTIME BORDERS ***
+	dialogArguments.oUtil.obj.runtimeBorder(false);
+	//***********************	
+	}
+	
+function format(oTD)
+	{
+	//STYLE
+	 oTD.style.cssText = inpCSSText.value;
+	 
+	 if(divStyle.style.display=="block")return;
+	
+	//AUTOFIT
+	if(inpAutoFit1[0].checked==true) oTD.style.width="";
+	else
+		{
+		if(inpWidth.value!="") oTD.style.width=inpWidth.value+inpAutoFitMeasure1.value;
+		else oTD.style.width="";
+		}
+	if(inpAutoFit2[0].checked==true) oTD.style.height="";
+	else
+		{
+		trigger1.innerHTML="";
+		if(inpWidth.height!="") oTD.style.height=inpHeight.value+inpAutoFitMeasure2.value;
+		else oTD.style.height="";
+		}
+	
+	//PROPERTIES
+	oTD.style.textAlign=inpAlign.value;
+	oTD.style.verticalAlign=inpVAlign.value;	
+	oTD.style.whiteSpace=inpWhtSpace.value;	
+	
+	//Berkaitan dgn "Not Available"
+	if(inpPaddingLeft.value!="na") oTD.style.paddingLeft = inpPaddingLeft.value; //by default satuanya pixel
+	if(inpPaddingRight.value!="na") oTD.style.paddingRight = inpPaddingRight.value;
+	if(inpPaddingTop.value!="na") oTD.style.paddingTop = inpPaddingTop.value;
+	if(inpPaddingBottom.value!="na") oTD.style.paddingBottom = inpPaddingBottom.value;
+
+
+	if(divPreview.style.background=="none transparent scroll repeat 0% 0%"||
+		divPreview.style.background=="")
+		{
+		oTD.style.background="";
+		
+		//Clean~~~
+		sTmpStyle=oTD.style.cssText
+		
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND: none transparent scroll repeat 0% 0%;/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND: none transparent scroll repeat 0% 0%/,"")
+
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-POSITION: 0% 0%;/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-POSITION: 0% 0%/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-ATTACHMENT: scroll;/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-ATTACHMENT: scroll/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-IMAGE: none;/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-IMAGE: none/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-REPEAT: repeat;/,"")
+		sTmpStyle=sTmpStyle.replace(/BACKGROUND-REPEAT: repeat/,"")
+
+		oTD.style.cssText=sTmpStyle
+		//~~~~~~~
+		}
+	else
+		{
+		oTD.style.background=divPreview.style.background;//sudah termasuk backgroundColor
+		//oTD.style.backgroundColor=inpBackgroundColor.style.backgroundColor;
+		}
+	oTD.removeAttribute("bgColor",0);
+	
+	//Border & Shading
+	if(divPreview.style.borderLeftWidth=="" || divPreview.style.borderLeftWidth==0) oTD.style.borderLeft="";
+	else oTD.style.borderLeft=divPreview.style.borderLeft;
+		
+	if(divPreview.style.borderRightWidth=="" || divPreview.style.borderRightWidth==0) oTD.style.borderRight="";
+	else oTD.style.borderRight=divPreview.style.borderRight;
+		
+	if(divPreview.style.borderTopWidth=="" || divPreview.style.borderTopWidth==0) oTD.style.borderTop="";
+	else oTD.style.borderTop=divPreview.style.borderTop;
+		
+	if(divPreview.style.borderBottomWidth=="" || divPreview.style.borderBottomWidth==0) oTD.style.borderBottom="";
+	else oTD.style.borderBottom=divPreview.style.borderBottom;		
+
+	//Clean
+	sTmpStyle=oTD.style.cssText
+	sTmpStyle=sTmpStyle.replace(/BORDER-RIGHT: medium none;/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-RIGHT: medium none/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-TOP: medium none;/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-TOP: medium none/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-LEFT: medium none;/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-LEFT: medium none/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-BOTTOM: medium none;/,"")
+	sTmpStyle=sTmpStyle.replace(/BORDER-BOTTOM: medium none/,"")	
+	oTD.style.cssText=sTmpStyle
+
+	//Text Formatting
+	if(divPreview.style.fontFamily!="") oTD.style.fontFamily=divPreview.style.fontFamily;
+	else
+		{
+		oTD.style.cssText = oTD.style.cssText.replace("FONT-FAMILY: ; ","");
+		oTD.style.cssText = oTD.style.cssText.replace("FONT-FAMILY: ","");
+		}
+		
+	if(divPreview.style.fontSize!="") oTD.style.fontSize=divPreview.style.fontSize;
+	else
+		{
+		oTD.style.cssText = oTD.style.cssText.replace("FONT-SIZE: ; ","");
+		oTD.style.cssText = oTD.style.cssText.replace("FONT-SIZE: ","");
+		}
+		
+	oTD.style.fontStyle=divPreview.style.fontStyle;//
+	oTD.style.fontWeight=divPreview.style.fontWeight;//
+	oTD.style.fontVariant=divPreview.style.fontVariant;//
+	oTD.style.textDecoration=divPreview.style.textDecoration;//
+	oTD.style.verticalAlign=divPreview.style.verticalAlign;//
+	oTD.style.textTransform=divPreview.style.textTransform;//
+	oTD.style.color=divPreview.style.color;
+
+	oTD.style.letterSpacing=divPreview.style.letterSpacing;
+	oTD.style.wordSpacing=divPreview.style.wordSpacing;
+	if(oTD.style.letterSpacing=="") 
+		{
+		oTD.style.letterSpacing=0
+		oTD.style.cssText = oTD.style.cssText.replace("LETTER-SPACING: 0px; ","");
+		oTD.style.cssText = oTD.style.cssText.replace("LETTER-SPACING: 0px","");
+		}
+	if(oTD.style.wordSpacing=="") 
+		{
+		oTD.style.wordSpacing=0
+		oTD.style.cssText = oTD.style.cssText.replace("WORD-SPACING: 0px; ","");
+		oTD.style.cssText = oTD.style.cssText.replace("WORD-SPACING: 0px","");		
+		}	
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding-top:15;padding-left:13;padding-right:13;padding-bottom:0;height:100%">
+
+	<table cellpadding=0 cellspacing=0 style="border-collapse:collapse;width:100%;" ID="Table2">
+	<tr>
+	<td id=tab1 style="cursor:hand;padding:8;" onclick="tabClick(1)" nowrap><b><span id=txtLang name=txtLang>AutoFit</span></b></td>
+	<td id=tab2 style="cursor:hand;padding:8;" onclick="tabClick(2)" nowrap><b><span id=txtLang name=txtLang>Properties</span></b></td>
+	<td id=tab3 style="cursor:hand;padding:8;" onclick="tabClick(3)" nowrap><b><span id=txtLang name=txtLang>Style</span></b></td>
+	<td style="border-bottom:#D6D6E2 2 solid;" width=100%></td>
+	</tr>
+	</table>	
+	
+
+	<table cellpadding=0 cellspacing=0 style="border:#D6D6E2 2 solid;border-top:none;border-collapse:collapse;width:100%;height:285;background:#F2F1F8;">
+	<tr>
+	<td style="padding:7;" valign=top height=100%>
+
+	<!-- AUTOFIT -->
+	<div id=divAutoFit style="display:block;">
+		<div style="margin-bottom:7;margin-top:3;"><span id=txtLang name=txtLang>Width</span>:</div>
+		<input type="radio" class=inpRdo name="inpAutoFit1"><span id=txtLang name=txtLang>AutoFit to contents</span><br>
+		<input type="radio" class=inpRdo name="inpAutoFit1"><span id=txtLang name=txtLang>Fixed cell width</span>:  
+		<input type="text" name="inpWidth" size=3 onblur="inpAutoFit1[1].checked=true" class="inpTxt">
+		<select ID="inpAutoFitMeasure1" name="inpAutoFitMeasure1" class="inpSel">
+			<option value="px" id="optLang" name="optLang">pixels</option>
+			<option value="%" id="optLang" name="optLang">percent</option>
+		</select>
+		
+		<br><br>
+		
+		<div style="margin-bottom:7;margin-top:3;"><span id=txtLang name=txtLang>Height</span>:</div>
+		<input type="radio" class=inpRdo name="inpAutoFit2"><span id=txtLang name=txtLang>AutoFit to contents</span><br>
+		<input type="radio" class=inpRdo name="inpAutoFit2"><span id=txtLang name=txtLang>Fixed cell height</span>: 
+		<input type="text" name="inpHeight" size=3 onblur="inpAutoFit2[1].checked=true" class="inpTxt">
+		<select ID="inpAutoFitMeasure2" name="inpAutoFitMeasure2" class="inpSel">
+			<option value="px" id="optLang" name="optLang">pixels</option>
+			<option value="%" id="optLang" name="optLang">percent</option>
+		</select>
+		<br>
+		<span id=trigger1></span>
+	</div>
+
+
+	<!-- PROPERTIES -->
+	<div id="divProperties" style="display:none;">
+	
+		<table border=0>
+		<tr>
+			<td nowrap>
+				<span id=txtLang name=txtLang>Text Alignment</span>:&nbsp;
+			</td>
+			<td>
+				<select name="inpVAlign" onchange="refresh()" style="width:100%" class="inpSel">
+					<option value="" id="optLang" name="optLang">not set</option>
+					<option value="top" id="optLang" name="optLang" selected>top</option>
+					<option value="middle" id="optLang" name="optLang">middle</option>
+					<option value="bottom" id="optLang" name="optLang">bottom</option>
+					<option value="baseline" id="optLang" name="optLang">baseline</option>
+					<option value="sub" id="optLang" name="optLang">sub</option>
+					<option value="super" id="optLang" name="optLang">super</option>
+					<option value="text-top" id="optLang" name="optLang">text-top</option>
+					<option value="text-bottom" id="optLang" name="optLang">text-bottom</option></select>
+			</td>
+			<td>
+				<select name="inpAlign" onchange="refresh()" class="inpSel">
+					<option value="" id="optLang" name="optLang">not set</option>
+					<option value="left" id="optLang" name="optLang" selected>left</option>
+					<option value="center" id="optLang" name="optLang">center</option>
+					<option value="right" id="optLang" name="optLang">right</option>
+					<option value="justify" id="optLang" name="optLang">justify</option></select>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top:3">
+				<span id=txtLang name=txtLang>Padding</span>				
+			</td>
+			<td nowrap>
+				<table cellpadding=2 cellspacing=0>
+				<tr>
+				<td nowrap><span id=txtLang name=txtLang>Left</span>:</td>
+				<td><input type="text" name="inpPaddingLeft" size=1 onblur="refresh()" class="inpTxt"></td>
+				<td> px</td>
+				<td>&nbsp;&nbsp;</td>
+				<td nowrap align=right><span id=txtLang name=txtLang>Right</span>:</td>
+				<td><input type="text" name="inpPaddingRight" size=1 onblur="refresh()" class="inpTxt"></td>
+				<td> px</td>
+				</tr>
+				<tr>
+				<td nowrap><span id=txtLang name=txtLang>Top</span>:</td>
+				<td><input type="text" name="inpPaddingTop" size=1 onblur="refresh()" class="inpTxt"></td>
+				<td> px</td>
+				<td>&nbsp;&nbsp;</td>
+				<td nowrap align=right><span id=txtLang name=txtLang>Bottom</span>:</td>
+				<td><input type="text" name="inpPaddingBottom" size=1 onblur="refresh()" class="inpTxt"></td>
+				<td> px</td>
+				</tr>
+				</table>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<span id=txtLang name=txtLang>White Space</span>:&nbsp;
+			</td>
+			<td>
+				<select name="inpWhtSpace" onchange="refresh()" style="width:100%" class="inpSel">
+					<option value="" id="optLang" name="optLang" selected>Not Set</option>
+					<option value="nowrap" id="optLang" name="optLang">No Wrap</option>
+					<option value="pre" id="optLang" name="optLang">pre</option>
+					<option value="normal" id="optLang" name="optLang">Normal</option></select>
+			</td>
+			<td></td>
+		</tr>
+		
+		<tr>
+			<td>
+				<span id=txtLang name=txtLang>Background</span>:&nbsp;
+			</td>
+			<td>
+				<span style="background:#ffffff"><span id="inpBackgroundColor" style="border:gray 1 solid;width:20;margin-right:3;"></span></span>
+				<input type=button name=btnPick value=Pick onclick="oColor1.show(this);event.cancelBubble=true;" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+				
+				<script>
+				var oColor1 = new ColorPicker("oColor1");
+				oColor1.onPickColor = new Function("inpBackgroundColor.style.backgroundColor=oColor1.color;refresh()");
+				oColor1.onRemoveColor = new Function("inpBackgroundColor.style.backgroundColor='';refresh()");
+				oColor1.align="left";
+				oColor1.txtCustomColors=getTxt("Custom Colors");
+				oColor1.txtMoreColors=getTxt("More Colors...");
+				oColor1.RENDER();
+				</script>	
+				<input type="button" name=btnImage id=btnImage value="Image" onclick="window.showModelessDialog('image_background.htm',[divPreview,dialogArguments],'dialogWidth:380px;dialogHeight:196px;edge:Raised;center:Yes;help:No;resizable:No;');refresh()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+			</td>
+			<td>&nbsp;</td>
+		</tr>
+
+		<tr>
+			<td colspan=3>
+				<div style="margin-bottom:5;margin-top:5;">
+				<span id=txtLang name=txtLang>Preview</span>:</div>
+				<table cellpadding=0 cellspacing=0>
+				<tr>
+				<td valign=middle align=center>
+					<div style="overflow:auto;border:#999999 1 solid;width:360;height:70;background:#ffffff;padding:3px">
+					<table style="border-collapse: collapse;" cellSpacing=0 cellPadding=0>
+					<tr><td id=divPreview style="border:#000000 1 solid;width:50;height:50;">Text 123</td></tr>
+					</table>
+					</div>
+				</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+
+		<input type="button" name=btnText id=btnText value=" Text Formatting " style="width:140px;margin-top:5;margin-bottom:5;" 
+			onclick="window.showModelessDialog('text2.htm',[dialogArguments,divPreview],'dialogWidth:511px;dialogHeight:468px;;edge:Raised;center:Yes;help:No;resizable:No;')" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		<input type="button" name=btnBorder id=btnBorder value=" Border Style " style="width:140px;margin-top:5;margin-bottom:5;" 
+			onclick="window.showModelessDialog('border.htm',[dialogArguments,divPreview],'dialogWidth:460px;dialogHeight:250px;edge:Raised;center:Yes;help:No;resizable:No;')" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+
+	</div>
+
+
+	<!-- CSS -->
+	<div id="divStyle" style="display:none;">
+		<div style="margin-bottom:9;margin-top:3;">
+		<span id=txtLang name=txtLang>CSS Text</span>: <br>
+		<textarea name="inpCSSText" style="width:100%;height:200;font-family:verdana;font-size:10px" class="inpTxt"></textarea>
+		</div>	
+	</div>
+
+	</td>
+	</tr>
+	<tr>
+	<td style="padding-right:8;padding-bottom:8">
+
+		<table align=right cellpadding=0 cellspacing=0>
+		<tr>
+		<td><span id=txtLang name=txtLang>Apply to</span>:&nbsp;</td>
+		<td>
+			<select name=inpApplyTo class="inpSel">
+			<option value="Current Cell" id="optLang" name="optLang" selected>Current Cell</option>
+			<option value="Current Row" id="optLang" name="optLang">Current Row</option>
+			<option value="Current Column" id="optLang" name="optLang">Current Column</option>
+			<!--<option value="Odd Row">Odd Row</option>
+			<option value="Even Row">Even Row</option>
+			<option value="Odd Column">Odd Column</option>
+			<option value="Even Column">Even Column</option>-->
+			<option value="Whole Table" id="optLang" name="optLang">Whole Table</option>
+			</select>
+		</td>
+		</tr>
+		</table>
+
+	</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

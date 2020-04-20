@@ -1,0 +1,45 @@
+$common-font-size: 9pt;
+=========================================================================
+$app-gird-a-font-size、$legend_body_form_td-font-size、$app-of-a-font-size、$of-legend-body-form-td-font-size、
+$linkeytable-font-size、$linkeytable-td-font-size、$linkeytable-td-texttd-font-size、$linkeytable-td-texttdl-font-size、
+$aptheme-a-font-size、
+
+
+
+$common-font-family: "微软雅黑","宋体";
+==========================================================================
+$app-gird-a-font-family、$app-gird-a-hover-font-family、$app-of-a-font-family、$app-of-a-hover-font-family、
+
+
+$common-background: #ffffff;
+==========================================================================
+$toptoolbar-background、$datagrid-view1-datagrid-header-td-background-color、$datagrid-view2-datagrid-header-td-background-color、
+$datagrid-header-inner-background-color、$toptoolbar-background、$datagrid-pager-background、$datagrid-header-background-color、
+$linkeyform_panel-header-background-color、$linkeyform_panel-header-background-color、$calendar-selected-color、
+$calendar-header-background、$calendar-header-background、$calendar-hover-color
+
+$common-background-black: #000000;
+=========================================================================
+$calendar-sunday_calendar-saturday-color、$calendar-today-color
+
+$common-background2: #e2e2e2;
+=========================================================================
+$searchbox-button-hover-background-color、$calendar-today-background-color、
+
+$common-background3: none;
+=========================================================================
+$datagrid-row-selected-background、
+
+$common-transparent: transparent;
+=========================================================================
+$toptoolbar-color、
+
+
+$common-border: 1px #cccccc solid;
+=========================================================================
+$datagrid-view1-datagrid-header-td-border-left、$datagrid-td-rownumber-border-left、$textarea-border、
+$input-border、$fieldset-border、$linkeytable-border
+
+$common-background-f9f9f9: #f9f9f9;
+=========================================================================
+$datagrid-view-nth-child、$linkeytable-td-texttd-background、$linkeytable-td-texttdl-background、

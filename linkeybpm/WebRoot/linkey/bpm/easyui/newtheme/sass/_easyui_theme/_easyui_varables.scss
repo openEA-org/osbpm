@@ -1,0 +1,489 @@
+@charset "UTF-8";
+
+$font-stack: Helvetica, sans-serif;
+$custom_white:#ffffff;
+$custom_3f:#fff;
+$custom_d3d3:#D3D3D3;
+$custom_f3:#f3f3f3;
+$custom_back:#000000;
+$custom_009:#0092DC;
+$custom_f8:#f8f8f8;
+$custom_6e:#eeeeee;
+$custom_fd:#fdfdfd;
+$custom_3c:#ccc;
+$custom_6c:#cccccc;
+$custom_f9:#f9f9f9;
+$custom_fa:#fafafa;
+$custom_ef:#efefef;
+$custom_f5:#f5f5f5;
+$custom_405:#405c8b;
+$custom_e2:#e2e2e2;
+$custom_223:#223a60;
+$custom3d:#ddd;
+$custom444:#444;
+$custom_font-size:12px;
+$custom-text-color:#94a7b2; //通常的字体颜色，包括文字，链接，按钮上的文字，以及工具栏的分割线等。
+$accordion_arrows_img:"images/accordion_arrows.png";
+$calendar_arrows_img:"images/calendar_arrows.png";
+$layout_arrows_img:"images/layout_arrows.png";
+$datagrid_icons_img:"images/datagrid_icons.png";
+$linkbutton_bg_img:"images/linkbutton_bg.png";
+$tree_icons_img:"images/tree_icons.png";
+$pagination_icons_img:"images/pagination_icons.png";
+$panel_tools_img:"images/panel_tools.png";
+$tabs_icons_img:"images/tabs_icons.png";
+$loading_img:"images/loading.gif";
+$messager_icons_img:"images/messager_icons.png";
+$menu_arrows_img:"images/menu_arrows.png";
+$icon-down-img:"images/icon-down.png";
+$tree_icon_null-img:"images/tree_icon_null.png";
+$icon-right-img:"images/icon-right.png";
+$icon-attention-img:"images/icon-attention.png";
+$tree_icon12-img:"images/tree_icon12.png";
+$tree_icon17-img:"images/tree_icon17.png";
+$tree_icon13-img:"images/tree_icon13.png";
+$sousuo-img:"images/sousuo.png";
+$riqi-img:"images/riqi.png";
+$icon-left-white-img:"images/icon-left-white.png";
+$icon-right-white-img:"images/icon-right-white.png";
+$tree_btn-img:"images/tree_btn.png";
+
+//accordion
+$accordion-collapse-background:$accordion_arrows_img;
+$accordion-expand-background:$accordion_arrows_img;
+$accordion-background:$custom_white;
+$accordion-border-color:$custom_d3d3;
+$accordion-accordion-header-background:$custom_f3;
+$accordion-accordion-header-selected-background:$custom_009;
+$accordion-accordion-header-selected-panel-title-color: $custom_3f;
+
+//calendar.scss
+$calendar-border-color:$custom_d3d3;
+$calendar-header-background:$custom_f3;
+$calendar-prevmonth-background:$calendar_arrows_img;
+$calendar-nextmonth-background:$calendar_arrows_img;
+$calendar-prevyear-background:$calendar_arrows_img;
+$calendar-nextyear-background:$calendar_arrows_img;
+$calendar-body-th-background:$custom_fa;
+$calendar-day-color:$custom_back;
+$calendar-menu-year-font-size:$custom_font-size;
+$calendar-menu-year-border-color:$custom_d3d3;
+$calendar-menu-prev-background:$calendar_arrows_img;
+$calendar-menu-next-background:$calendar_arrows_img;
+$calendar-body-th-calendar-menu-month-color:#4d4d4d;
+$calendar-sunday-color:#cc2222;
+$calendar-saturday-color:#00ee00;
+$calendar-today-color:#0000ff;
+$calendar-body-calendar-menu-background:$custom_white;
+$calendar-hover-calendar-nav-hover-calendar-menu-hover-background-color:$custom_e2;
+$calendar-hover-calendar-nav-hover-calendar-menu-hover-color: $custom_back;
+$calendar-hover-solid:$custom_3c;
+$calendar-selected-background-color:$custom_009;
+$calendar-selected-color:$custom_3f;
+$calendar-selected-solid:#0070a9;
+
+//calendar1.scss
+$calendar1_a-color: #00457d;
+$calendar1_a_hover-color: #a3b9de;
+$calendar1_toptoolbar-solid:#eee;
+$calendar1_toptoolbar-background: $custom_white;
+$calendar1_textarea-solid: $custom_3c;
+$calendar1_select-solid: $custom_fd;
+$calendar1_input-solid: $custom_fd;
+$calendar1_fieldset-solid: $custom_fd;
+$calendar1_linkeytable-solid:#e8e8e8;
+$calendar1_linkeytable_td-solid:#e8e8e8;
+$calendar1_linkeytable_texttd-background: $custom_f9;
+$calendar1_linkeytable_texttdl-background: $custom_f9;
+$calendar1_datagrid-pager-background: $custom_white;
+$calendar1_datagrid-header-background: $custom_white;
+$linkeyform_panel-header-background-color: $custom_white;
+$linkeyform_panel-header_panel-title-color: #324b74;
+$datebox_combo-arrow-background-image:"images/riqi.png";
+$calendar1_icon-flow-background:"images/icon-process.png";
+$calendar1-selected-background-color: #a3b9de;
+$calendar1-selected-color: $custom_3f;
+$calendar1-selected-solid: #0070a9;
+$calendar1-header-background:$custom_white;
+$calendar1-sunday-color: $custom_back;
+$calendar1-today-background-color:$custom_e2;
+$calendar1-today-color: $custom_back;
+$calendar1-today-solid:#0070a9;
+$calendar1-hover-solid: $custom_fd;
+$calendar1-hover-background-color: #a3b9de;
+$calendar1-hover-color: $custom_white;
+$calendar1_validatebox-invalid:"images/icon-attention.png";
+//combo.scss
+$combo-border-color:$custom_d3d3;
+$combo-background-color:$custom_white;
+$combo-combo-text-font-size:$custom_font-size;
+$combo-arrow-background:"images/combo_arrow.png";
+//$combo-arrow-background-color:$common-datagrid-text-color;     //时间控件背景颜色、文字颜色
+$combo-arrow-hover-background-color:$custom_e2;
+$combo-panel-background-color:$custom_white;
+
+//combobox.scss
+$combobox-item-combobox-group-font-size:$custom_font-size;
+$combobox-item-hover-background-color:$custom_e2;
+$combobox-item-hover-color:$custom_back;
+$combobox-item-selected-background-color:$custom_009;
+$combobox-item-selected-color:$custom_3f;
+
+//datagrid.scss
+$datagrid-mask-background:$custom_fd;
+$datagrid-mask-msg-background:$custom_white;
+$datagrid-mask-msg-url:$loading_img;
+$datagrid-mask-msg-border-color:$custom_d3d3;
+$datagrid-btn-separator-border-left:$custom_fd;
+$datagrid-btn-separator-border-right:$custom_3f;
+$datagrid-header-datagrid-cell-span-font-size:$custom_font-size;
+$datagrid-header-inner-background-color: #0077d1;
+$datagrid-header-inner-color: #ffffff;
+$datagrid-header-td-border-color:$custom_6c;
+$datagrid-header-background-color:#fafafa;
+$datagrid-header-td-background-color: #0077d1;
+$datagrid-header-td-color: #ffffff;
+$datagrid-cell-rownumber-font-size:$custom_font-size;
+//$datagrid-editable-input-border-color:$custom_d3d3;
+$datagrid-resize-proxy-background:#bfbfbf;
+$datagrid-sort-desc-datagrid-sort-icon-background:$datagrid_icons_img;
+$datagrid-sort-asc-datagrid-sort-icon-background:$datagrid_icons_img;
+$datagrid-row-collapse-background:$datagrid_icons_img;
+$datagrid-row-expand-background:$datagrid_icons_img;
+$datagrid-header-d-td-row-background-color:$custom_fa;
+$datagrid-header-d-td-row-bg-w-l-g1:$custom_fd;
+$datagrid-header-d-td-row-bg-w-l-g2:$custom_f5;
+$datagrid-header-d-td-row-bg-m-l-g1:$custom_fd;
+$datagrid-header-d-td-row-bg-m-l-g2:$custom_f5;
+$datagrid-header-d-td-row-bg-o-l-g1:$custom_fd;
+$datagrid-header-d-td-row-bg-o-l-g2:$custom_f5;
+$datagrid-header-d-td-row-bg-l-g1:$custom_fd;
+$datagrid-header-d-td-row-bg-l-g2:$custom_f5;
+//$datagrid-cell-rownumber-color:$custom_back;
+$datagrid-toolbar-datagrid-pager-bg:$custom_fa;
+$datag-h_datag-t_datag-p_datag-f-border-color:$custom3d;
+$datagrid-htable_datagrid-btable_datagrid-ftable_color:$custom_back;
+$datagrid-row-alt-background:$custom_fa;
+$datagrid-row-over_datagrid-header_datagrid-header-over-background:$custom_e2;
+$datagrid-row-over_datagrid-header_datagrid-header-over-color:$custom_back;
+$datagrid-row-selected-background:$custom_009;
+//$datagrid-row-selected-color:$custom_3f;
+
+
+$datagrid-border-size : 0.5px 0.5px 0.5px 0.5px; //视图边框的线的粗细
+//$datagrid-border-color : $div-arround-table-background; //视图边框的线的颜色
+//$datagrid-head-font-color : $common-datagrid-text-color; //视图标题行字颜色
+//$datagrid-body-font-color : $a-font-color; //视图内容行的字体默认颜色
+//$datagrid-over-font-color : $a-hover-font-color; //鼠标飘过时的字体颜色
+//$datagrid-row-selected-font-color : $a-hover-font-color; //视图行被选中时的字体颜色
+
+//datebox
+$datebox-button-background-color:$custom_fa;
+$datebox-button_a-color:$custom444;
+$datebox-combo-arrow-background-image:"images/datebox_arrow.png";
+
+//dialog
+$dialog-toolbar-border-bottom:$custom3d;
+$dialog-tool-separator-border-left:$custom_fd;
+$dialog-tool-separator-border-right:$custom_3f;
+$dialog-button-border-top:$custom3d;
+$dialog-toolbar-dialog-button-background:$custom_fa;
+
+//layout
+$layout-expand-background-color:$custom_f3;
+$layout-split-proxy-h_layout-split-proxy-v-background-color:#bfbfbf;
+$layout-mask-background:$custom_fa;
+$layout-button-up-background:$layout_arrows_img;
+$layout-button-down-background:$layout_arrows_img;
+$layout-button-left-background:$layout_arrows_img;
+$layout-button-right-background:$layout_arrows_img;
+$layout-split-north-border-bottom:$custom_ef;
+$layout-split-south-border-top:$custom_ef;
+$layout-split-east-border-left:$custom_ef;
+$layout-split-west-border-right:$custom_ef;
+$layout-expand-over-background-color:$custom_f3;
+
+
+//linkbutton.scss
+$linkbutton_a_l-btn-color:$custom444;
+$linkbutton_a_l-btn-background-image:$linkbutton_bg_img;
+$linkbutton_a_l-btn-span-background-image:$linkbutton_bg_img;
+$l-btn-focus-outline:#0000ff;
+$l-btn-disabled-color:$custom_fd;
+$l-btn-plain-background:$custom_e2;
+$l-btn-plain-color:$custom_back;
+$hover-l-btn-disabled-color:$custom444;
+$l-btn-plain-selected-background:$custom3d;
+
+//login-solft.scss
+
+
+//menu.scss
+//$menu-background-color:$common-all-background;  //菜单背景颜色
+//$menu-border-color:$common-border-color1;       //菜单栏边框颜色在memu-line设置
+//$menu-color: $common-all-font;                 //菜单栏字体颜色
+$menu-item_border-color:$custom_f3;
+$menu-rightarrow-background:$menu_arrows_img;
+$menu-line-border-left:$custom_fd;
+$menu-line-border-right:$custom_3f;
+$menu-sep-border-top:$custom_fd;
+$menu-sep-border-bottom:$custom_3f;
+$menu-active-border-color: $custom_fd;
+$menu-active-color: $custom_back;
+$menu-active-background: $custom_e2;
+$menu-text-span-font-size:$custom_font-size;
+$menu-shadow-m-b-s:$custom_6c;
+$menu-shadow-w-b-s:$custom_6c;
+$menu-shadow-b-s:$custom_6c;
+$menu-content-background:$custom_white;
+$menu-active-disabled-color:$custom444;
+
+//menubutton.scss
+$m-btn-downarrow-background:$menu_arrows_img;
+$m-btn-plain-active-border-color:$custom_3c;
+$m-btn-plain-active-background-color: $custom_e2;
+$m-btn-plain-active-color: $custom_back;
+
+//messager
+$messager-body-messager_input-border:$custom_d3d3;
+$messager-error-background:$messager_icons_img;
+$messager-info-background:$messager_icons_img;
+$messager-question-background:$messager_icons_img;
+$messager-warning-background:$messager_icons_img;
+
+//pagination
+//$pagination-page-text-color:$custom-text-color; //分页底部工具栏(选页)处的分割线与按钮颜色
+$pagination-first-background:$pagination_icons_img;
+$pagination-prev-background:$pagination_icons_img;
+$pagination-next-background:$pagination_icons_img;
+$pagination-last-background:$pagination_icons_img;
+$pagination-load-background:$pagination_icons_img;
+$pagination-loading-background:$loading_img;
+$pagination_pagination-num-border-color:$custom_d3d3;
+
+//panel
+//$panel-header_panel-body-border-color:$common-border-color1; //panel边框颜色
+$panel-header-background-color: $custom_f3;
+$panel-header-w-l-g1:$custom_f8;
+$panel-header-w-l-g2:$custom_6e;
+$panel-header-m-o-g1:$custom_f8;
+$panel-header-m-o-g2:$custom_6e;
+$panel-header-o-l-g1:$custom_f8;
+$panel-header-o-l-g2:$custom_6e;
+$panel-header-l-g1:$custom_f8;
+$panel-header-l-g2:$custom_6e;
+$panel-title-background:"images/blank.gif";
+$panel-body-border-color:#d3d3d3;
+$layout-panel-west-background-color: #3c3c3c;
+//$panel-body-background-color:$dev-main-background-color; //用户端主窗口最底层背景颜色、开发端背景
+//$panel-body-color:$custom_back;
+$panel-body-font-size: $custom_font-size;
+$panel-loading-background:$loading_img;
+$panel-tool-background-image:"images/tree_btn.png";
+$panel-tool-close-background:$panel_tools_img;
+$panel-tool-min-background:$panel_tools_img;
+$panel-tool-max-background:$panel_tools_img;
+$panel-tool-restore-background:$panel_tools_img;
+$panel-tool-collapse-background:$panel_tools_img;
+$panel-tool-expand-background:$panel_tools_img;
+$panel-border:0px 0px 0px 0px; //panel的边框宽度
+
+//progressbar
+$progressbar-border-color:$custom_d3d3;
+$progressbar-text-color:$custom_back;
+$progressbar-text-font-size: $custom_font-size;
+$progressbar-text-background-color:$custom_009;
+$progressbar-text-color: $custom_3f;
+
+//propertygrid
+$datagrid-body-border-color:$custom3d;
+$datagrid-group-border-color:$custom_f3;
+$datagrid-view2_datagrid-group-border-color:$custom3d;
+$datagrid-view1_d-r-s-background: $custom_f3;
+
+//searchbox
+//$searchbox-border-color: $common-datagrid-searchbox-background;    //搜索框边框背景
+//$searchbox-background-color: $common-datagrid-searchbox-background; //搜索框右边背景
+$searchbox-text-font-size: $custom_font-size;                      
+//$searchbox-text-font-color: $common-all-font;                       //输入时文字颜色
+$searchbox-prompt-color: $custom_3c;
+$l-btn-plain-background: $custom_f3;
+$searchbox-button-background:"images/searchbox_button.png";
+
+
+//slider
+$slider-inner-border-color: $custom_d3d3;
+$slider-inner-background: $custom_d3d3;
+$slider-handle-background:"images/slider_handle.png";
+$slider-rule_span-border-color:$custom_d3d3;
+$slider-rulelabel_span-color: $custom_back;
+
+//spinner
+$spinner-border-color:$custom_d3d3;
+$spinner-text-font-size: $custom_font-size;
+$spinner-arrow-background-color: $custom_f3;
+$spinner-arrow-hover-background-color: $custom_e2;
+$spinner-arrow-up-background:"images/spinner_arrows.png";
+$spinner-arrow-down-background:"images/spinner_arrows.png";
+
+
+//splitbutton
+$s-btn-downarrow-background:$menu_arrows_img;
+$s-btn-downarrow-border-color: #bfbfbf;
+$s-btn-plain-active-border-color: $custom_3c;
+$s-btn-plain-active-background-color: $custom_e2;
+$s-btn-plain-active-color: $custom_back;
+
+
+//tabs.scss
+$tabs-scroller-left-background: $custom_f3;
+$tabs-scroller-left-url:$tabs_icons_img;
+$tabs-scroller-right-background: $custom_f3;
+$tabs-scroller-right-url:$tabs_icons_img;
+$tabs-inner-color: #575765;
+$tabs-inner-background-color: $custom_f3;
+$tabs-inner-w-l-g1:$custom_f8;
+$tabs-inner-w-l-g2:$custom_6e;
+$tabs-inner-m-l-g1:$custom_f8;
+$tabs-inner-m-l-g2:$custom_6e;
+$tabs-inner-o-l-g1:$custom_f8;
+$tabs-inner-o-l-g2:$custom_6e;
+$tabs-inner-l-g1:$custom_f8;
+$tabs-inner-l-g2:$custom_6e;
+//$tabs-inner_hover-background: $custom_e2;
+$tabs-inner_hover-color: $custom_back;
+$tabs-close-background:$tabs_icons_img;
+$tabs-selected_tabs-inner-background-color:$custom_white;
+//$tabs-selected_tabs-inner-color:$common-all-font;    //tab文字颜色
+$tabs-selected_tabs-inner-w-l-g1:$custom_f8;
+$tabs-selected_tabs-inner-w-l-g2:$custom_white;
+$tabs-selected_tabs-inner-m-l-g1:$custom_f8;
+$tabs-selected_tabs-inner-m-l-g2:$custom_white;
+$tabs-selected_tabs-inner-o-l-g1:$custom_f8;
+$tabs-selected_tabs-inner-o-l-g2:$custom_white;
+//$tabs-selected_tabs-inner-l-g1:$datagrid-head-color;    //tab背景颜色 
+//$tabs-selected_tabs-inner-l-g2:$custom_white;  //tab背景颜色 渐变
+$tabs-selected_tabs-inner-solid:$custom_white;
+$tabs-header-bottom_tabs-inner-w-l-g1:$custom_white;
+$tabs-header-bottom_tabs-inner-w-l-g2:$custom_f8;
+$tabs-header-bottom_tabs-inner-m-l-g1:$custom_white;
+$tabs-header-bottom_tabs-inner-m-l-g2:$custom_f8;
+$tabs-header-bottom_tabs-inner-o-l-g1:$custom_white;
+$tabs-header-bottom_tabs-inner-o-l-g2:$custom_f8;
+$tabs-header-bottom_tabs-inner-l-g1:$custom_white;
+$tabs-header-bottom_tabs-inner-l-g2:$custom_f8;
+$tabs-header-bottom_tabs-inner-solid:$custom_white;
+
+$tabs-header-left_tabs-inner-w-l-g1:$custom_f8;
+$tabs-header-left_tabs-inner-w-l-g2:$custom_white;
+$tabs-header-left_tabs-inner-m-l-g1:$custom_f8;
+$tabs-header-left_tabs-inner-m-l-g2:$custom_white;
+$tabs-header-left_tabs-inner-o-l-g1:$custom_f8;
+$tabs-header-left_tabs-inner-o-l-g2:$custom_white;
+$tabs-header-left_tabs-inner-l-g1:$custom_f8;
+$tabs-header-left_tabs-inner-l-g2:$custom_white;
+$tabs-header-left_tabs-inner-solid:$custom_white;
+
+$tabs-header-right_tabs-inner-w-l-g1:$custom_white;
+$tabs-header-right_tabs-inner-w-l-g2:$custom_f8;
+$tabs-header-right_tabs-inner-m-l-g1:$custom_white;
+$tabs-header-right_tabs-inner-m-l-g2:$custom_f8;
+$tabs-header-right_tabs-inner-o-l-g1:$custom_white;
+$tabs-header-right_tabs-inner-o-l-g2:$custom_f8;
+$tabs-header-right_tabs-inner-l-g1:$custom_white;
+$tabs-header-right_tabs-inner-l-g2:$custom_f8;
+$tabs-header-right_tabs-inner-solid:$custom_white;
+$tabs-header_tabs-tool-background-color: $custom_f3;
+//$li_tabs-selected_a_tabs-inner-border-color: $common-border-color1;  //tab边框颜色
+$tabs-scroller-over-background-color: $custom_e2;
+
+//tooltip.scss
+$tooltip-background-color: $custom_white;
+$tooltip-border-color: $custom_d3d3;
+$tooltip-color: $custom_back;
+$tooltip-content-font-size: $custom_font-size;
+$tooltip-right_tooltip-arrow-outer-border-right-color: $custom_d3d3;
+$tooltip-right_tooltip-arrow-border-right-color: $custom_white;
+
+$tooltip-left_tooltip-arrow-outer-border-right-color: $custom_d3d3;
+$tooltip-left_tooltip-arrow-border-right-color: $custom_white;
+$tooltip-top_tooltip-arrow-outer-border-right-color: $custom_d3d3;
+$tooltip-top_tooltip-arrow-border-right-color: $custom_white;
+$tooltip-bottom_tooltip-arrow-outer-border-right-color: $custom_d3d3;
+$tooltip-bottom_tooltip-arrow-border-right-color: $custom_white;
+
+//tree.scss
+$tree-file1-background:"images/tree_file.png";
+$tree-root-first_tree-expanded:"images/tree_icons.png";
+$tree-root-first_tree-collapsed:"images/tree_icons.png";
+$tree-root-one_tree-expanded:"images/tree_icons.png";
+$tree-expanded-background:$tree_icons_img;
+$tree-expanded-hover-background:$tree_icons_img;
+$tree-collapsed-background:$tree_icons_img;
+$tree-collapsed-hover-background:$tree_icons_img;
+$tree-collapsed-background:$tree_icons_img;
+$tree-collapsed-hover-background:$tree_icons_img;
+$tree-root-one_tree-collapsed-background:$tree_icons_img;
+$tree-line-background:$tree_icons_img;
+$tree-join-background:$tree_icons_img;
+$tree-joinbottom-background:$tree_icons_img;
+$tree-folder-background: "images/folder_close.png";
+$tree-folder-open-background:"images/folder_open.png";
+$tree-file-background:$tree_icons_img;
+$tree-loading-background:$loading_img;
+$tree-checkbox0-background:$tree_icons_img;
+$tree-checkbox1-background:$tree_icons_img;
+$tree-checkbox2-background:$tree_icons_img;
+$tree-title-font-size: $custom_font-size;
+$tree-node-proxy-font-size: $custom_font-size;
+$tree-node-proxy-background-color: $custom_white;
+$tree-node-proxy-color: $custom_back;
+$tree-node-proxy-border-color: $custom_d3d3;
+$tree-dnd-yes-background:$tree_icons_img;
+$tree-dnd-no-background:$tree_icons_img;
+$tree-node-top-dotted:red;
+$tree-node-bottom-dotted:red;
+$tree-node-append_tree-title-dotted:red;
+$tree-editor-solid: $custom_3c;
+//$tree-node-hover-background: $common-border-color1;    //左侧菜单栏鼠标移动时背景颜色
+//$tree-node-hover-color: $a-hover-font-color;       //左侧菜单栏鼠标移动时文字颜色
+//$tree-node-selected-background: $common-border-color1;               //左侧菜单栏鼠标选择时背景颜色
+$tree-node-selected-background-image:"images/icon-right.png";    
+//$tree-node-selected-color: $a-hover-font-color;       //左侧菜单栏鼠标选择时背景颜色
+
+
+//validatebox
+$validatebox-invalid-background-image:"images/validatebox_warning.png";
+$validatebox-invalid-border-color: #ffa8a8;
+$validatebox-invalid-background-color: #fff3f3;
+$validatebox-invalid-color: #000;
+
+//window.scss
+$window-background-color: $custom_f3;
+$window-w-l-g1:$custom_f8;
+$window-w-l-g2:$custom_6e;
+$window-m-l-g1:$custom_f8;
+$window-m-l-g2:$custom_6e;
+$window-o-l-g1:$custom_f8;
+$window-o-l-g2:$custom_6e;
+$window-l-g1:$custom_f8;
+$window-l-g2:$custom_6e;
+$window-proxy-dashed: $custom_d3d3;
+$window-shadow-m-b-s:$custom_6c;
+$window-shadow-w-b-s:$custom_6c;
+$window-shadow-b-s:$custom_6c;
+$window_window-body-border-color: $custom_d3d3;
+$window-proxy-mask_window-mask-background: $custom_3c;
+
+//easyui_custom.scss
+$back_logo_table-m-l-g1:$custom_405;
+$back_logo_table-m-l-g2:$custom_223;
+$back_logo_table-w-l-g1:$custom_405;
+$back_logo_table-w-l-g2:$custom_223;
+$back_logo_table-o-l-g1:$custom_405;
+$back_logo_table-o-l-g2:$custom_223;
+$back_logo_table-ms-l-g1:$custom_405;
+$back_logo_table-ms-l-g2:$custom_223;
+$back_logo_table-l-g1:$custom_405;
+$back_logo_table-l-g2:$custom_223;
+//$back_logo_table-background-color: $dev-back_logo_table-background-color; //开发端头部背景颜色37527f

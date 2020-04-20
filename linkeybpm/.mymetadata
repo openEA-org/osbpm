@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="linkeybpm"
+  id="myeclipse.1383314183121"
+  context-root="/bpm"
+  j2ee-spec="6.0"
+  archive="linkeybpm.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

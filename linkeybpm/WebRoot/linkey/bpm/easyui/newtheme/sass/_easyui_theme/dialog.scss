@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.dialog-content {
+    overflow: auto;
+}
+.dialog-toolbar {
+    padding: 2px 5px;
+    border-bottom: 1px solid $dialog-toolbar-border-bottom;
+}
+.dialog-tool-separator {
+    float: left;
+    height: 24px;
+    border-left: 1px solid $dialog-tool-separator-border-left;
+    border-right: 1px solid $dialog-tool-separator-border-right;
+    margin: 2px 1px;
+}
+.dialog-button {
+    padding: 5px;
+    text-align: right;
+    border-top: 1px solid $dialog-button-border-top;
+    .l-btn {
+        margin-left: 5px;
+    }
+}
+.dialog-toolbar,
+.dialog-button {
+    background: $dialog-toolbar-dialog-button-background;
+}

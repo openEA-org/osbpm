@@ -1,0 +1,17 @@
+ueditor.all.js 修改 'allowDivTransToP':false 	 不允许转换div到p标签
+ueditor.all.js 修改  unhtml:函数中 ' 单引号不能进行编码.
+ueditor.all.js 修改 createBookmark: 不准创建书签
+
+修改语言包路径
+dialogs/internal.js
+ 
+ 1.修改utils.loadFile(document,{中的href 增加
+ 	var src=window.location.href;
+	var spos=src.indexOf("/",8);
+	var epos=src.indexOf("/",spos+1);
+	var appfolder=src.substring(spos,epos);
+	var url=appfolder+"/linkey/bpm/editor/ueditor/themes/default/dialogbase.css?cache="+Math.random();
+2.修改 langImgPath 变量为指定路径
+
+修改jsp/fileup.jsp
+增加允许上传的文件类型xls.xlsx.gif.jpg

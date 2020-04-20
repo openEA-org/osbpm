@@ -1,0 +1,29 @@
+@charset "UTF-8";
+.progressbar {
+    border-width: 1px;
+    border-style: solid;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
+    position: relative;
+    border-color: $progressbar-border-color;
+}
+.progressbar-text {
+    text-align: center;
+    position: absolute;
+    color: $progressbar-text-color;
+    font-size: $progressbar-text-font-size;
+}
+.progressbar-value {
+    position: relative;
+    overflow: hidden;
+    width: 0;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+    .progressbar-text {
+        background-color: $progressbar-text-background-color;
+        color: $progressbar-text-color;
+    }
+}

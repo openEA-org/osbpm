@@ -1,0 +1,132 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	
+function applyHyperlink(){
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	var sURL;
+
+		sURL="["+doc_no.value + ","+ doc_name.value+"]";
+
+	if(sURL.value!="")
+	{//alert(sURL);
+		//oSel.execCommand("CreateLink",false,sURL);
+		oEditor.document.body.innerHTML+=sURL;
+	}
+}
+		
+</script>
+<script language="JavaScript" type="text/javascript">
+<!-- 
+//搜索关联文件编号
+function openSelSearch(url){
+    window.open(url,"","status=no,resizable=yes,scrollbars=auto,top=100,left=650,width=300,height=300");
+}
+
+var line1=1;
+var line2=1;
+var line3=1;
+//增加行
+function addrow(){
+var tr=event.srcElement.parentElement.parentElement;
+var newtr=tr.cloneNode(true);
+var cells=newtr.childNodes;//alert(cells.length);
+if(arguments[0]){
+	cells[1].innerHTML="Doc.ID&nbsp&nbsp<input type=text class=\"myinput\" size=\"15\" value=\"\"/>";
+}else{
+	cells[1].innerHTML="<input type=text class=\"myinput\" size=\"15\" value=\"\"/>";
+	cells[2].innerHTML="<input type=text class=\"myinput\" size=\"40\" value=\"\"/>";
+}
+tr.insertAdjacentElement("afterEnd",newtr);
+if(tr.name=="tr1")line1++;
+if(tr.name=="tr2")line2++;
+if(tr.name=="tr3")line3++;
+}
+
+//删除行
+function delrow(){
+var tr=event.srcElement.parentElement.parentElement;
+if(tr.name=="tr1"){
+	if(line1==1){
+		alert("不能删除！\n至少必须填写一项！");
+		return null;
+	}else{
+	 line1--;
+	 }
+}
+if(tr.name=="tr2"){
+	if(line2==1){
+		alert("不能删除！\n至少必须填写一项！");
+		return null;
+	}else{
+	 line2--;
+	 }
+}
+if(tr.name=="tr3"){
+		if(line3==1){
+		alert("不能删除！\n至少必须填写一项！");
+		return null;
+	}else{
+	 line3--;
+	 }
+}
+tr.removeNode(true);
+}
+function FormFilingCard(){
+	var parenturl=parent.location.href;
+	var uinum=parenturl.indexOf("uid=");
+	var Lonum=parenturl.indexOf("end=");
+     
+ 
+      
+	var url;
+	//获取返回的文档ID号
+	var uid=parenturl.substring(uinum+4,Lonum-1);
+	//alert(parent.location.href);
+	//传一个ID参数
+	document.all.fartheruid.value=uid;
+}
+// -->
+</script>
+</head>
+<body style="overflow:hidden;">
+
+<table width="96%"  border="0" cellpadding="4" cellspacing="1" bgcolor="#000000">
+  
+<input name="FCSupport_FNO" value="" class="myinput" size="15"  type=hidden>
+<input name="FCSupport_FName" value="" class="myinput" size="40"  type=hidden> 
+ <tr bgcolor="#CCCCCC">
+    <td align="right"> <p>Linking/CrossRef</p>    </td>
+    <td>Document No</td>
+    <td>Document Name</td>
+    <td nowrap>Search</td></tr> 
+  <tr bgcolor="#FFFFFF" name="tr2">
+    <td align="right"> <p>Linking/CrossRef</p>    </td>
+    <td><INPUT type="text" ID="doc_no"  style="width:100%" class="inpTxt" size="15"></td>
+    <td><INPUT type="text" ID="doc_name"  style="width:100%" class="inpTxt"></td>
+    <td nowrap>
+	<input type="button" onclick="openSelSearch('index.html')" value="Search" Class="myinput"> 
+	<input type="button" onclick="addrow();" value="Add Rows" class="myinput">
+	<input type="button" onclick="delrow();" value="Del" class="myinput">
+	</td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td align="right">&nbsp;</td>
+    <td colspan="3">      
+		<input type="button" onclick="applyHyperlink();" value="Complete" id="Complete" class="myinput">  &nbsp;   
+		<input type="button" onclick="self.close();" value="cancel" id="cancel_1" class="myinput">
+	</td>
+  </tr>
+</table>
+
+
+</body>
+</html>

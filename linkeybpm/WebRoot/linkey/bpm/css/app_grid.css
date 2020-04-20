@@ -1,0 +1,84 @@
+a{font-size:9pt;font-family:"Microsoft YaHei","宋体";color: #00457D;text-decoration: none}
+a:hover{color: #FF0000;text-decoration: none;font-family:"Microsoft YaHei","宋体"}
+.toptoolbar{
+  padding:2px;
+  /*border:1px solid #eee;*/
+  background:#FFFFFF;
+  color: transparent;
+}
+.toptoolbarhr{
+  height:2px;
+}
+legend,body,form,td{
+  font-size:9pt
+}
+p{
+  height:0px;
+}
+/*chrome ��ʽ���� */
+ input,button,select,textarea,div,span,td{
+   outline:none
+ }
+/*UI*/
+body{
+  margin: 0px 0px 0px 0px;
+}
+/*
+#dgframe .datagrid-view tr:nth-child(odd){
+	background-color:# f9f9f9;
+}
+#centerFrame .datagrid-view tr:nth-child(odd){
+	background-color:# f9f9f9;
+}
+*/
+.datagrid-cell .datagrid-view tr:nth-child(odd){
+  background: none ;
+}
+.datagrid-view tr:nth-child(even){
+  background: #f9f9f9 ;
+}
+.datagrid-row:hover{
+  text-decoration:underline;
+}
+.datagrid-row-over{
+  background:none;
+}
+.datagrid-row-selected{
+  /*background: #DAE3FE;*/
+  background: none;
+  text-decoration:underline;
+}
+.datagrid-row-selected:nth-child(odd){
+  background: #DAE3FE;
+}
+.datagrid-row-selected:nth-child(even){
+  background: #DAE3FE;
+}
+.searchbox-button {
+  background: url('images/search.png') no-repeat center center;
+}
+.searchbox-button:hover {
+  background-color:#e2e2e2;
+}
+.searchbox {
+  border-radius: 3px;
+}
+iframe[id="centerFrame"] .datagrid-header td{
+  /*border-style: solid;*/
+}
+.datagrid-view1 .datagrid-header td{
+  border-left: 1px #cccccc solid;
+  background-color: #ffffff;
+}
+.datagrid-view2 .datagrid-header td{
+  background-color: #FFFFFF;
+}
+.datagrid-view1 .datagrid-td-rownumber{
+  border-left: 1px #cccccc solid;
+}
+.datagrid-header-inner {
+  background-color: #ffffff;
+}
+.datagrid-row-alt{
+  background: none !important;
+}

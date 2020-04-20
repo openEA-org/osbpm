@@ -1,0 +1,4432 @@
+﻿﻿var goalTypeName="";
+var color1="#000000";
+var color2="#000000";
+var size1=0;
+var xx=0;
+var yy=0;
+var zz=100;
+var moveobj=null;
+var pmoveobj=null;
+var hotx=0;
+var hoty=0;
+var hotx2=0;
+var hoty2=0;
+var hotType="Bottom";
+var hotEndType="";
+var StartPointType="Bottom";
+var goalStartObj=null;
+var goalEndObj=null;
+var thisobj=null;
+var goalObjColor="#000000";
+var moveobjoldleft=0; 
+var moveobjoldtop=0;
+var oldArryEndPosx=new Array();
+var oldArryEndPosy=new Array();
+var oldArryEndPosx2=new Array();
+var oldArryEndPosy2=new Array();
+var oldArryStartLeft=new Array();
+var oldArryStartTop=new Array();
+var goalShowGrid=0;
+var goalPrvNode=new Array();
+var goalNextNode=new Array();
+var goalClickStyle="";
+var HistoryArray=new Array('');
+var CHistoryPos=0;
+var offsetX=0;
+var offsetY=0;
+var goalux=document.body.clientWidth;
+var goaluy=document.body.clientHeight;
+var goalcopyflag="0";
+var goalcopyobj;
+var goalmulsel=0; //是否多选标记
+
+var mstartX=0;
+var mstartY=0;
+var mendX=0;
+var mendY=0;
+/*if(document.all.flowtable)
+{
+	flowtable.ondblclick=flowtableondblclick;
+	flowtable.onmousedown=flowtableonmousedown;
+	xtable=flowtable.xtype;
+}*/
+//alert(document.all.YNode);
+//
+//flowtableondblclick();
+function mySetType(getName,ObjType)
+{
+	 goalTypeName=getName;
+	 StartPointType=ObjType;
+	 if(getName=="Move")
+	 {
+	  document.body.style.cursor="default";
+	 } else if(getName=="MulSel")
+	 {
+		document.body.style.cursor="default";
+	 }
+	 else if(getName=="PolyLine")
+	 {
+		document.body.style.cursor="crosshair";
+	 }
+	else if(getName=="AddText")
+	{
+		document.body.style.cursor="Text";
+	}
+	else if(getName=="EditArea")
+	{
+		document.body.style.cursor="crosshair";
+	}
+	else
+	{
+		document.body.style.cursor="hand";
+	}
+}
+
+function div1.onmousedown()
+{
+	top.hisCurrentCode=div1.innerHTML; //记录当前图形状态
+	div1.setCapture();
+	//var win=window.open();
+	//win.document.write(div1.innerHTML);
+	//popmenu.style.display="none";
+	CancelPrvNextNode();
+	ShowErrorInfo("");
+	size1="2";
+	zz+=1;
+	xx=getEventX(event);
+	yy=getEventY(event);
+	mstartX=getEventOX(event);
+	mstartY=getEventOY(event);
+	offsetX=parseInt(document.body.scrollLeft);
+	offsetY=parseInt(document.body.scrollTop);
+	moveobj=null;
+	goalStartObj=null;
+     if((event.srcElement.parentElement.id=="div1"||event.srcElement.parentElement.parentElement.id=="div1")&&event.button==1)
+     {
+        	if(event.srcElement.parentElement.id=="div1")
+        	{
+        		moveobj=event.srcElement;
+        	}
+        	else
+        	{
+        		moveobj=event.srcElement.parentElement;
+        	}
+        	
+        	pmoveobj=moveobj;
+        	goalStartObj=moveobj;
+      }
+	//alert(moveobj.outerHTML);
+    if(goalTypeName!="MulSel")
+	{ //只有不是在多选时右键才能生效改变样式
+		if((event.srcElement.parentElement.id=="div1"||event.srcElement.parentElement.parentElement.id=="div1"))
+			{
+				if(event.srcElement.parentElement.id=="div1")
+				{
+					moveobj=event.srcElement;
+				}
+				else
+				{
+					moveobj=event.srcElement.parentElement;
+				}
+				ChangeObjStyle(moveobj);
+			}
+    }
+
+	 if(moveobj){parent.west.selectTreeNode(moveobj.id);} //选中树节点
+
+     if(event.button==1)
+     {
+	   switch(goalTypeName)
+	   {
+		case "MulSel":{
+				//ShowErrorInfo("当前为多选状态");
+		   }
+		   break;
+		case "Move":  
+			if(moveobj!=null)
+			{
+				try{
+					SaveoldNodePosition(moveobj);
+					ShowObjXYPosInBottom(moveobj);
+				}
+				catch(E)
+				{
+					//alert(E.message);
+					ShowErrorInfo("本活动出错,请执行错误修复操作!");	
+				}
+			}
+			break;
+		case "Edit":  
+			if(thisobj!=null&&thisobj.tagName!="polyline")
+			{
+				SaveoldNodePosition(thisobj);
+			}
+			else
+			{
+				moveobj=null;	
+			}
+			break;
+		case "PolyLine":  
+		        if(moveobj!=null&&(goalStartObj.tagName=="roundrect"||goalStartObj.tagName=="shape"||goalStartObj.tagName=="Oval"))
+			{
+				goalStartObj=moveobj;
+				
+				if(goalStartObj.NodeType=="StartNode")
+				{
+					if(goalStartObj.LinkeyStartObj!=""){ goalStartObj=null;return false;}
+				}
+				if(goalStartObj.NodeType=="EndNode")
+				{
+					goalStartObj=null;
+					return false;
+				}
+				
+		    	getObjXY(moveobj,getEventOX(event),getEventOY(event));
+				PolyLine1.style.left=hotx;
+				PolyLine1.style.top=hoty;
+				PolyLine1.points.value="0,0";
+				PolyLine1.style.display="";
+			}
+			break;
+		case "AddActivity":{AddNode("Activity");}break;
+		case "AddAutoActivity":{AddNode("AutoActivity");}break;
+		case "AddSubProcess":{AddNode("SubProcess");}break;
+		case "AddEdge":{AddNode("Edge");}break;
+		case "AddStart":{AddNode("StartNode");}break;
+		case "AddEnd":{AddNode("EndNode");}break;
+		case "AddEvent":{AddNode("EventNode");}break;
+		case "AddText":{AddText();}break;
+		case "AddPool":{AddNode("Pool");}break;
+		case "AddUnit":{AddUnit();}break; //tx版本
+		case "AddUnitProcess":{AddUnitProcess();}break; //tx版本
+		case "AddArea":{AddArea();}break; //tx版本
+		case "AddTextNode":{AddTextNode();}break; //tx版本
+		case "AddXNode":{AddXNode();}break; //tx版本
+		case "AddYNode":{AddYNode();}break; //tx版本
+	 } 
+      }
+
+	//没有选择任何环节的情况下进行移动
+	if((moveobj==null || moveobj.NodeType=="XNode" || moveobj.NodeType=="YNode") && goalTypeName=="MulSel" ){
+		var moffsetX=parseInt(document.body.scrollLeft);
+		var moffsetY=parseInt(document.body.scrollTop);
+		rect1.style.left=mstartX+moffsetX;
+		rect1.style.top=mstartY+moffsetY;
+		rect1.style.width=0;
+		rect1.style.height=0;
+		rect1.style.display="";
+	}
+
+}
+
+/* tx开始.............. */
+
+var YW_YWDRUNID="",YW_ProcessName="";
+function AddUnit()
+{
+	//增加业务单元
+	var NodeType="Activity";
+	var cobj;
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	var tempStr="<v:roundrect id='Node"+NodeNum+"' UnitId='"+YW_YWDRUNID+"' NodeNum='"+NodeNum+"' NodeType='Activity' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:96px;height:50px;z-index:10;text-align:center;' onDblClick=\"SetProperty (this,'Activity');\"  arcsize='10923f' fillcolor=\"#daeef3 [664]\" strokecolor='#004d86' strokeweight='1.20pt'>";
+	cobj=div1.document.createElement(tempStr);
+	div1.appendChild(cobj);
+	cobj.innerHTML="<v:fill color2=\"white [3212]\" rotate=\"t\" focus=\"100%\" type=\"gradient\"/><v:shadow on=\"t\" type=\"perspective\"  offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox id='TextBoxNode"+NodeNum+"' style='font-size:9pt;' inset='1pt,1pt,1pt,1pt' >"+NodeNum+"."+YW_ProcessName+"</v:TextBox>";
+	AutoSaveUnitNode(YW_ProcessName,"Node"+NodeNum,YW_YWDRUNID,NodeType); //自动存盘节点属性
+	return cobj;
+}
+
+function AddTextNode()
+{
+	//增加文本框
+	var NodeType="TextNode";
+	var cobj;
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	var tempStr="<v:roundrect id='Node"+NodeNum+"'  NodeNum='"+NodeNum+"' NodeType='TextNode' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:96px;height:50px;z-index:10;text-align:center;' onDblClick=\"SetProperty (this,'TextNode');\"  arcsize='10923f' fillcolor=\"#EAFDF1\" strokecolor='#336600' strokeweight='1.20pt'>";
+	cobj=div1.document.createElement(tempStr);
+	div1.appendChild(cobj);
+	//cobj.innerHTML="<v:fill color2=\"white [3212]\" rotate=\"t\" focus=\"100%\" type=\"gradient\"/><v:shadow on=\"t\" type=\"perspective\"  offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox id='TextBoxNode"+NodeNum+"' style='font-size:9pt;' inset='1pt,1pt,1pt,1pt' ></v:TextBox>";
+	cobj.innerHTML="<v:TextBox id='TextBoxNode"+NodeNum+"' style='font-size:9pt;' inset='1pt,1pt,1pt,1pt' ></v:TextBox>";
+	return cobj;
+}
+function AddUnitProcess()
+{
+	//增加子业务流程
+	var NodeType="SubProcess";
+	var cobj;
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	var tempStr="<v:shapetype id='SNode"+NodeNum+"' coordsize='21600,21600' o:spt='112' ><v:stroke joinstyle='miter'/><v:path o:extrusionok='f' gradientshapeok='t' o:connecttype='rect' textboxrect='2610,0,18990,21600'/></v:shapetype>";
+	cobj=div1.document.createElement(tempStr);
+	div1.appendChild(cobj);
+	tempStr="<v:shape  id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='SubProcess' type='#SNode"+NodeNum+"'  LinkeyStartObj='' LinkeyEndObj='' type=\"#_x0000_t112\" style='position:absolute;left:"+objx+";top:"+objy+";text-align:center;width:96px;height:50px;z-index:2' fillcolor=\"#daeef3 [664]\" strokeweight='1.20pt' strokecolor='#004d86' onDblClick=\"SetProperty (this,'SubProcess')\" >";
+	tempStr+="<v:fill color2=\"white [3212]\" rotate=\"t\" focus=\"100%\" type=\"gradient\"/>";
+	tempStr+="<v:shadow on=\"t\" type=\"perspective\"  offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox inset='1pt,1pt,1pt,1pt' id='TextBoxNode"+NodeNum+"' style='font-size:9pt;text-align:center'>"+NodeNum+"."+YW_ProcessName+"</v:TextBox>";
+	tempStr+="</v:shape>";
+	cobj.outerHTML+=tempStr;
+	AutoSaveUnitNode(YW_ProcessName,"Node"+NodeNum,YW_YWDRUNID,NodeType); //自动存盘节点属性
+	return cobj;
+}
+
+function AutoSaveUnitNode(NodeName,Nodeid,YW_YWDRUNID,NodeType)
+{
+	var ProcessUNID=xmlframe.document.all.unid.value;
+	var url="agentSaveUnitNode?openagent&NodeName="+NodeName+"&Nodeid="+Nodeid+"&NodeType="+NodeType+"&YW_YWDRUNID="+YW_YWDRUNID+"&ProcessUNID="+ProcessUNID;
+	var conn = Ext.lib.Ajax.getConnectionObject().conn;
+	conn.open("GET",url,false);
+	conn.send();
+	if (conn.status == "200"){
+		var rsArray=Ext.util.JSON.decode(conn.responseText);
+		document.all(Nodeid).SaveFlag="yes";
+		ShowErrorInfo("节点保存成功!");
+	}else{alert("节点数据创建失败，请删除图标重新创建一次!");}
+}
+
+function ChangeTextBox()
+{
+	for(var i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		if(obj.inset!=undefined)
+		{
+			//obj.inset="1pt,3pt,1pt,1pt";
+		}
+	}
+}
+function AddXNode()
+{
+	//横向泳道
+	var NodeType="XNode";
+	var cobj,cobj1;
+	var tempx=event.x;
+	var tempy=event.y;
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	var NodeNum1=NodeNum+10000;
+	/*
+	for (i = 0; i < document.all.length; i++)
+	{
+	//document.write("document.all["+i+"]="+document.all[i].tagName+"<br />");
+	//alert(document.all[i].tagName);
+		if(document.all[i].NodeType=='YNode'){
+			//document.write("document.all["+i+"]="+document.all[i].tagName+"<br />");
+			//parseInt(document.all[i].style.left)+parseInt(document.all[i].style.width);
+			//break;
+		}
+	}
+	*/
+	var tempStr="<v:rect id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='XNode'  style='position:absolute;left:10px;top:"+objy+"px;width:1000px;height:200px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#f4f4f4\" strokecolor='#999999' strokeweight='1pt' onmousedown='flowtableonmousedown1();'>";
+	var tempStr1="<v:rect id='Node"+NodeNum1+"' NodeNum='"+NodeNum+"' NodeType='XNode_text'  style='position:absolute;left:10px;top:"+objy+"px;width:30px;height:200px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#ccc\" strokecolor='#999999' strokeweight='1pt' onmousedown='flowtableonmousedown1();'>";
+	cobj=div1.document.createElement(tempStr);
+	cobj1=div1.document.createElement(tempStr1);
+	div1.appendChild(cobj);
+	div1.appendChild(cobj1);
+	//alert(cobj1.style.height);
+	var textbox_h=parseInt(cobj1.style.height)/4;
+	//alert(textbox_h);
+	//cobj1.innerHTML="<v:fill opacity=\"60948f\"'/><v:TextBox  inset='1pt,1pt,1pt,1pt' style='font-size:9pt;writing-mode:tb-rl;text-algin:center;'  onclick='flowtableondblclick1();'>部门名称</v:TextBox>";
+	cobj1.innerHTML="<v:fill opacity=\"60948f\"'/><v:TextBox id='Node"+NodeNum+"_xtb'  inset='3pt,"+textbox_h+"pt,1pt,3pt' style=';font-weight:bold;font-size:9pt;writing-mode:tb-rl;text-algin:center;'  onclick='flowtableondblclick1();'>部门名称</v:TextBox>";
+	//alert(cobj1.outerHTML);
+	return cobj;
+}
+
+function AddYNode()
+{
+	//增加纵向泳道
+	var NodeType="YNode";
+	var cobj,cobj1;
+	var tempx=event.x;
+	var tempy=event.y;
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	var NodeNum1=NodeNum+10000;
+	//alert("Node"+NodeNum1);
+	var tempStr="<v:rect id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='YNode'  style='position:absolute;left:"+objx+"px;top:10px;width:200px;height:600px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#f4f4f4\" strokecolor='#999999' strokeweight='1pt' onmousedown='flowtableonmousedown1();'>";
+	var tempStr1="<v:rect id='Node"+NodeNum1+"' NodeNum='"+NodeNum+"' NodeType='YNode_text'  style='position:absolute;left:"+objx+"px;top:10px;width:200px;height:30px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#cccccc\" strokecolor='#999999' strokeweight='1pt' onmousedown='flowtableonmousedown1();'>";
+	//var tempStr="<v:shapetype id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='YNode'  style='position:absolute;left:"+objx+"px;top:10px;width:200px;height:600px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#f4f4f4\" strokecolor='#ffcf37' strokeweight='1pt' coordsize='21600,21600' o:spt='109' path='m,l,21600r21600,l21600,xe'><v:stroke joinstyle='miter'/><v:path gradientshapeok='t' o:connecttype='rect'/></v:shapetype><v:shape id='_x0000_s1026' type='#_x0000_t109' style='position:absolute;margin-left:3pt;margin-top:9pt;width:126.75pt;height:396pt;z-index:1'/><v:shape id='_x0000_s1030' type='#_x0000_t109' style='position:absolute;margin-left:3pt;margin-top:9pt;width:126.75pt;height:28.5pt;z-index:2'>";
+	cobj=div1.document.createElement(tempStr);
+	cobj1=div1.document.createElement(tempStr1);
+	div1.appendChild(cobj);
+	div1.appendChild(cobj1);
+	cobj1.innerHTML="<v:fill opacity=\"60948f\"/><v:TextBox id='Node"+NodeNum+"_xtb' inset='1pt,3pt,3pt,1pt' style='font-size:9pt;text-align:center;font-weight:bold' onclick='flowtableondblclick1();'>部门名称</v:TextBox>";
+	return cobj;	
+}
+var DeptObj;
+function flowtableondblclick1()
+{
+	//alert(1);
+	//if(event.srcElement.className=="DeptTd"||event.srcElement.className=="TopTdBody"||event.srcElement.className=="zx_DeptId"||event.srcElement.className=="zx_jd")
+	//{
+		 var offsetX=document.body.scrollLeft;
+	 	 var offsetY=document.body.scrollTop;
+		 DeptObj=event.srcElement;
+		 CellText.style.posLeft=getEventOX(event)+offsetX+5;
+		 CellText.style.posTop=getEventOY(event)+offsetY+25; 
+		 CellText.style.display="";
+		 CellTextBody.value=DeptObj.innerText;
+		 CellTextBody.focus();
+	//}
+}
+function flowtableonmousedown1(){
+	if(DeptObj){DeptObj.innerText=document.all.CellTextBody.value;DeptObj=false;CellText.style.display="none";}
+}
+function AddArea()
+{//增加区域块
+	var NodeType="Area";
+	var cobj;
+	var tempx=event.x;
+	var tempy=event.y;
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	var objx=tempx+offsetX-35;
+	var objy=tempy+offsetY-25;
+	var NodeNum=GetNodeNum(NodeType);
+	//var tempStr="<v:rect id='Node"+NodeNum+"' style='position:absolute;left:"+objx+";top:"+objy+";text-align:center;width:400px;height:260px;z-index:1'  fillcolor='#ffffe5' strokecolor='#ffc000' coordsize ='21600,21600' strokeweight='1px' ><v:fill opacity='57016f'/></v:rect>";
+	
+	var tempStr="<v:roundrect id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='Area' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:400px;height:200px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#fffff7\" strokecolor='#ffcf37' strokeweight='1pt'>";
+	//var tempStr="<v:rect id='ANode"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='Area' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:400px;height:200px;z-index:1;text-align:center;'  arcsize='10923f' fillcolor=\"#fffff7\" strokecolor='#ffcf37' strokeweight='1pt'>";
+	cobj=div1.document.createElement(tempStr);
+	div1.appendChild(cobj);
+	cobj.innerHTML="<v:fill opacity=\"60948f\"/>";
+	
+	return cobj;
+}
+
+function AddDocumentNode(Nodeid)
+{
+	//附加文档标识
+	var NodeObj=document.getElementById(Nodeid);
+	var NodeType="DocNode";
+	var Nodeid=NodeObj.id+"_Doc";
+	if(document.getElementById(Nodeid)){return false;}
+	var GroupId=NodeObj.id;
+	var cobj;
+	var tempx=parseInt(NodeObj.style.left);
+	var tempy=parseInt(NodeObj.style.top);
+	var objx=tempx+parseInt(NodeObj.style.width)-15;
+	var objy=tempy+parseInt(NodeObj.style.height)-18;
+	var NodeNum=GetNodeNum(NodeType);
+	var tempStr='<v:shapetype id="T'+Nodeid+'"	 coordsize="21600,21600" o:spt="114" >	 <v:stroke joinstyle="miter"/>	 <v:path o:connecttype="custom" o:connectlocs="10800,0;0,10800;10800,20400;21600,10800"	  textboxrect="0,0,21600,17322"  />	</v:shapetype>';
+	
+	cobj=div1.document.createElement(tempStr);
+	div1.appendChild(cobj);
+	cobj.outerHTML+='<v:shape id="'+Nodeid+'" NodeType="'+NodeType+'" GroupId="'+GroupId+'" type="#T'+Nodeid+'" oldleft="'+objx+'" oldtop="'+objy+'" style="position:absolute; left:'+objx+';top:'+objy+';width:11px; height:13px;z-index:1600" fillcolor="#ffffa7" onDblClick="SetProperty (this,\'DocNode\')" />';
+	return cobj;
+}
+
+function DelDocumentNode(Nodeid)
+{
+	//删除文档标识节点
+	var DocNodeid=Nodeid+"_Doc";
+	var obj=document.getElementById(DocNodeid);
+	if(obj){obj.outerHTML="";}
+}
+
+//tx版本结束.............. 
+
+function div1.onmousemove()
+{
+	var tempx=getEventX(event)+_x1;
+	var tempy=getEventY(event)+_y1;
+	if(event.button==1)
+	{
+		switch(goalTypeName)
+		{
+		case "MulSel":
+			MoveAndShowMulRect(); //移动时同时框选多个
+			break;
+		case "EditArea":
+			EditArea(moveobj); //移动时修改大小
+			break;
+		case "Move":
+			var MulSelNode=top.document.all.MulNodeList.value;
+		    if(MulSelNode==""){
+		    	if(moveobj && moveobj!=null){
+		    		if(moveobj.NodeType=="XNode" || moveobj.NodeType=="YNode"){return;}
+		    	}
+				//只移动一个
+				if(moveobj!=null&&moveobj.tagName!="polyline")
+				{
+					MoveNodeObj(moveobj,tempx,tempy);
+					if((tempx!=xx || tempy!=yy) && moveobj.tagName!="SPAN")
+					{
+						PolyLineX.style.display="";
+						PolyLineY.style.display="";
+						PolyLineX.style.top=moveobj.style.top;
+						PolyLineY.style.left=moveobj.style.left;
+					}
+				}
+				else if(moveobj!=null&&moveobj.tagName=="polyline")
+				{
+					MoveLine(moveobj,tempx,tempy);
+				}
+				
+				//移动泳道
+				 if(moveobj!=null && (moveobj.NodeType=="XNode_text" || moveobj.NodeType=="YNode_text") )
+				 {
+					 var tid=moveobj.id;
+					 if(tid.substring(4)<10000)
+						 tid=parseInt(tid.substring(4))+10000;
+					 else
+						 tid=parseInt(tid.substring(4))-10000;
+					 var newobj=document.getElementById("Node"+tid);
+					 if(newobj){MoveNodeObj(newobj,tempx,tempy);}
+				 }
+				 //泳道移动结束
+				 
+				 movegroupnode(moveobj) //移动组合图标
+				 
+			}else{
+				//同时移动多个
+				MulSel_MoveNodeObj();
+			}
+			break;
+		case "Edit":  
+			if(thisobj!=null)
+			{
+				if(thisobj.tagName=="polyline")
+				{
+					StartPointType=thisobj.PolyLineType;
+					var PointsStr=GetPointsStr("Edit");
+					thisobj.points.value=PointsStr;
+				}
+				else
+				{
+					moveobj=thisobj;
+					
+					offsetX=document.body.scrollLeft;
+					offsetY=document.body.scrollTop;
+					tempx+=offsetX;
+					tempy+=offsetY;   
+					if(tempx>moveobjoldleft){moveobj.style.width=tempx-moveobjoldleft}else{moveobj.style.left=tempx;moveobj.style.width=moveobjoldleft-tempx}
+					if(tempy>moveobjoldtop){moveobj.style.height=tempy-moveobjoldtop}else{moveobj.style.top=tempy;moveobj.style.height=moveobjoldtop-tempy}
+				}
+			}
+			break;
+		case "PolyLine":
+			var PointsStr=GetPointsStr();
+			//ShowErrorInfo(PointsStr);
+			PolyLine1.points.value=PointsStr;
+			
+			/*
+			var offsetX=document.body.scrollLeft;
+			var offsetY=document.body.scrollTop;
+			var goalux=document.body.clientWidth;
+			var goaluy=document.body.clientHeight;
+			if (tempx>goalux) window.scrollTo(offsetX+3,offsetY);
+			if (tempx<0) window.scrollTo(offsetX-3,offsetY);
+			if (tempy>goaluy) window.scrollTo(offsetX,offsetY+3);
+			if (tempy<0) window.scrollTo(offsetX,offsetY-3);
+			*/
+
+			//显示覆盖的节点热点
+			ShowEndHotPoint();
+			break;
+		}
+	}
+	
+}
+
+function movegroupnode(moveobj)
+{
+	 //移动GroupId为一至的图形元素
+	 if(moveobj!=null && (moveobj.NodeType=="Activity" || moveobj.NodeType=="SubProcess") )
+	 {
+		 var tempx=event.x;
+		 var tempy=event.y;
+		 var GroupId="";
+		 var obj;
+		 for(var i=0;i<document.all.length;i++)
+		 {
+			 obj=document.all[i];
+			 GroupId=document.all[i].GroupId;
+			 if(GroupId!=undefined && GroupId==moveobj.id)
+			 {
+				 MoveNodeObjV9(obj,tempx,tempy);
+			 }
+		 }
+	 }
+	 //移动结束
+}
+
+function div1.onmouseup()
+{
+	hideStartHotPoint();
+	document.releaseCapture();
+    ShowObjXYPosInBottom(moveobj);
+	PolyLine1.style.display="none";
+	PolyLineX.style.display="none";
+	PolyLineY.style.display="none";
+	var tempx=event.x+_x1;
+	var tempy=event.y+_y1;
+	tempx+=offsetX;
+	tempy+=offsetY;   
+
+	if(goalTypeName=="MulSel")
+	{
+		if(moveobj)
+		{
+			if(moveobj.tagName=="roundrect"||moveobj.tagName=="shape"||moveobj.tagName=="Oval" )
+			{
+						MulSel_AddNode(moveobj.id);
+			}
+		}
+		MoveAndSelectMulNode(); //多选开始
+		MulSel_ChangeNodeStyle();
+		return;
+	}else
+	{
+		ChangeObjStyle();
+	}
+	if( (event.srcElement.parentElement.id=="div1"||event.srcElement.parentElement.parentElement.id=="div1") && event.button==2 && moveobj==null)
+    {
+        	if(event.srcElement.parentElement.id=="div1")
+        	{
+	        	thisobj=event.srcElement;
+				goalTypeName="Move";
+				document.body.style.cursor="default";
+				return false;
+        	}
+        	else
+        	{
+        		thisobj=event.srcElement.parentElement;
+				goalTypeName="Move";
+				document.body.style.cursor="default";
+				return false;
+        	}
+    }else if(event.srcElement.tagName=="DIV"&&event.button==2&&goalTypeName=="Move"){
+		thisobj=null;
+	}else if(event.srcElement.tagName=="TD"&&event.button==2&&goalTypeName=="Move"){
+		thisobj=null;
+	}
+
+	if(event.button==1)
+	{
+		switch(goalTypeName)
+		{
+		case "Move":
+			InitOldXY(); //重新计算所有对像的旧坐标在多选移时需要依靠旧坐标来进行移动
+			break;
+		case "Edit":  
+			goalTypeName="Move";
+			thisobj=null;
+			moveobj=null;
+			break;
+		case "PolyLine":
+			if(goalStartObj!=null&&(goalStartObj.tagName=="roundrect"||goalStartObj.tagName=="shape"||goalStartObj.tagName=="Oval")&&(goalEndObj.tagName=="roundrect"||goalEndObj.tagName=="shape"||(goalEndObj.tagName=="Oval"&&(goalEndObj.NodeType=="EndNode" || goalEndObj.NodeType=="Event"))))//不充许在线上面为起点画线
+			{
+				CreateObj("PolyLine",tempx,tempy);
+			}
+		  	break;
+		}
+		
+	}
+	else if(event.button==2)
+	{
+		
+		if(insertText.style.display!="none")
+		{
+			AddNode("AddText");
+		}
+		//得到点击的对像
+		if(event.srcElement.id=="div1")
+		{
+			thisobj=event.srcElement;
+		}else if(event.srcElement.parentElement.id=="div1")
+		{
+			thisobj=event.srcElement;
+		}
+		else{
+			thisobj=event.srcElement.parentElement;
+		}
+		goalTypeName="Move";
+		document.body.style.cursor="default";
+	}
+	moveobj=null;
+	hotType="";
+	top.hisEndCode=div1.innerHTML; //记录当前图形结束时状态
+	top.putHisData();
+}
+
+function MoveAndShowMulRect()
+{
+	//显示多选移的可视化框
+	var moffsetX=parseInt(document.body.scrollLeft);
+	var moffsetY=parseInt(document.body.scrollTop);
+	var mendX=getEventOX(event);
+	var mendY=getEventOY(event);
+	if(mendX-mstartX<0){
+		rect1.style.left=mendX+moffsetX;
+		rect1.style.width=(mstartX-mendX);
+	}else{
+		rect1.style.width=(mendX-mstartX);
+	}
+	
+	if(mendY-mstartY<0)
+	{
+		rect1.style.top=mendY+moffsetY;
+		rect1.style.height=(mstartY-mendY);
+	}else
+	{
+		rect1.style.height=(mendY-mstartY);
+	}
+}
+
+function MoveAndSelectMulNode()
+{
+	//移动并选择多个环节
+	mendX=getEventOX(event);
+	mendY=getEventOY(event);
+	rect1.style.display="none";
+	if(moveobj!=null && moveobj.NodeType!="XNode" && moveobj.NodeType!="YNode") return;
+	var moffsetX=parseInt(document.body.scrollLeft);
+	var moffsetY=parseInt(document.body.scrollTop);
+	mendX=mendX+moffsetX;
+	mendY=mendY+moffsetY;
+	mstartX=mstartX+moffsetX;
+	mstartY=mstartY+moffsetY;
+	if(mendX<mstartX){var tmpX=mstartX;mstartX=mendX;mendX=tmpX;} //交换坐标
+	if(mendY<mstartY){var tmpY=mstartY;mstartY=mendY;mendY=tmpY;} //交换坐标
+	for(var i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		var gettagName=obj.tagName;
+		if((gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval"))
+		{
+			var sx=parseInt(obj.style.left);
+			var ox=sx+parseInt(obj.offsetWidth);
+			var sy=parseInt(obj.style.top);
+			var oy=sy+parseInt(obj.offsetHeight);
+			if(mstartX<ox && ox<mendX && mstartY<oy && oy<mendY && mstartX<sx && sx<mendX && mstartY<sy && sy<mendY){
+				 var Nodeid=obj.id;
+				 MulSel_AddNode(Nodeid,"AddOnly");
+			}
+		}
+	}
+	MulSel_ChangeNodeStyle();
+}
+
+function EditArea(obj)
+{
+	if(obj.NodeType=='YNode_text' || obj.NodeType=='XNode_text' || obj.tagName=="polyline"){return;}
+	
+	//修改区域块的大小
+	var moffsetX=parseInt(document.body.scrollLeft);
+	var moffsetY=parseInt(document.body.scrollTop);
+	var mendX=getEventOX(event);
+	var mendY=getEventOY(event);
+	var w=mendX-parseInt(obj.style.left)+moffsetX;
+	var h=mendY-parseInt(obj.style.top)+moffsetY;
+	if(w<30){w=30;}
+	if(h<30){h=20;}
+	obj.style.width=w;
+	obj.style.height=h;
+	var xtbobj=document.all(obj.id+'_xtb');
+	if(xtbobj)
+	{
+		var chinset=xtbobj.inset;
+		var chinset_arr=chinset.split(",");
+		chinset_arr[1]=h/4+'pt';
+		 var tid=obj.id;
+		 tid=tid=parseInt(tid.substring(4))+10000;
+		 //alert(tid);
+		 //if(tid.substring(4)<10000){tid=parseInt(tid.substring(4))+10000;}
+		 //else {tid=parseInt(tid.substring(4))-10000;}
+		 var newobj=document.getElementById("Node"+tid);
+		 if(obj.NodeType=='YNode')
+		 {
+			 newobj.style.width=w;
+		 }
+		 if(obj.NodeType=='XNode')
+		 {
+			 //alert(newobj);
+			 //newobj=xtbobj;
+			 newobj.style.height=h;
+			 var lnum=newobj.innerText.length;
+			 var TextHeight=lnum*15;
+			 var TextDX=(h-TextHeight)/2;
+			 if(TextDX<0){TextDX=0;}
+			 xtbobj.inset="3px,"+TextDX+"px,3px,3px";
+		 }
+		
+	}
+	
+
+}
+function delalonenode()
+{
+	goalTypeName="Move";
+	document.body.style.cursor="wait";
+	FixError();
+	var gettagName="";
+	var NodeListStr="";
+	for(i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval"||gettagName=="polyline")
+		{
+			NodeListStr+=obj.id+",";
+		}
+	}
+	xmlframe.document.all.HadNodeList.value=NodeListStr;
+	top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+	xmlframe.document.all.delnode.click();
+}
+
+function saveDefaultNode(obj,NodeType)
+{
+	var ProcessUNID=xmlframe.document.all.unid.value;
+	var Nodeid=obj.id;
+	var StartNodeType="";
+	var EndNodeType="";
+	if(NodeType=="Router")
+	{
+		var LinkeyNode=obj.LinkeyNode;
+		var objarray=LinkeyNode.split("_");
+		var sobj=eval("document.all.Node"+objarray[0]);
+		var eobj=eval("document.all.Node"+objarray[1]);
+		StartNodeType=sobj.NodeType;
+		EndNodeType=eobj.NodeType;
+	}
+
+	top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+	Ext.Ajax.request({
+		   url: 'agentSaveDefaultNode?openagent',
+		   success : function(response, action) 
+				  {
+				   var responseArray = Ext.util.JSON.decode(response.responseText);   
+				   obj.SaveFlag="yes"; 
+				   top.Ext.getBody().unmask();
+				  },
+		   failure: function(){alert('Url Error!')},
+		   params: { ProcessUNID:ProcessUNID,Nodeid:Nodeid,NodeType:NodeType,StartNodeType:StartNodeType,EndNodeType:EndNodeType}
+	});
+
+}
+
+function saveAllDefaultNode()
+{
+	for(i=0;i<div1.all.length;i++)
+	{
+		var obj=div1.all[i];
+		var NodeType=obj.NodeType;
+		
+		if(NodeType=="StartNode" || NodeType=="EndNode" || NodeType=="Event" || obj.tagName=="polyline" )
+		{
+			if(obj.SaveFlag=="yes"){continue;}
+			var Nodeid=obj.Nodeid;
+			var LinkeyNode=obj.LinkeyNode;
+			var StartNodeid="";
+			var EndNodeid="";
+			if(obj.tagName=="polyline")
+			{
+				var objarray=LinkeyNode.split("_");
+				var sobj=eval("document.all.Node"+objarray[0]);
+				var eobj=eval("document.all.Node"+objarray[1]);
+				StartNodeid=sobj.Nodeid;
+				EndNodeid=eobj.Nodeid;
+				NodeType="Router&StartNodeid="+StartNodeid+"&EndNodeid="+EndNodeid;
+			}
+			var Params="&Action=SaveAllDefaultNode&Processid="+top.processid+"&Nodeid="+Nodeid+"&NodeType="+NodeType;
+			var url="rule?wf_num=R_S030_B006"+Params;
+			//alert(url);
+			var conn = Ext.lib.Ajax.getConnectionObject().conn;
+			conn.open("post",url,false);   
+			conn.send(); 
+			if (conn.status == "200"){obj.SaveFlag="yes";ShowErrorInfo("缺省属性保存成功!");}else{ShowErrorInfo("缺省属性保存失败!");}
+
+		}//end if
+
+	 } //end for
+
+}
+
+//错误修复
+function FixError()
+{
+	var a=0;
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		var gettagName=obj.tagName;
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval")
+		{
+				var LinkeyStartStr=obj.LinkeyStartObj;
+  				var LinkeyEndStr=obj.LinkeyEndObj;
+  				if(LinkeyStartStr!="")
+  				{
+				  	var mobjarray=LinkeyStartStr.split(",");
+				  	var getLinkeyStartStr="";
+					for(j=0;j<mobjarray.length;j++)
+					{
+						try
+						{
+							var lineobj=eval(mobjarray[j]);
+							if(getLinkeyStartStr=="")
+							{
+								getLinkeyStartStr=lineobj.id;	
+							}
+							else
+							{
+								getLinkeyStartStr+=","+lineobj.id;
+							}
+						}
+						catch(E)
+						{
+							a++;
+						}
+					}
+					obj.LinkeyStartObj=getLinkeyStartStr;
+  				}
+			  	if(LinkeyEndStr!="")
+			  	{
+				  	var mobjarray=LinkeyEndStr.split(",");
+			  		var getLinkeyEndStr="";
+					for(j=0;j<mobjarray.length;j++)
+					{
+						try
+						{
+							var lineobj=eval(mobjarray[j]);
+							if(getLinkeyEndStr=="")
+							{
+								getLinkeyEndStr=lineobj.id;	
+							}
+							else
+							{
+								getLinkeyEndStr+=","+lineobj.id;
+							}
+						}
+						catch(E)
+						{
+							a++;
+						}
+					}
+					obj.LinkeyEndObj=getLinkeyEndStr;
+			  	}
+		}
+		
+		if(gettagName=="polyline")
+		{
+			try{
+				var NodeArray=obj.LinkeyNode.split("_");
+				eval("Node"+NodeArray[0]);
+				eval("Node"+NodeArray[1]);
+			}
+			catch(E)
+			{
+				a++;
+			}
+		}
+
+	}
+}
+function DebugFlow(obj)
+{
+
+}
+function DebugFlowAll(obj)
+{
+
+}
+function ShowNextNode(obj) 
+{
+	var LinkeyStartStr=obj.LinkeyStartObj;
+	if(LinkeyStartStr!=""&&LinkeyStartStr!=undefined)
+	{
+		var mobjarray=LinkeyStartStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+			var startpos=mobjarray[i].indexOf("_");
+			var endpos=mobjarray[i].length;
+			var NodeNum=mobjarray[i].substring(startpos+1,endpos);
+			var NodeObj=eval("Node"+NodeNum);
+			goalNextNode[goalNextNode.length]="Node"+NodeNum+"$$"+NodeObj.fillcolor+","+NodeObj.id+"$$"+NodeObj.firstChild.color2;
+			NodeObj.fillcolor="#f8feb0";
+			NodeObj.firstChild.color2="#fad01e";
+		}
+	}
+}
+
+function ShowPrvNode(obj)
+{
+	var LinkeyEndStr=obj.LinkeyEndObj;
+	if(LinkeyEndStr!=""&&LinkeyEndStr!=undefined)
+	{
+		var mobjarray=LinkeyEndStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+			var startpos=mobjarray[i].indexOf("polyline");
+			var endpos=mobjarray[i].indexOf("_");
+			var NodeNum=mobjarray[i].substring(startpos+8,endpos);
+			var NodeObj=eval("Node"+NodeNum);
+			goalPrvNode[goalPrvNode.length]="Node"+NodeNum+"$$"+NodeObj.fillcolor+","+NodeObj.id+"$$"+NodeObj.firstChild.color2;
+			NodeObj.fillcolor="#f8feb0";
+			NodeObj.firstChild.color2="#fad01e";
+		}
+	}
+}
+
+function FocusFlowNode(NodeObj)
+{
+	try{
+			if(NodeObj.tagName=="polyline"){
+				return;
+			}else{
+				goalPrvNode[goalPrvNode.length]=NodeObj.id+"$$"+NodeObj.fillcolor+","+NodeObj.id+"$$"+NodeObj.firstChild.color2;
+				NodeObj.fillcolor="#f8feb0";
+				NodeObj.firstChild.color2="#fad01e";
+			}
+			var NodeObjX=NodeObj.style.posLeft-document.body.clientWidth / 2;
+			var NodeObjY=NodeObj.style.posTop-document.body.clientHeight / 2;
+			window.scrollTo(NodeObjX,NodeObjY);
+	}catch(e){alert(e.message);ShowError("节点已被删除!")}
+			
+}
+
+function CancelPrvNextNode()
+{
+	var tempStr="";
+	var tempArray="";
+	var tempObj="";
+	var getObj="";
+	for(i=0;i<goalPrvNode.length;i++)
+	{
+		cancelNodeError(goalPrvNode[i]);
+	}
+	for(i=0;i<goalNextNode.length;i++)
+	{
+		cancelNodeError(goalNextNode[i]);
+	}
+	function cancelNodeError(tempStr)
+	{
+		tempArray=tempStr.split(",");
+		for(j=0;j<tempArray.length;j++)
+		{
+			tempObj=tempArray[j].split("$$");
+			var NodeName=tempObj[0];
+			var NodeObj=eval(NodeName);
+			var NodeColor=tempObj[1];
+			if(NodeObj.tagName=="polyline")
+			{
+				NodeObj.strokecolor=NodeColor;
+			}
+			else
+			{
+				if(j==0){NodeObj.fillcolor=NodeColor;}else{NodeObj.firstChild.color2=NodeColor;}
+			}
+		}
+	}
+	goalPrvNode=new Array();
+	goalNextNode=new Array();
+}
+
+
+function AddText()
+{
+ insertText.style.posLeft=getEventOX(event)+offsetX-75;
+ insertText.style.posTop=getEventOY(event)+offsetY-25; 
+ insertText.style.display="";
+ insertTextValue.focus();
+}
+
+function editobj(obj)
+{
+	if(obj.tagName!="SPAN")
+	{
+		goalTypeName="Edit"
+	}
+	else
+	{
+		insertText.style.posLeft=event.x+offsetX-75;
+ 		insertText.style.posTop=event.y+offsetY-25; 
+ 		insertTextValue.value=obj.innerText;
+ 		insertText.style.display="";
+ 		obj.outerHTML="";
+ 		goalTypeName="AddText";
+ 		document.body.style.cursor="Text";
+	}
+	
+}
+
+Ext.onReady(function()
+{
+    Ext.get("div1").on('contextmenu',function(e)
+	{
+		var MulSelNode=top.document.all.MulNodeList.value; //是否有多个环节选中
+		var menu = new Ext.menu.Menu();
+		//thisobj是在mouseup中记录下来的点击对像
+		//alert("id="+thisobj.id+" NodeType="+thisobj.NodeType+" "+goalTypeName+"--MulSelNode="+MulSelNode+"--"+thisobj.tagName.toLowerCase());
+		if(thisobj.NodeType=="DocNode"){return;}
+		if(thisobj!=null && goalTypeName!="MulSel" && thisobj.NodeType!="XNode" && thisobj.NodeType!="YNode" && thisobj.id!="div1" && MulSelNode=="")
+		{
+			if((thisobj.tagName=="roundrect"||thisobj.tagName=="shape"||thisobj.tagName=="Oval") && thisobj.NodeType!="Area"  )
+			{
+				menu.add(new Ext.menu.Item({text: '节点属性',handler:function(){SetProperty (thisobj,thisobj.NodeType)}}));
+				menu.add(new Ext.menu.Item({text: '显示前导节点',handler:function(){ShowPrvNode(thisobj)}}));
+				menu.add(new Ext.menu.Item({text: '显示后导节点',handler:function(){ShowNextNode(thisobj)}}));
+				//menu.add(new Ext.menu.Item({text: '复制属性',handler:function(){copyobj(thisobj)}}));
+				if(thisobj.NodeType=="Activity" || thisobj.NodeType=="SubProcess")
+				{
+					//menu.add(new Ext.menu.Item({text: '附加关键文档',handler:function(){AddDocumentNode(thisobj.id)}}));
+				}
+				if(goalcopyobj&&goalcopyobj.tagName==thisobj.tagName&&goalcopyobj!=thisobj)
+				{
+					menu.add(new Ext.menu.Item({text: '粘贴属性',handler:function(){pasteobj(thisobj)}}));
+				}else
+				{
+					menu.add(new Ext.menu.Item({text: '粘贴属性',disabled:true}));
+				}
+				menu.add(new Ext.menu.Item({text: '删除',handler:function(){deleteobj(thisobj)}}));
+				if(thisobj.tagName=="Oval")
+				{
+					//menu.add(new Ext.menu.Item({text: '保存缺省属性',handler:function(){saveDefaultNode(thisobj,thisobj.NodeType)}}));
+				}
+			}else if(thisobj.NodeType=="Area" || thisobj.NodeType=="XNode_text" || thisobj.NodeType=="YNode_text" )
+			{
+				//lucaihui 2013-10-18
+				menu.add(new Ext.menu.Item({text: '删除',handler:function(){deleteobj(thisobj)}}));
+				//menu.add(new Ext.menu.Item({text: '淡黄',handler:function(){changeobjcolor(thisobj.fillcolor="#fffff7")}}));
+				//menu.add(new Ext.menu.Item({text: '蓝色',handler:function(){changeobjcolor(thisobj.fillcolor="#3399CC")}}));
+				//menu.add(new Ext.menu.Item({text: '灰色',handler:function(){changeobjcolor(thisobj.fillcolor="#cccccc")}}));
+				//menu.add(new Ext.menu.Item({text: '红色',handler:function(){changeobjcolor(thisobj.fillcolor="#FF9966")}}));
+				//menu.add(new Ext.menu.Item({text: '紫色',handler:function(){changeobjcolor(thisobj.fillcolor="##CCCCFF")}}));
+				//lucaihui end
+			}
+			else if(thisobj.tagName=="polyline")
+			{
+				menu.add(new Ext.menu.Item({text: '路由属性',handler:function(){SetProperty (thisobj,'Router')}}));
+				menu.add(new Ext.menu.Item({text: '复制属性',handler:function(){copyobj(thisobj)}}));
+				if(goalcopyobj&&goalcopyobj.tagName==thisobj.tagName&&goalcopyobj!=thisobj)
+				{
+					menu.add(new Ext.menu.Item({text: '粘贴属性',handler:function(){pasteobj(thisobj)}}));
+				}else
+				{
+					menu.add(new Ext.menu.Item({text: '粘贴属性',disabled:true}));
+				}
+				var insMenu=new Ext.menu.Item({text: '变化线型',menu: {items:[]}});
+				var insSubMenu=new Ext.menu.Item({text:"直线",icon:'line.gif',handler:function(){ChangeLine(thisobj,'Line')}});
+				insMenu.menu.add(insSubMenu);
+				var insSubMenu=new Ext.menu.Item({text:"左右折线",icon:'lineleftcur.gif',handler:function(){ChangeLine(thisobj,'Bian')}});
+				insMenu.menu.add(insSubMenu);
+				var insSubMenu=new Ext.menu.Item({text:"上下折线",icon:'linerightcur.gif',handler:function(){ChangeLine(thisobj,'Bottom')}});
+				insMenu.menu.add(insSubMenu);
+				var insSubMenu=new Ext.menu.Item({text:"上下直角线",icon:'line90_1.gif',handler:function(){ChangeLine(thisobj,'zhexian902')}});
+				insMenu.menu.add(insSubMenu);
+				var insSubMenu=new Ext.menu.Item({text:"左右直角线",icon:'line90_2.gif',handler:function(){ChangeLine(thisobj,'zhexian90')}});
+				insMenu.menu.add(insSubMenu);
+				var insSubMenu=new Ext.menu.Item({text:"曲线",icon:'linecurv.gif',handler:function(){ChangeLine(thisobj,'zhexian')}});
+				insMenu.menu.add(insSubMenu);
+				menu.add(insMenu);
+				menu.add(new Ext.menu.Item({text: '删除',handler:function(){deleteobj(thisobj)}}));
+				//menu.add(new Ext.menu.Item({text: '保存缺省属性',handler:function(){saveDefaultNode(thisobj,"Router")}}));
+			}
+			else if(thisobj.tagName=="SPAN")
+			{
+				menu.add(new Ext.menu.Item({text: '修改',handler:function(){editobj(thisobj)}}));
+				menu.add(new Ext.menu.Item({text: '删除',handler:function(){deleteobj(thisobj)}}));
+			}
+			else if(thisobj.id=="flowtable"){
+				menu.add(new Ext.menu.Item({text: '过程属性',handler:function(){SetProperty (thisobj,'Process')}}));
+				//menu.add(new Ext.menu.Item({text: '错误修复',handler:function(){delalonenode()}}));
+				//menu.add(new Ext.menu.Item({text: '错误检查',handler:function(){CheckFlowError()}}));
+				menu.add(new Ext.menu.Item({text: '单击多选',handler:function(){MulSel_Start(true)}}));
+				menu.add(new Ext.menu.Item({text: '全部选择',handler:function(){MulSel_Start("ALL")}}));
+				menu.add(new Ext.menu.Item({text: '保存流程',handler:function(){save()}}));
+			}
+			else if(goalTypeName!="Move")
+			{
+				menu.add(new Ext.menu.Item({text: '删除',handler:function(){deleteobj(thisobj)}}));
+			}
+		}
+		else
+		{
+			if((thisobj.id=="div1" || thisobj.tagName.toLowerCase()=="body" || thisobj.NodeType=="XNode" || thisobj.NodeType=="YNode" ) && MulSelNode=="")
+ 			{
+				menu.add(new Ext.menu.Item({text: '过程属性',handler:function(){SetProperty (thisobj,'Process')}}));
+				//menu.add(new Ext.menu.Item({text: '错误修复',handler:function(){delalonenode()}}));
+				menu.add(new Ext.menu.Item({text: '错误检查',handler:function(){CheckFlowError()}}));
+				//menu.add(new Ext.menu.Item({text: '单击多选',handler:function(){MulSel_Start(true)}}));
+				menu.add(new Ext.menu.Item({text: '全部选择',handler:function(){MulSel_Start("ALL")}}));
+				menu.add(new Ext.menu.Item({text: '开始多选',handler:function(){mySetType("MulSel")}}));
+				//menu.add(new Ext.menu.Item({text: '保存缺省属性',handler:function(){saveAllDefaultNode()}}));
+				menu.add(new Ext.menu.Item({text: '保存流程',handler:function(){save()}}));
+				//menu.add(new Ext.menu.Item({text: '查看代码',handler:function(){var win=window.open();win.document.body.innerText=div1.outerHTML;}}));
+ 			}
+		}
+		if(MulSelNode!="")
+		{   //只有多选状态下才出现
+			menu.add(new Ext.menu.Item({text: '垂直对齐',handler:function(){MulSel_GropToSameX()}}));
+			menu.add(new Ext.menu.Item({text: '水平对齐',handler:function(){MulSel_GropToSameY()}}));
+			menu.add(new Ext.menu.Item({text: '纵向自动间距',handler:function(){MulSel_AutoYJZ()}}));
+			menu.add(new Ext.menu.Item({text: '横向自动间距',handler:function(){MulSel_AutoXJZ()}}));
+			menu.add(new Ext.menu.Item({text: '反向选择',handler:function(){MulSel_Start("FXSEL")}}));
+			menu.add(new Ext.menu.Item({text: '开始移动',handler:function(){mySetType("Move")}}));
+			menu.add(new Ext.menu.Item({text: '取消选择',handler:function(){MulSel_Start()}}));
+		}
+		/*
+		menu.add(new Ext.menu.Item({text: 'Show Code',handler:function(){
+			var htmlcode=thisobj.outerHTML;
+			var mywin=window.open();
+			mywin.document.body.innerText=htmlcode;
+		}}));
+		*/
+		menu.showAt(e.getXY());
+	});
+	try{
+		setTimeout(function(){
+        parent.Ext.get('loading').remove();
+        parent.Ext.get('loading-mask').fadeOut({remove:true});
+    }, 150+_x80);
+	}catch(e){}
+
+	InitOldXY(); //初始化所有对像的旧坐标，兼容旧的图形
+	//ChangeTextBox() //修改文字排序方式wxj
+	top.initHisData();
+	getNodeInfo();
+});
+
+function getObjXY(moveobj,ex,ey,CreatFlag)
+{
+	//本函数有差异根据图形大小要细调
+	var oy=(parseInt(moveobj.style.top)+moveobj.offsetHeight);
+	var ox=(parseInt(moveobj.style.left)+moveobj.offsetWidth);
+	var x=parseInt(moveobj.style.left);
+	var y=parseInt(moveobj.style.top);
+	var cx=x+parseInt(moveobj.offsetWidth/2);
+	var cy=y+parseInt(moveobj.offsetHeight/2);
+	var temphotx,temphoty;
+	var temphotType="";
+	var hotNumx=parseInt(moveobj.offsetWidth/4)+5;
+	var hotNumy=parseInt(moveobj.offsetHeight/4)+5;
+	var NodeType=moveobj.NodeType;
+	ex+=offsetX;
+	ey+=offsetY;
+	if( (cx-hotNumx)< ex && ex <(cx+hotNumx) && (y-hotNumy)<ey && ey<(y+hotNumy) )
+	{
+		temphotx=cx;
+		temphoty=y;
+		temphotType="Top";
+	}
+	else if( (ox-hotNumx) < ex && ex <(ox+hotNumx) && ( (cy-hotNumy)<ey && ey <(cy+hotNumy) ) )
+	{
+		temphotx=ox-size1;
+		temphoty=cy;
+		temphotType="Right";
+	}
+	else if( (cx-hotNumx)< ex && ex <(cx+hotNumx) && (oy+hotNumy) > ey&&ey > (oy-hotNumy) )
+	{
+		temphotx=cx;
+		temphoty=oy-size1;
+		temphotType="Bottom";
+	}
+	else if( (x-hotNumx) < ex&&ex <(x+hotNumx) && ( (cy-hotNumy)<ey&&ey<(cy+hotNumy) ) )
+	{
+		temphotx=x;
+		temphoty=cy;
+		temphotType="Left"
+	}
+	else
+	{
+	
+		temphotx=cx;
+		temphoty=oy;
+		temphotType="Bottom"
+	}
+	//alert(temphotType);
+	//alert(CreatFlag);
+	//ShowErrorInfo("ex="+event.clientX+" ey="+event.clientY+" objx="+moveobj.style.left+" objy="+moveobj.style.top+" "+temphotType);
+	if(!CreatFlag)
+	{
+		//alert("执行");
+		hotx=temphotx;
+		hoty=temphoty;	
+		hotType=temphotType;
+		//ShowErrorInfo("hotType=" + hotType);
+		switch(temphotType)
+		{
+			case "Top":
+				if(NodeType=="Edge")
+				{
+					hoty+=1;
+					hotx-=5;
+				}
+				else
+				{
+					hotx-=1;
+				}
+				break;
+			case "Right":
+				if(NodeType=="Edge")
+				{
+					hoty-=4;
+					hotx-=8;
+				}
+				else
+				{
+					hoty-=1;
+					hotx-=4;
+				}
+				break;
+			case "Bottom":
+				if(NodeType=="Edge")
+				{
+					hoty-=6;
+					hotx-=5;
+					//alert("shape"+hotx);
+				}
+				else
+				{
+					hotx-=1;
+					hoty-=4;
+				}
+				break;
+			case "Left":
+				if(NodeType=="Edge")
+				{
+					hoty-=4;
+					hotx+=1;
+				}
+				else
+				{
+					hoty-=1;
+				}
+				break;
+		}
+	}
+	else
+	{
+		//差异函数
+		hotx2=temphotx;
+		hoty2=temphoty;
+		hotEndType=temphotType;
+		//alert(NodeType+"="+temphotType);
+		switch(temphotType)
+		{
+			case "Top":
+				if(NodeType=="Edge"){hoty2+=1;hotx2-=3;}
+				//if(NodeType=="Activity"){hoty2+=1;hotx2+=1;}
+				break;
+			case "Right":
+				if(NodeType=="Edge")
+				{
+					hoty2-=1;
+					hotx2-=2;
+				}
+				else
+				{
+					hotx2-=1;
+					hoty2-=1;
+				}
+				break;
+			case "Bottom":
+				if(NodeType=="Edge")
+				{
+					hoty2-=2;
+					hotx2-=0;
+				}
+				else
+				{
+					hoty2-=1;
+				}
+				break;
+			case "Left":
+				if(NodeType=="Edge")
+				{
+					hoty2-=3;
+					hotx2+=2;
+				}
+				else
+				{
+					//hoty2-=1;
+				}
+				break;
+		}
+	}
+
+	//显示开始出去的热点
+	if(!CreatFlag){
+		switch(temphotType)
+		{
+			case "Bottom":
+				showStartHotPoint(hotx-5,hoty-5);
+				break;
+			case "Left":
+				showStartHotPoint(hotx-5,hoty-5);
+				break;
+			case "Right":
+				showStartHotPoint(hotx-5,hoty-5);
+				break;
+			case "Top":
+				showStartHotPoint(hotx-5,hoty-5);
+				break;
+		}
+	}
+
+}
+
+//显示开始线的热点
+function showStartHotPoint(x,y){
+	document.all.StartNodePoint.style.display="";
+	document.all.StartNodePoint.style.left=x;
+	document.all.StartNodePoint.style.top=y;
+}
+function hideStartHotPoint(){
+	document.all.StartNodePoint.style.display="none";
+	document.all.EndNodePoint.style.display="none";
+}
+
+//计算目的节点的热点并显示图标
+function ShowEndHotPoint(){
+	var ex=getEventOX(event);
+	var ey=getEventOY(event);
+	var moffsetX=parseInt(document.body.scrollLeft);
+	var moffsetY=parseInt(document.body.scrollTop);
+	ex+=moffsetX;
+	ey+=moffsetY;
+	//ShowErrorInfo("ex="+ex+" ey="+ey);	
+	document.all.EndNodePoint.style.display="none";
+	for(var i=0; i<document.all.length; i++) 
+	{
+
+		var obj=document.all(i);
+		var gettagName=obj.tagName.toLowerCase();
+		if((gettagName=="roundrect"||gettagName=="shape"||gettagName=="oval") && goalStartObj.id!=obj.id)
+		{
+			var minx=parseInt(obj.style.left);
+			var maxx=minx+parseInt(obj.offsetWidth);
+			var miny=parseInt(obj.style.top);
+			var maxy=miny+parseInt(obj.offsetHeight);
+			if(minx<ex && ex<maxx && miny<ey && ey<maxy){
+				//ShowErrorInfo(obj.id+"="+getEndHotPointType(obj));	
+				var temphotType=getEndHotPointType(obj);
+				switch(temphotType)
+				{
+					case "Bottom":
+						var hotx=minx+parseInt(obj.offsetWidth/2);
+						var hoty=maxy;
+						showEndHotPoint(hotx-5,hoty-10);
+						break;
+					case "Left":
+						var hotx=minx;
+						var hoty=miny+parseInt(obj.offsetHeight/2);
+						showEndHotPoint(hotx-5,hoty-5);
+						break;
+					case "Right":
+						var hotx=maxx;
+						var hoty=miny+parseInt(obj.offsetHeight/2);
+						showEndHotPoint(hotx-10,hoty-5);
+						break;
+					case "Top":
+						var hotx=minx+parseInt(obj.offsetWidth/2);
+						var hoty=miny;
+						showEndHotPoint(hotx-5,hoty-5);
+						break;
+				}
+			}
+		}
+	}
+}
+//显示热点的到比点位置
+function showEndHotPoint(x,y){
+	document.all.EndNodePoint.style.display="";
+	document.all.EndNodePoint.style.left=x;
+	document.all.EndNodePoint.style.top=y;
+}
+
+//获得画线时目标节点的热点类型
+function getEndHotPointType(targetobj){
+	//本函数有差异根据图形大小要细调
+	var oy=(parseInt(targetobj.style.top)+targetobj.offsetHeight);
+	var ox=(parseInt(targetobj.style.left)+targetobj.offsetWidth);
+	var x=parseInt(targetobj.style.left);
+	var y=parseInt(targetobj.style.top);
+	var cx=x+parseInt(targetobj.offsetWidth/2);
+	var cy=y+parseInt(targetobj.offsetHeight/2);
+	var temphotType="";
+	var hotNumx=parseInt(targetobj.offsetWidth/4)+5;
+	var hotNumy=parseInt(targetobj.offsetHeight/4)+5;
+	var ex=getEventOX(event);
+	var ey=getEventOY(event);
+	ex+=offsetX;
+	ey+=offsetY;
+	if( (cx-hotNumx)< ex && ex <(cx+hotNumx) && (y-hotNumy)<ey && ey<(y+hotNumy) )
+	{
+		temphotType="Top";
+	}
+	else if( (ox-hotNumx) < ex && ex <(ox+hotNumx) && ( (cy-hotNumy)<ey && ey <(cy+hotNumy) ) )
+	{
+		temphotType="Right";
+	}
+	else if( (cx-hotNumx)< ex && ex <(cx+hotNumx) && (oy+hotNumy) > ey&&ey > (oy-hotNumy) )
+	{
+		temphotType="Bottom";
+	}
+	else if( (x-hotNumx) < ex&&ex <(x+hotNumx) && ( (cy-hotNumy)<ey&&ey<(cy+hotNumy) ) )
+	{
+		temphotType="Left"
+	}
+	else
+	{
+		temphotType="Bottom"
+	}
+	return temphotType;
+}
+
+function CreateObj(ObjType,tempx,tempy)
+{
+  		switch(ObjType)
+		{
+		case "PolyLine":
+			PolyLine1.style.display="none";
+			if (Math.abs(tempx-hotx)<=5&&Math.abs(tempy-hoty)<=5)return false;
+			if(goalEndObj!=null&&goalEndObj.tagName!="polyline"&&goalEndObj.NodeNum!=goalStartObj.NodeNum)
+			{
+				var NodeNum=GetNodeNum("PolyLine");
+				NodeNum="0000"+NodeNum;
+				NodeNum=NodeNum.substring(NodeNum.length-4);
+				if(NodeNum.substring(0,1)!="1"){NodeNum="1"+NodeNum;}
+
+				var PointsStr=GetPointsStr("Creat");
+				var PolyLineName=goalStartObj.NodeNum+"_"+goalEndObj.NodeNum;
+				try
+				{					
+				   var robj=eval("polyline"+PolyLineName);
+				   ShowErrorInfo("节点之间的路由已存在("+robj.Nodeid+")!");
+				}
+				catch(e)
+				{
+					id="R"+NodeNum;
+					var tempStr="<v:polyline id='polyline"+PolyLineName+"' Nodeid='"+id+"' SourceNode='"+goalStartObj.Nodeid+"' TargetNode='"+goalEndObj.Nodeid+"' LinkeyNode='"+PolyLineName+"'  PolyLineType='"+StartPointType+"'  hotType='"+hotType+"' points='"+PointsStr+"' oldpoints='"+PointsStr+"' style='position:absolute;z-index:2;left:"+hotx+"px;top:"+hoty+"px' strokecolor='"+color1+"' onDblClick=\"SetProperty (this,'Router')\" strokeweight='1.2px' filled='false'   />";
+					RegObj("polyline"+PolyLineName);
+					var temppolyline=document.createElement(tempStr);
+					div1.appendChild(temppolyline);
+					temppolyline.innerHTML='<v:stroke  endarrow="block" endarrowwidth="narrow" endarrowlength="long"/>';
+					//alert(temppolyline.outerHTML);
+				}
+				goalEndObj=null;
+			}
+			break;
+		}
+}
+
+
+
+function GetPointsStr(EditPolyLine,endx,endy)
+{				  
+ 
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	
+	tempx+=offsetX;
+	tempy+=offsetY;    	
+
+	
+	if(event.srcElement.tagName!="BODY")
+	{
+		if((event.srcElement.parentElement.id=="div1"||event.srcElement.parentElement.parentElement.id=="div1")&&event.button==1)
+	        {
+	        	if(event.srcElement.parentElement.id=="div1")
+	        	{
+	        		goalEndObj=event.srcElement;
+	        	}
+	        	else
+	        	{
+	        		goalEndObj=event.srcElement.parentElement;
+	        	}
+	        }
+	}
+	
+	
+	if(EditPolyLine=="Edit")
+	{
+		var DatX=event.x-moveobjoldleft;
+		var DatY=event.y-moveobjoldtop;	
+
+	}
+        else if(EditPolyLine=="Creat")
+	{
+		getObjXY(goalEndObj,getEventOX(event),getEventOY(event),"Creat");
+		var DatX=hotx2-hotx;
+		var DatY=hoty2-hoty;
+	}
+	else if(EditPolyLine=="NodeMove")
+	{
+		var DatX=endx;
+		var DatY=endy;
+	}
+	else
+	{
+		var DatX=tempx-hotx;
+		var DatY=tempy-hoty;
+	}
+	
+	var CX=DatX/2;
+	var CY=DatY/2;
+	var temppointsvalue="0,0";
+	switch(StartPointType)
+	{
+		case "Bottom":
+			temppointsvalue="0,0"+" "+"0,"+CY+"px "+DatX+"px,"+CY+"px "+DatX+"px,"+DatY+"px";
+			break;
+		case "Bian":
+			temppointsvalue="0,0"+" "+CX+"px,0"+" "+CX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+			break;
+		case "Line":
+			temppointsvalue="0,0"+" "+DatX+"px,"+DatY+"px";
+			break;
+		case "zhexian":
+			var TopY=30;
+			var TopX=30;
+			
+			if(hotType=="Bottom"||hotType=="Top")
+			{
+				if(hotType=="Bottom"){ TopY=(DatY>=0)?(Math.abs(DatY)+TopY):TopY;}
+				if(hotType=="Top"){TopY=(DatY<0)?-(Math.abs(DatY)+TopY):-TopY;}
+				temppointsvalue="0,0"+" 0,"+TopY+" "+DatX+","+TopY+" "+DatX+"px,"+DatY+"px";
+			}
+			else
+			{
+				if(hotType=="Right"){TopX=(DatX>0)?(Math.abs(DatX)+TopX):TopX;}
+				if(hotType=="Left"){TopX=(DatX<0)?-(Math.abs(DatX)+TopX):-TopX;}
+				temppointsvalue="0,0"+" "+TopX+",0 "+TopX+","+DatY+" "+DatX+"px,"+DatY+"px";
+			}
+			break;
+		case "zhexian90":
+			temppointsvalue="0,0"+" "+DatX+"px,0 "+DatX+"px,"+DatY+"px";
+			break;
+		case "zhexian902":
+			temppointsvalue="0,0 0,"+DatY+" "+DatX+"px,"+DatY+"px";
+			break;
+	}
+	return temppointsvalue;
+}
+
+ function MouseOverOut(obj,EventType)
+{ 
+	if(EventType==1)
+	{
+     		
+     		obj.strokecolor="#blue";
+     		
+	}
+	else
+	{
+		obj.strokecolor="black";
+		
+	}
+}
+
+function RegObj(objName)
+{
+	var objHtml="";
+	if(goalStartObj!=null)
+	{
+		var tempobjstr=goalStartObj.LinkeyStartObj;
+		if(tempobjstr=="")
+		{
+			goalStartObj.LinkeyStartObj=objName;
+		}
+		else
+		{
+			goalStartObj.LinkeyStartObj+=","+objName;
+		}
+	}
+	if(goalEndObj!=null)
+	{
+		var tempobjstr=goalEndObj.LinkeyEndObj;
+		if(tempobjstr=="")
+		{
+			goalEndObj.LinkeyEndObj=objName;
+		}
+		else
+		{
+			goalEndObj.LinkeyEndObj+=","+objName;
+		}
+	}
+}
+
+function MoveNodeObj(moveobj,tempx,tempy,dx,dy)
+{
+	var i=0;
+	try{if(event.button==2)return false;} catch(e){}
+	if(dx==undefined){dx=tempx-xx;}
+	if(dy==undefined){dy=tempy-yy;}
+	if(dx==0&&dy==0){return false;}
+	var LinkeyStartStr=moveobj.LinkeyStartObj;
+	var LinkeyEndStr=moveobj.LinkeyEndObj;
+	if(LinkeyStartStr!=""&&LinkeyStartStr!=undefined)
+	{
+		var mobjarray=LinkeyStartStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+			try{
+				
+				var tempobj=eval(mobjarray[i]);
+				tempobj.style.left=oldArryStartLeft[i]+dx;
+				tempobj.style.top=oldArryStartTop[i]+dy;
+								
+						
+				var endx=oldArryEndPosx[i]-dx;
+				var endy=oldArryEndPosy[i]-dy;
+				var DatX=endx;
+				var DatY=endy;
+				var TopY=30;
+				var TopX=30;
+				var PolyLineType=tempobj.PolyLineType;
+				var temphotType=tempobj.hotType;
+				var temppointsvalue="";
+				switch(PolyLineType)
+				{
+					case "Bottom":
+						var ZY=endy/2;
+						if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Bian":
+				  		var ZY=endx/2;
+				  		if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+ZY+"px,0"+" "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Line":
+				  		temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "zhexian":
+						switch(temphotType)
+						{
+							case "Bottom":
+								TopY=(endy<=0)?(TopY):(endy+TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Top":
+								TopY=(endy<=0)?(endy-TopY):(-TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Right":
+								TopX=(endx<=0)?(TopX):(endx+TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Left":
+								TopX=(endx<=0)?(endx-TopX):(-TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+						}
+						break;
+					case "zhexian90":
+						temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+						break;
+					case "zhexian902":
+						temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+						break;
+				}
+				tempobj.oldpoints=temppointsvalue;
+				tempobj.orpoints=temppointsvalue;
+				tempobj.points.value=temppointsvalue;
+				AddRouterText(tempobj,"MoveObj");
+				
+				
+			}
+			catch(E)
+			{
+				ShowErrorInfo("本活动出错,请执行错误修复操作!");
+			}
+		}
+	}
+	
+	if(LinkeyEndStr!=""&&LinkeyEndStr!=undefined)
+	{
+		var mobjarray=LinkeyEndStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+			try{
+				var tempobj=eval(mobjarray[i]);
+						
+				var endx=oldArryEndPosx2[i]+dx;
+				var endy=oldArryEndPosy2[i]+dy;
+				var DatX=endx;
+				var DatY=endy;
+				var TopY=30;
+				var TopX=30;
+				var PolyLineType=tempobj.PolyLineType;
+				var temphotType=tempobj.hotType;
+				var temppointsvalue="";
+				switch(PolyLineType)
+				{
+					case "Bottom":
+						var ZY=endy/2;
+						if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Bian":
+				  		var ZY=endx/2;
+				  		if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+ZY+"px,0"+" "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Line":
+				  		temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "zhexian":
+						switch(temphotType)
+						{
+							case "Bottom":
+								TopY=(endy<=0)?(TopY):(endy+TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Top":
+								TopY=(endy<=0)?(endy-TopY):(-TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+" "+DatX+","+TopY+" "+DatX+"px,"+DatY+"px";
+								break;
+							case "Right":
+								TopX=(endx<=0)?(TopX):(endx+TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Left":
+								TopX=(endx<=0)?(endx-TopX):(-TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+						}
+						break;
+					case "zhexian90":
+						temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+						break;
+					case "zhexian902":
+						temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+						break;
+				}
+				tempobj.oldpoints=temppointsvalue;
+				tempobj.orpoints=temppointsvalue;
+				tempobj.points.value=temppointsvalue;
+				AddRouterText(tempobj,"MoveObj");
+				
+			}
+			catch(E)
+			{
+				ShowErrorInfo("本活动出错,请执行错误修复操作!");
+			}
+		}
+	}
+	
+	if(moveobj.NodeType!="XNode" && moveobj.NodeType!="XNode_text")
+	{
+		moveobj.style.left=moveobjoldleft+dx;
+	}
+	if(moveobj.NodeType!="YNode" && moveobj.NodeType!="YNode_text")
+	{
+		moveobj.style.top=moveobjoldtop+dy;
+	}
+	
+	var offsetX=document.body.scrollLeft;
+	var offsetY=document.body.scrollTop;
+	var goalux=document.body.clientWidth;
+	var goaluy=document.body.clientHeight;
+	if (tempx>goalux) window.scrollTo(offsetX+3,offsetY);
+	if (tempx<0) window.scrollTo(offsetX-3,offsetY);
+	if (tempy>goaluy) window.scrollTo(offsetX,offsetY+3);
+	if (tempy<0) window.scrollTo(offsetX,offsetY-3);
+	
+	
+}
+
+
+function MoveNodeObjV9(moveobj)
+{
+	var i=0;
+	try{if(event.button==2)return false;} catch(e){}
+	var dx=getEventOX(event)-mstartX;
+	var dy=getEventOY(event)-mstartY;
+	var MulSelNode=top.document.all.MulNodeList.value; //选择的多个节点
+	var LinkeyStartStr=moveobj.LinkeyStartObj;
+	var LinkeyEndStr=moveobj.LinkeyEndObj;
+	if(LinkeyStartStr!=""&&LinkeyStartStr!=undefined)
+	{
+		var mobjarray=LinkeyStartStr.split(",");
+		for(var i=0;i<mobjarray.length;i++)
+		{
+			//try{
+				
+				var tempobj=eval(mobjarray[i]);
+				tempobj.style.left=parseInt(tempobj.oldleft)+dx;
+				tempobj.style.top=parseInt(tempobj.oldtop)+dy;
+								
+				var oldPointsStr=tempobj.oldpoints;
+				var re=/( )/gi;
+				oldPointsStr=oldPointsStr.replace(re,",");
+				re=/px/gi;
+				oldPointsStr=oldPointsStr.replace(re,"");
+				var pointarray=oldPointsStr.split(",");
+
+				//计算线条是否在两个选中的节点之中，如果在之中就不需要变化points，只需要改变x,y坐标即可
+				var tmparray=tempobj.id.replace("polyline","").split("_");
+				var StartNodeid="Node"+tmparray[0];
+				var EndNodeid="Node"+tmparray[1];
+				var tmpStr=MulSelNode+",";
+				if(tmpStr.indexOf(EndNodeid+",")!=-1)
+				{ //说明这条线的结束环节也是在多选里面，只需要变化x,y坐标即可
+					var endx=pointarray[pointarray.length-2]-0;
+					var endy=pointarray[pointarray.length-1]-0;
+				}else{
+				  //说明线条链接的节点没有在选中里面，需要变换points
+					var endx=pointarray[pointarray.length-2]-0-dx;
+					var endy=pointarray[pointarray.length-1]-0-dy;
+				}
+				//计算结束
+
+				var DatX=endx;
+				var DatY=endy;
+				var TopY=30;
+				var TopX=30;
+				var PolyLineType=tempobj.PolyLineType;
+				var temphotType=tempobj.hotType;
+				var temppointsvalue="";
+				switch(PolyLineType)
+				{
+					case "Bottom":
+						var ZY=endy/2;
+						if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Bian":
+				  		var ZY=endx/2;
+				  		if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+ZY+"px,0"+" "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Line":
+				  		temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "zhexian":
+						switch(temphotType)
+						{
+							case "Bottom":
+								TopY=(endy<=0)?(TopY):(endy+TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Top":
+								TopY=(endy<=0)?(endy-TopY):(-TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Right":
+								TopX=(endx<=0)?(TopX):(endx+TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Left":
+								TopX=(endx<=0)?(endx-TopX):(-TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+						}
+						break;
+					case "zhexian90":
+						temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+						break;
+					case "zhexian902":
+						temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+						break;
+				}
+				//ShowErrorInfo(temppointsvalue);
+				tempobj.orpoints=temppointsvalue;
+				tempobj.points.value=temppointsvalue;
+				AddRouterText(tempobj,"MoveObj");
+				
+				
+			//}catch(E)
+			//{
+				//ShowErrorInfo("本活动出错,请执行错误修复操作v9!");
+			//}
+		}
+	}
+	
+	
+	if(LinkeyEndStr!=""&&LinkeyEndStr!=undefined)
+	{
+		var mobjarray=LinkeyEndStr.split(",");
+		for(var i=0;i<mobjarray.length;i++)
+		{
+			//try{
+				var tempobj=eval(mobjarray[i]);
+				
+				//var endx=oldArryEndPosx2[i]+dx;
+				//var endy=oldArryEndPosy2[i]+dy;
+
+				var oldPointsStr=tempobj.oldpoints;
+				var re=/( )/gi;
+				oldPointsStr=oldPointsStr.replace(re,",");
+				re=/px/gi;
+				oldPointsStr=oldPointsStr.replace(re,"");
+				var pointarray=oldPointsStr.split(",");
+
+				//计算线条是否在两个选中的节点之中，如果在之中就不需要变化points，只需要改变x,y坐标即可
+				var tmparray=tempobj.id.replace("polyline","").split("_");
+				var StartNodeid="Node"+tmparray[0];
+				var EndNodeid="Node"+tmparray[1];
+				var tmpStr=MulSelNode+",";
+				if(tmpStr.indexOf(StartNodeid+",")!=-1)
+				{ //说明这条线的开始环节也是在多选里面，只需要变化x,y坐标即可
+					var endx=pointarray[pointarray.length-2]-0;
+					var endy=pointarray[pointarray.length-1]-0;
+				}else{
+				  //说明线条的开始节点没有在选中里面，需要变换points
+					var endx=pointarray[pointarray.length-2]-0+dx;
+					var endy=pointarray[pointarray.length-1]-0+dy;
+				}
+				//计算结束
+
+				//var endx=pointarray[pointarray.length-2]-0+dx;
+				//var endy=pointarray[pointarray.length-1]-0+dy;
+
+				var DatX=endx;
+				var DatY=endy;
+				var TopY=30;
+				var TopX=30;
+				var PolyLineType=tempobj.PolyLineType;
+				var temphotType=tempobj.hotType;
+				var temppointsvalue="";
+				switch(PolyLineType)
+				{
+					case "Bottom":
+						var ZY=endy/2;
+						if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Bian":
+				  		var ZY=endx/2;
+				  		if(tempobj.TopY!=undefined&&tempobj.TopY!="") ZY=parseInt(tempobj.TopY);
+				  		temppointsvalue="0,0"+" "+ZY+"px,0"+" "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "Line":
+				  		temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				  		break;
+				  	case "zhexian":
+						switch(temphotType)
+						{
+							case "Bottom":
+								TopY=(endy<=0)?(TopY):(endy+TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+"px "+DatX+"px,"+TopY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Top":
+								TopY=(endy<=0)?(endy-TopY):(-TopY);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopY=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" 0,"+TopY+" "+DatX+","+TopY+" "+DatX+"px,"+DatY+"px";
+								break;
+							case "Right":
+								TopX=(endx<=0)?(TopX):(endx+TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+							case "Left":
+								TopX=(endx<=0)?(endx-TopX):(-TopX);
+								if(tempobj.TopY!=undefined&&tempobj.TopY!="") TopX=parseInt(tempobj.TopY);
+								temppointsvalue="0,0"+" "+TopX+"px,0 "+TopX+"px,"+DatY+"px "+DatX+"px,"+DatY+"px";
+								break;
+						}
+						break;
+					case "zhexian90":
+						temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+						break;
+					case "zhexian902":
+						temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+						break;
+				}
+				tempobj.orpoints=temppointsvalue;
+				tempobj.points.value=temppointsvalue;
+				AddRouterText(tempobj,"MoveObj");
+				
+			//}	catch(E){
+			//	ShowErrorInfo("本活动出错,请执行错误修复操作v9!");
+			//}
+		}
+	}
+	
+	
+
+	moveobj.style.left=parseInt(moveobj.oldleft)+dx;
+	moveobj.style.top=parseInt(moveobj.oldtop)+dy;
+	
+	var tempx=event.x;
+	var tempy=event.y;
+	var offsetX=document.body.scrollLeft;
+	var offsetY=document.body.scrollTop;
+	var goalux=document.body.clientWidth;
+	var goaluy=document.body.clientHeight;
+	if (tempx>goalux) window.scrollTo(offsetX+3,offsetY);
+	if (tempx<0) window.scrollTo(offsetX-3,offsetY);
+	if (tempy>goaluy) window.scrollTo(offsetX,offsetY+3);
+	if (tempy<0) window.scrollTo(offsetX,offsetY-3);
+	
+	
+}
+
+function InitOldXY()
+{
+	//初始化所有对像的旧坐标，兼容旧的图形
+	for(var i=0; i<document.all.length; i++) 
+	{
+
+		var obj=document.all(i);
+		var gettagName=obj.tagName.toLowerCase();
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="oval"||gettagName=="polyline")
+		{
+			obj.oldleft=parseInt(obj.style.left);
+			obj.oldtop=parseInt(obj.style.top);
+			if(gettagName=="polyline"){
+				if(obj.orpoints==""||obj.orpoints==undefined){obj.orpoints=obj.oldpoints;}
+				obj.oldpoints=obj.orpoints;
+			}else{
+				//增加onmouseover功能
+				//obj.onmouseover=ShowEndHotPoint;
+			}
+		}
+	}
+}
+
+function SaveoldNodePosition(moveobj)
+{
+	moveobjoldleft=parseInt(moveobj.style.left);
+	moveobjoldtop=parseInt(moveobj.style.top);
+	if(goalTypeName=="Edit") return false;
+	
+	if(moveobj.tagName=="polyline")
+	{
+		xx=getEventOX(event);
+		yy=getEventOY(event);
+		var tempobj=moveobj;
+		oldArryStartLeft[0]=tempobj.style.left.replace("px","")-0;
+		oldArryStartTop[0]=tempobj.style.top.replace("px","")-0;
+		var oldPointsStr=tempobj.oldpoints;
+		var re=/( )/gi;
+		oldPointsStr=oldPointsStr.replace(re,",");
+		re=/px/gi;
+		oldPointsStr=oldPointsStr.replace(re,"");
+		oldArrayEndPosx=oldPointsStr.split(",");
+		oldArrayEndPosx[8]=parseInt(yy+document.body.scrollTop);
+		oldArrayEndPosx[9]=parseInt(xx+document.body.scrollLeft);
+		return false;
+	}
+	
+	var LinkeyStartStr=moveobj.LinkeyStartObj;
+	var LinkeyEndStr=moveobj.LinkeyEndObj;
+	var tempNum=0;
+	EndMoveClearObj();
+	
+	if(LinkeyStartStr!=""&&LinkeyStartStr!=undefined)
+	{
+		var mobjarray=LinkeyStartStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+				var tempobj=eval(mobjarray[i]);
+				oldArryStartLeft[i]=tempobj.style.left.replace("px","")-0;
+				oldArryStartTop[i]=tempobj.style.top.replace("px","")-0;
+				var oldPointsStr=tempobj.oldpoints;
+				var re=/( )/gi;
+				oldPointsStr=oldPointsStr.replace(re,",");
+				re=/px/gi;
+				oldPointsStr=oldPointsStr.replace(re,"");
+				var pointarray=oldPointsStr.split(",");
+				tempNum=pointarray[pointarray.length-2]-0;
+				oldArryEndPosx[i]=tempNum;
+				tempNum=pointarray[pointarray.length-1]-0;
+				oldArryEndPosy[i]=tempNum;
+		}
+	}
+	
+	if(LinkeyEndStr!=""&&LinkeyEndStr!=undefined)
+	{
+		var mobjarray=LinkeyEndStr.split(",");
+		for(i=0;i<mobjarray.length;i++)
+		{
+				var tempobj=eval(mobjarray[i]);
+				var oldPointsStr=tempobj.oldpoints;
+				var re=/( )/gi;
+				oldPointsStr=oldPointsStr.replace(re,",");
+				re=/px/gi;
+				oldPointsStr=oldPointsStr.replace(re,"");
+				var pointarray=oldPointsStr.split(",");
+				tempNum=pointarray[pointarray.length-2]-0;
+				oldArryEndPosx2[i]=tempNum;
+				tempNum=pointarray[pointarray.length-1]-0;
+				oldArryEndPosy2[i]=tempNum;
+		}
+	}
+	
+}
+
+function EndMoveClearObj()
+{
+	for(i=0;i<oldArryEndPosx.length;i++)
+	oldArryEndPosx[i]=0;
+	
+	for(i=0;i<oldArryEndPosy.length;i++)
+	oldArryEndPosy[i]=0;
+	
+	for(i=0;i<oldArryEndPosx2.length;i++)
+	oldArryEndPosx2[i]=0;
+	
+	for(i=0;i<oldArryEndPosy2.length;i++)
+	oldArryEndPosy2[i]=0;
+	
+	
+	for(i=0;i<oldArryStartLeft.length;i++)
+	oldArryStartLeft[i]=0;
+	
+	for(i=0;i<oldArryStartTop.length;i++)
+	oldArryStartTop[i]=0;
+
+}
+
+function deleteobj(delobj)
+{
+  
+  var Nodeid=delobj.id;
+  var i=0;
+  if(delobj.tagName!="polyline"&&delobj.tagName!="SPAN")
+  {  	
+	var LinkeyStartStr=delobj.LinkeyStartObj;
+  	var LinkeyEndStr=delobj.LinkeyEndObj;
+  
+  	if(LinkeyStartStr!="" && LinkeyStartStr!=null)
+  	{
+  		try{
+	  		var mobjarray=LinkeyStartStr.split(",");
+			for(i=0;i<mobjarray.length;i++)
+			{
+				//alert("删除引出线="+mobjarray[i]);
+				deletepolyline(eval(mobjarray[i]));
+			}
+			for(i=0;i<mobjarray.length;i++)
+			{
+				eval(mobjarray[i]).outerHTML="";
+			}
+		}
+		catch (e){alert("deleteobj1="+e.message);}
+  	}
+  	if(LinkeyEndStr!="" && LinkeyStartStr!=null )
+  	{
+  		try{
+	  		mobjarray=LinkeyEndStr.split(",");
+			for(i=0;i<mobjarray.length;i++)
+			{
+				//alert("删除结束线="+mobjarray[i]);
+				deletepolyline(eval(mobjarray[i]));
+			}
+			for(i=0;i<mobjarray.length;i++)
+			{
+				eval(mobjarray[i]).outerHTML="";
+			}
+		}catch (e){alert("deleteobj2="+e.message);}
+  	}
+  	
+  }
+  else if(delobj.tagName=="polyline")
+  {
+	deletepolyline(delobj);
+  }
+
+  
+  if(delobj.tagName=="shape")
+  {
+	 var sdelobj=eval("document.all.S"+delobj.id);
+	 sdelobj.outerHTML="";
+  }
+  delPropertyDoc(delobj,"0");
+  delobj.outerHTML="";
+  
+  //删除相关的文档节点
+  DelDocumentNode(Nodeid);
+  
+  //删除关联泳道节点 lucaihui
+  var YdNodeid="Node"+(Nodeid.replace("Node","")-0-10000);
+  var YdNodeText=document.all(YdNodeid);
+  if(YdNodeText)  
+  {
+	 YdNodeText.outerHTML="";
+  }
+  
+  top.ReloadTree();
+  top.putHisData(div1.innerHTML);
+
+}
+
+function delPropertyDoc(obj,AddObj)
+{
+		/*删除指定节点*/
+		top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+		var url="rule?wf_num=R_S002_B011&Action=DeleteNode&Processid="+top.processid+"&Nodeid="+obj.Nodeid;
+
+		var conn = Ext.lib.Ajax.getConnectionObject().conn;
+		conn.open("post",url,false);   
+		conn.send(); 
+		if (conn.status == "200"){
+
+			top.Ext.getBody().unmask();
+		}
+		/*
+		alert(url+"===="+obj.Nodeid);
+		Ext.Ajax.request({
+			url: url,
+			success : function(response, action){
+				var rs = Ext.util.JSON.decode(response.responseText);
+				document.body.style.cursor="default";
+				ShowErrorInfo(rs.msg);
+				top.Ext.getBody().unmask();
+			},
+			failure: function(){alert('URL Error!');Ext.getBody().unmask();},
+			params: {Action:"DeleteNode",Processid:top.processid,Nodeid:obj.Nodeid}
+		});
+		*/
+}
+
+function deletepolyline(LineObj)
+{
+	var i=0;
+	var NewArray=new Array();
+	var NewArray2=new Array();
+	var LineName=LineObj.id;
+	if(LineObj.LinkeyNode)
+	{
+		var NodeArray=LineObj.LinkeyNode.split("_");
+	}
+	try{
+		var NodeObj=eval("Node"+NodeArray[0]);
+		var NewLinkeyStartObj=NodeObj.LinkeyStartObj;
+		var tempArray=NewLinkeyStartObj.split(",");
+		var tempStr="";
+		var j=0;
+		for(i=0;i<tempArray.length;i++)
+		{
+			if(tempArray[i]!=LineName)
+			{
+				NewArray[j]=tempArray[i];
+				j++;
+			}
+		}
+		for(i=0;i<NewArray.length;i++)
+		{
+		   	if(i==NewArray.length-1)
+			tempStr+=NewArray[i];
+			else
+			tempStr+=NewArray[i]+",";	
+		}
+		
+		NodeObj.LinkeyStartObj=tempStr;
+	}
+	catch (e){alert("deletepolyline error 1="+e.message);}
+	try{
+		NodeObj=eval("Node"+NodeArray[1]);
+		var NewLinkeyEndObj=NodeObj.LinkeyEndObj;
+		tempArray=NewLinkeyEndObj.split(",");
+		tempStr="";
+		j=0;
+		for(i=0;i<tempArray.length;i++)
+		{
+			if(tempArray[i]!=LineName)
+			{
+				NewArray2[j]=tempArray[i];
+				j++;
+			}
+		}
+		for(i=0;i<NewArray2.length;i++)
+		{
+		   	if(i==NewArray2.length-1)
+			tempStr+=NewArray2[i];
+			else
+			tempStr+=NewArray2[i]+",";	
+		}
+		NodeObj.LinkeyEndObj=tempStr;
+	}
+	catch (e){alert("deletepolyline error 2="+e.message)}
+	
+	try{
+		var tobj=eval("document.all.TextBox"+LineObj.id);
+		tobj.outerHTML="";
+	}
+	catch (e){}
+	
+	delPropertyDoc(LineObj);
+	
+}
+function move1x(dx,dy)
+{
+	SaveoldNodePosition(pmoveobj);
+	MoveNodeObj(pmoveobj,0,0,dx,dy);
+}
+
+function pmove()
+{ 
+	if(pmoveobj==null||pmoveobj.tagName=="polyline")return false;
+	var obj=parent.event;
+	if(obj.keyCode==37)move1x(-1,0);
+	if(obj.keyCode==37&&obj.ctrlKey)move1x(-5,0);
+	if(obj.keyCode==39)move1x(1,0);
+	if(obj.keyCode==39&&obj.ctrlKey)move1x(5,0);
+	if(obj.keyCode==38)move1x(0,-1);
+	if(obj.keyCode==38&&obj.ctrlKey)move1x(0,-5);
+	if(obj.keyCode==40)move1x(0,1);
+	if(obj.keyCode==40&&obj.ctrlKey)move1x(0,5);
+}
+
+
+function ShowObjXYPosInBottom(obj)
+{
+	if(obj!=null)
+	{
+   		parent.document.getElementById("xypos").innerText=obj.style.left+","+obj.style.top;
+   	}
+}
+
+function ShowErrorInfo(msg)
+{
+ if(msg!=""){msg="<img src=linkey/bpm/images/icons/erinfo.gif valign=absmiddle height=14 >"+msg;}
+ top.Ext.getBody().unmask();
+  parent.document.getElementById("ErrorInfo").innerHTML=msg;
+}
+
+function GetGridXY(getV,getType)
+{
+	
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	if(goalShowGrid==1)
+	{
+		if(getType=="x")
+		{
+			return parseInt(tempx/48)*48
+		}
+		if(getType=="y")
+		{
+			return parseInt(tempy/25)*25
+		}
+	}
+	else
+	{
+		return getV;	
+	}
+}
+
+function getEventX(evt){
+	return evt.x;
+}
+function getEventY(evt){
+	return evt.y;
+}
+function getEventOX(evt){
+	//return evt.offsetX;
+	return evt.clientX;
+}
+function getEventOY(evt){
+	return evt.clientY;
+	//return evt.offsetY;
+}
+
+function AddNode(NodeType)
+{
+
+	var cobj;
+	var tempx=getEventOX(event);
+	var tempy=getEventOY(event);
+	tempx=GetGridXY(tempx,"x");
+	tempy=GetGridXY(tempy,"y");
+	//ShowErrorInfo("oX="+event.offsetX+" oY="+event.offsetY+" xc="+event.clientX+" yc="+event.clientY+" x="+tempx+" y="+tempy);
+	if(NodeType!="AddText")
+	{
+		NodeNum=GetNodeNum(NodeType);
+		if(NodeNum==0) return false;
+		NodeNum="0000"+NodeNum;
+		NodeNum=NodeNum.substring(NodeNum.length-4);
+		if(NodeNum.substring(0,1)!="1"){NodeNum="1"+NodeNum;}
+	}
+	switch(NodeType)
+	{
+		case "Activity":  
+				var objx=tempx+offsetX-35;
+				var objy=tempy+offsetY-25;
+				var id="T"+NodeNum;
+		        var tempStr="<v:roundrect class=\"Activity\" id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='Activity' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:96px;height:50px;z-index:10;text-align:center;' onDblClick=\"SetProperty (this,'Activity');\"  arcsize='10923f' fillcolor=\"#daeef3 [664]\" strokecolor='#004d86' strokeweight='1.20pt'>";
+		        cobj=div1.document.createElement(tempStr);
+				div1.appendChild(cobj);
+				cobj.innerHTML="<v:fill color2=\"white [3212]\" rotate=\"t\" focus=\"100%\" type=\"gradient\"/><v:shadow on=\"t\" type=\"perspective\"  offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox id='TextBoxNode"+NodeNum+"' style='font-size:9pt;' inset='1pt,7pt,1pt,7pt' ></v:TextBox>";
+				//alert(cobj.outerHTML);
+		        break;
+		case "AutoActivity":  
+				var objx=tempx+offsetX-35;
+				var objy=tempy+offsetY-25;
+				var id="T"+NodeNum;
+		         var tempStr="<v:roundrect id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='AutoActivity' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:96px;height:50px;z-index:10;text-align:center;' onDblClick=\"SetProperty (this,'AutoActivity')\"  arcsize='10923f' strokeweight='1.2pt' strokecolor='#004d86' fillcolor='#f0f0f0'>";
+		         cobj=div1.document.createElement(tempStr);
+				 div1.appendChild(cobj);
+				 cobj.innerHTML="<v:fill color2=\"#bebebe\" focusposition=\"1\" focussize=\"\" focus=\"100%\" type=\"gradient\"/><v:shadow on=\"t\" type=\"perspective\" color=\"#7f7f7f [1601]\" opacity=\".5\" offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox  id='TextBoxNode"+NodeNum+"'  style='font-size:9pt;' inset='1pt,5pt,1pt,5pt' ></v:TextBox>";
+		         break;
+		case "SubProcess":  
+				var objx=tempx+offsetX-35;
+				var objy=tempy+offsetY-25;
+				var id="S"+NodeNum;
+               	var tempStr="<v:shapetype id='SNode"+NodeNum+"' coordsize='21600,21600' o:spt='112' ><v:stroke joinstyle='miter'/><v:path o:extrusionok='f' gradientshapeok='t' o:connecttype='rect' textboxrect='2610,0,18990,21600'/></v:shapetype>";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+					tempStr="<v:shape  id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='SubProcess' type='#SNode"+NodeNum+"'  LinkeyStartObj='' LinkeyEndObj='' type=\"#_x0000_t112\" style='position:absolute;left:"+objx+";top:"+objy+";text-align:center;width:96px;height:50px;z-index:2' fillcolor=\"#daeef3 [664]\" strokeweight='1.20pt' strokecolor='#004d86' onDblClick=\"SetProperty (this,'SubProcess')\" >";
+					tempStr+="<v:fill color2=\"white [3212]\" rotate=\"t\" focus=\"100%\" type=\"gradient\"/>";
+                	tempStr+="<v:shadow on=\"t\" type=\"perspective\"  offset=\"1pt\" offset2=\"-3pt\"/><v:TextBox inset='2pt,3pt,2pt,3pt' id='TextBoxNode"+NodeNum+"' style='font-size:9pt;text-align:center'></v:TextBox>";
+                	tempStr+="</v:shape>";
+                	cobj.outerHTML+=tempStr;
+		         break;
+	     case "Edge":
+	         		var objx=tempx+offsetX-50;
+					var objy=tempy+offsetY-30;
+					var id="G"+NodeNum;
+                	var tempStr="<v:shapetype  id='SNode"+NodeNum+"'  coordsize='21600,21600'   path='m10800,0l0,10800,10800,21600,21600,10800xe' />";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+                	tempStr="<v:shape id='Node"+NodeNum+"'  Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='Edge' type='#SNode"+NodeNum+"'  LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:110px;height:60px;z-index:2' onDblClick=\"SetProperty (this,'Edge')\" strokecolor='#004d86'  strokeweight='1px' fillcolor='#e8e8e8'>";
+					tempStr+='<v:fill opacity="1" color2="#c7c7c7" o:opacity2="1" rotate="f" alignshape="t" angle="0" focusposition="1" focussize="" method="linear sigma" focus="100%" type="gradient"/>';
+					tempStr+='<v:shadow on="t" type="perspective" color="#7f7f7f [1601]" opacity=".5" origin="0,0" offset="1pt,2pt" offset2="-3pt,0" matrix="1,0,0,1,0,0"/><o:extrusion v:ext="view" on="f"/>';
+                	tempStr+="<v:TextBox inset='6pt,17pt,6pt,6pt' id='TextBoxNode"+NodeNum+"' style='font-size:9pt;text-align:center'>是否同意?</v:TextBox>";
+                	tempStr+="</v:shape>";
+                	cobj.outerHTML+=tempStr;
+                	break;
+		case "EventNode_old":
+				var objx=tempx+offsetX-15;
+				var objy=tempy+offsetY-15;
+				var id="E"+NodeNum;
+				var tempStr="<v:shapetype id='SNode"+NodeNum+"'    coordsize='21600,21600' o:spt='23' adj='5400' ></v:shapetype>";
+				cobj=div1.document.createElement(tempStr);
+				div1.appendChild(cobj);
+				tempStr="<v:shape id='Node"+NodeNum+"' type='#SNode"+NodeNum+"'  Nodeid='"+id+"' NodeNum='"+NodeNum+"' oldleft='"+objx+"' oldtop='"+objy+"' NodeType='Event' LinkeyStartObj='' LinkeyEndObj='' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:30px;height:30px;z-index:2' onDblClick=\"SetProperty (this,'Event')\" strokecolor='#004d86'  strokeweight='1px' fillcolor='#e8e8e8' >";
+				tempStr+='<v:fill opacity="1" color2="#f8feb0" o:opacity2="1" rotate="f" alignshape="t" angle="0" focusposition="1" focussize="" method="linear sigma" focus="100%" type="gradient"/>';
+				tempStr+="<v:TextBox inset='6pt,17pt,6pt,6pt' id='TextBoxNode"+NodeNum+"' style='font-size:9pt;text-align:center'></v:TextBox>";
+				tempStr+="</v:shape>";
+				cobj.outerHTML+=tempStr;
+				break;
+		case "EventNode":
+                	var objx=tempx+offsetX-20;
+					var objy=tempy+offsetY-20;
+					var id="E"+NodeNum;
+                	var tempStr="<v:Oval id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='Event' LinkeyStartObj='' LinkeyEndObj='' style='Z-INDEX: 2; POSITION: absolute;left:"+objx+"px;top:"+objy+"px;width:25;height:25' fillcolor='#e8e8e8' onDblClick=\"SetProperty (this,'Event')\" strokecolor='#004d86' strokeweight='1.8px'    />";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+					cobj.innerHTML="<v:fill  />";//<v:shadow on=\"t\" type=\"perspective\" color=\"#e8e8e8\" offset=\"0pt\" offset2=\"0pt\"/><v:TextBox inset='1pt,8pt,1pt,1pt' id='TextBoxNode"+NodeNum+"'  style='font-size:9pt;text-align:center;'></v:TextBox>";
+                	break;
+          case "StartNode":
+                	var objx=tempx+offsetX-20;
+					var objy=tempy+offsetY-20;
+					var id="E"+NodeNum;
+                	var tempStr="<v:Oval id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='StartNode' LinkeyStartObj='' LinkeyEndObj='' style='Z-INDEX: 2; POSITION: absolute;left:"+objx+"px;top:"+objy+"px;width:45;height:45' fillcolor='#00CC00' onDblClick=\"SetProperty (this,'StartNode')\" strokecolor='#004d00' strokeweight='1.8px'    />";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+					cobj.innerHTML="<v:fill type='gradient;'  /><v:shadow on=\"t\" type=\"perspective\" color=\"#A2A2A2\" offset=\"0.5pt\" offset2=\"-0pt\"/><v:TextBox inset='1pt,8pt,1pt,1pt' id='TextBoxNode"+NodeNum+"'  style='font-size:9pt;text-align:center;'>开始</v:TextBox>";
+                	break;
+          case "EndNode":
+                	var objx=tempx+offsetX-20;
+					var objy=tempy+offsetY-20;
+					var id="E"+NodeNum;
+                	var tempStr="<v:Oval id='Node"+NodeNum+"' Nodeid='"+id+"' NodeNum='"+NodeNum+"' NodeType='EndNode' LinkeyStartObj='' LinkeyEndObj='' style='Z-INDEX: 2; POSITION: absolute;left:"+objx+"px;top:"+objy+"px;width:45;height:45' fillcolor='#FFCC33' onDblClick=\"SetProperty (this,'EndNode')\"  strokecolor='#CE5300' strokeweight='1.8px'  />";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+					cobj.innerHTML="<v:fill type='gradient;' color2='#E0E0E0' /><v:shadow on=\"t\" type=\"perspective\" color=\"#A2A2A2\" offset=\"1pt\" offset2=\"-1pt\"/><v:TextBox inset='1pt,8pt,1pt,1pt'  id='TextBoxNode"+NodeNum+"'  style='font-size:9pt;text-align:center;' >结束</v:TextBox>";
+                	break;
+           case "AddText":
+                	var objx=insertText.style.left;
+					var objy=insertText.style.top;
+					var getText=insertTextValue.value;
+					insertText.style.display="none";			
+					if(getText=="") return false;
+					getText=getText.replace(/\n/gi,"<br>");
+					insertTextValue.value="";
+                	var tempStr="<span style='position:absolute;z-index:90;left:"+objx+";top:"+objy+";line-height:20px;'></span>";
+                	cobj=div1.document.createElement(tempStr);
+					div1.appendChild(cobj);
+					cobj.innerHTML=getText;
+                	break;
+			case "Pool":
+				var objx=tempx+offsetX-35;
+				var objy=tempy+offsetY-25;
+				objy=10;
+		        var tempStr="<v:rect id='Node"+NodeNum+"' NodeNum='"+NodeNum+"' NodeType='Pool' style='position:absolute;left:"+objx+"px;top:"+objy+"px;width:230px;height:700px;z-index:1;text-align:center;' fillcolor=#cccccc strokecolor='#000000' strokeweight='1.0pt' />";
+		        cobj=div1.document.createElement(tempStr);
+				div1.appendChild(cobj);
+		        break;
+	}
+
+	return cobj;
+}
+
+function GetNodeNum(NodeType)
+{
+	
+	if(NodeType=="StartNode")
+	{
+		for (i=0; i<document.all.length; i++) 
+		{
+			var obj=document.all(i);
+			gettagName=obj.tagName;
+			if(gettagName=="Oval"&&obj.NodeType=="StartNode")
+			{
+				ShowErrorInfo("开始节点已存在");
+				return 0;
+			}
+		}
+	}
+	
+	
+	var gettagName="";
+	var tempNum=0;
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		var NodeNum=obj.NodeNum;
+		var Nodeid=obj.Nodeid;
+		if(NodeNum!=undefined)
+		{
+			if(parseInt(NodeNum)>tempNum)
+			{
+				tempNum=parseInt(NodeNum);	
+			}
+		}else if(Nodeid!=undefined){
+			NodeNum=Nodeid.substring(1,Nodeid.length);
+			if(parseInt(NodeNum)>tempNum)
+			{
+				tempNum=parseInt(NodeNum);	
+			}
+		}
+	}
+	//alert(tempNum);
+	return tempNum+1;
+}
+
+function fdobj()
+{
+	for(i=0;i<div1.all.length;i++)
+	{
+	   try{
+		div1.all[i].style.left=parseInt(div1.all[i].style.left)-5;
+		div1.all[i].style.top=parseInt(div1.all[i].style.top)-5;div1.all[i].style.width=parseInt(div1.all[i].style.width)+10;
+		div1.all[i].style.height=parseInt(div1.all[i].style.height)+10;
+	    }
+	    catch(e)
+		{}
+	}
+}
+
+function sxobj()
+{
+	for(i=0;i<div1.all.length;i++)
+	{
+		try{
+			div1.all[i].style.left=parseInt(div1.all[i].style.left)+5;
+			div1.all[i].style.top=parseInt(div1.all[i].style.top)+5;
+			div1.all[i].style.width=parseInt(div1.all[i].style.width)-10;
+			div1.all[i].style.height=parseInt(div1.all[i].style.height)-10;
+		}
+		catch(e){}
+	}
+}
+
+function highlight()
+{
+	if (event.srcElement.className == "menuitems") 
+	{
+		event.srcElement.style.backgroundColor = "highlight";
+		event.srcElement.style.color = "white";
+	}
+	if(event.srcElement.parentElement.className == "menuitems")
+	{
+		event.srcElement.parentElement.style.backgroundColor = "highlight";
+		event.srcElement.parentElement.style.color = "white";
+	}
+}
+function lowlight() {
+	if (event.srcElement.className == "menuitems") 
+	{
+		event.srcElement.style.backgroundColor = "";
+		event.srcElement.style.color = "black";
+	}
+	if(event.srcElement.parentElement.className == "menuitems")
+	{
+		event.srcElement.parentElement.style.backgroundColor = "";
+		event.srcElement.parentElement.style.color = "black";
+	}
+}
+
+function printsetup()
+{
+	linkeyflow.execwb(8,1); 
+} 
+function printpreview()
+{ 
+	document.all.linkeyflow.execwb(7,1); 
+} 
+function printit() 
+{
+	window.print();
+} 
+
+function ChangeObjStyle(obj)
+{
+	if(obj)
+	{
+		if(obj.NodeType=="XNode" || obj.NodeType=="YNode" || obj.NodeType=="XNode_text" || obj.NodeType=="YNode_text" ){return;}
+	}
+	if(obj)
+	{
+		if(goalClickStyle!=obj.id && obj.NodeType!="Pool" && obj.NodeType!="Area")
+		{
+			obj.strokeweight+=1;
+			obj.style.zIndex="1200";
+			goalClickStyle=obj.id;
+		}else if(obj.NodeType!="Pool")
+		{
+			obj.strokeweight+=1;
+			goalClickStyle=obj.id;
+		}
+	}
+	else
+	{
+		if(goalClickStyle!="")
+		{
+			try{
+				var oldobj=eval(goalClickStyle);
+				oldobj.strokeweight-=1;
+				if(oldobj.tagName=="polyline")
+				{
+					oldobj.style.zIndex="5";	
+				}
+				else
+				{
+					if(oldobj.NodeType=="Edge")
+					{
+						oldobj.style.zIndex="10";
+					}else if(oldobj.NodeType=="Area"){
+						oldobj.style.zIndex="3";
+					}else if(oldobj.NodeType=="XNode" || oldobj.NodeType=="YNode" ){
+						oldobj.style.zIndex="1";
+					}else{
+						if(oldobj.NodeType=="DocNode"){
+							oldobj.style.zIndex="1600";
+						}else
+						{
+							oldobj.style.zIndex="10";
+						}
+					}
+				}
+			}
+			catch(e){}
+			goalClickStyle="";
+		}
+	}
+}
+
+
+function SaveHistory(doaction)
+{
+	if(doaction=="Save"&&HistoryArray[HistoryArray.length-1]!=div1.innerHTML)
+	{
+		var Num=HistoryArray.length;
+		HistoryArray[Num]=div1.innerHTML;
+		CHistoryPos=Num-1;
+		if(CHistoryPos<0)CHistoryPos=0;
+		parent.document.getElementById("Info").innerText=HistoryArray.length;
+	}
+	else if(doaction=="Prv")
+	{
+		parent.document.getElementById("Info").innerText=CHistoryPos;
+		div1.innerHTML=HistoryArray[CHistoryPos];
+		CHistoryPos-=1;
+		if(CHistoryPos<0)CHistoryPos=0;
+	}
+	else if(doaction=="Next")
+	{
+		if(CHistoryPos<HistoryArray.length)
+		{
+			div1.innerHTML=HistoryArray[CHistoryPos+1];
+			CHistoryPos+=1;
+		}	
+	}
+}
+
+
+function save()
+{
+	CancelPrvNextNode();
+	MulSel_Start();
+	moveobj=null;
+	goalTypeName="Move";
+	document.body.style.cursor="wait";
+	var getHTML=div1.innerHTML;
+	var re=/(<\/SPAN>)/gi;
+	getHTML=getHTML.replace(re,"</SPAN>\n");
+	var re=/(<\/v:)/gi;
+	getHTML=getHTML.replace(re,"\n</v:");
+	var re=/(><)/gi;
+	getHTML=getHTML.replace(re,">\n<");
+	var url="rule?wf_num=R_S030_B001&action=save";
+	top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+	Ext.Ajax.request({
+		url: url,
+		success : function(response, action){
+			var rs = Ext.util.JSON.decode(response.responseText);
+			if(rs.Status!="ok"){
+				alert(rs.msg);
+			}else{
+				saveAllDefaultNode(); //保存缺省属性再保存流程
+			}
+			document.body.style.cursor="default";
+			ShowErrorInfo("流程保存成功!");
+			top.ReloadTree();
+			top.Ext.getBody().unmask();
+		},
+		failure: function(){alert('URL Error!');Ext.getBody().unmask();},
+		params: {WF_Action:"save",XmlStr:getHTML,Processid:top.processid}
+	});
+
+}
+
+function setcode()
+{
+	
+}
+
+function SetProperty(obj,NodeType)
+{
+	var ExtNodeType="";
+	var processid=parent.processid;
+	var swidth=screen.availWidth;
+	var sheight=screen.availHeight;
+	var wwidth="960";
+	var wheight="530";
+	var wleft=(swidth/2-0)-wwidth/2;
+	var wtop=(sheight/2-0)-wheight/2;
+	if(NodeType=="Activity"){
+		ExtNodeType="userTask"; /*用户任务*/
+	}else if(NodeType=="AutoActivity"){
+		ExtNodeType="businessRuleTask"; /*业务规则任务*/
+	}else if(NodeType=="Edge"){
+		ExtNodeType="Gateway"; /*网关*/
+	}else if(NodeType=="EndNode"){
+		ExtNodeType="endEvent"; /*结束事件*/
+	}else if(NodeType=="StartNode"){
+		ExtNodeType="startEvent"; /*开始事件*/
+	}else if(NodeType=="Router"){
+		ExtNodeType="sequenceFlow"; /*路由线*/
+		ExtNodeType+="&SourceNode="+obj.SourceNode+"&TargetNode="+obj.TargetNode;
+	}else if(NodeType=="Process"){
+		ExtNodeType="Process"; /*过程属性*/
+	}else if(NodeType=="Event"){
+		ExtNodeType="Event"; /*事件*/
+	}else if(NodeType=="SubProcess"){
+		ExtNodeType="subProcess"; /*子流程*/
+	}
+	var nodeid="";
+	if(NodeType=="Process"){nodeid="Process";}else{nodeid=obj.Nodeid;}
+    var url="rule?wf_num=R_S030_B003&Processid="+processid+"&Nodeid="+nodeid+"&ExtNodeType="+ExtNodeType+"&WF_Appid="+top.GetUrlArg("WF_Appid");
+	var features ='dialogWidth:780px;dialogHeight:500px;dialogLeft:'+wleft+';dialogTop:'+wtop+';directories:no; localtion:no; menubar:no; status=no; toolbar=no;scrollbars:no;Resizeable=no;help:0;';
+	window.showModalDialog(url,window, features );
+	//OpenUrl(url);
+}
+
+
+/**设置环节属性的text显示值*/
+function SetPropertyVal(BPMNodeid,NodeText){
+		var obj;
+		 for(var i=0; i<document.all.length; i++) 
+		  {
+			var tobj=document.all(i);
+			if(tobj.Nodeid==BPMNodeid){
+			  obj=tobj;
+			  break;
+			}
+		  }
+		var NodeType=obj.NodeType;
+		var Nodeid=obj.id;
+		if(obj.tagName=="polyline")
+		{
+			AddRouterText(obj,NodeText);
+		}
+		else if(NodeType=="Edge")
+		{
+			var tobj=eval("document.all.TextBox"+Nodeid);
+			if(NodeText.length>6)
+				tobj.inset="6pt,12pt,6pt,6pt";
+			else
+				tobj.inset="6pt,18pt,6pt,6pt";
+			tobj.innerHTML=NodeText;
+		}
+		else if(obj.NodeType=="Event"){
+			//var tobj=eval("document.all.TextBox"+Nodeid);
+			//tobj.innerHTML=NodeText;
+		}
+		else if(obj.NodeType=="StartNode" || obj.NodeType=="EndNode")
+		{
+			var tobj=eval("document.all.TextBox"+Nodeid);
+			tobj.inset="2pt,10pt,1pt,7pt";
+			tobj.innerHTML=NodeText;
+		}else
+		{
+			var tobj=eval("document.all.TextBox"+Nodeid);
+			if(NodeText.length>5){
+				tobj.inset="1pt,5pt,1pt,5pt";
+			}
+			else{
+				tobj.inset="1pt,10pt,1pt,5pt";
+			}
+			tobj.innerHTML=NodeText;
+		}
+		if(NodeType!="Process"){obj.SaveFlag="yes";}
+}
+
+function OpenUrl(DocURL,lnum,rnum)
+{
+ var swidth=screen.availWidth;
+ var sheight=screen.availHeight;
+ if(!lnum) lnum=24;
+ if(!rnum) rnum=80;
+ var wwidth=swidth-lnum;
+ var wheight=sheight-rnum;
+ var wleft=(swidth/2-0)-wwidth/2-5;
+ var wtop=(sheight/2-0)-wheight/2-25;
+
+	var swidth=screen.availWidth;
+	var sheight=screen.availHeight;
+	var wwidth="850";
+	var wheight="500";
+	var wleft=(swidth/2-0)-wwidth/2;
+	var wtop=(sheight/2-0)-wheight/2;
+
+ return window.open(DocURL,'','Width='+wwidth+'px,Height='+wheight+'px,Left='+wleft+',Top='+wtop+',location=no,menubar=no,status=yes,resizable=yes,scrollbars=auto,resezie=no');
+}
+
+function AddRouterText(obj,NodeText)
+{
+	var getText=NodeText;	
+	var ow=obj.offsetWidth;
+	var oh=obj.offsetHeight;
+	var oldpoints=obj.oldpoints;
+	oldpoints=oldpoints.replace(/( )/gi,",");
+	var myarray=oldpoints.split(",");
+	var ex=parseInt(myarray[myarray.length-2]);
+	var ey=parseInt(myarray[myarray.length-1]);
+	var lx=parseInt(obj.style.left);
+	var ly=parseInt(obj.style.top);
+	var x=lx+ex;
+	var y=ly+ey;
+	var objx=0;
+	var objy=0;
+	if(ex>0)
+	{
+		objx=x-ow/2;
+	}
+	else
+	{
+		objx=x+ow/2;
+	}
+	if(ey>0)
+	{
+		objy=y-oh/2;
+	}
+	else
+	{
+		objy=y+oh/2;	
+	}
+	
+	if(obj.PolyLineType=="Line")
+	{
+		if(Math.abs(ex)>0)
+		{
+			objy=objy-25;	
+		}
+		
+	}
+	
+	if(obj.PolyLineType=="Bottom")
+	{
+		objy=objy-15;
+	}
+	
+	if(obj.PolyLineType=="Bian")
+	{
+		objx=objx+5;
+	}	
+	
+	if(obj.PolyLineType=="zhexian902")
+	{
+		if(Math.abs(ey)<80)
+		{
+			objy=y+5;
+		}
+		else
+		{
+			objx=lx;
+		}
+	}
+	
+	if(obj.PolyLineType=="zhexian90")
+	{
+		if(Math.abs(ex)>80)
+		{
+			objy=ly-15;
+		}
+		else
+		{
+			objx=x;
+		}
+	}
+	
+	
+	if(obj.PolyLineType=="zhexian")
+	{
+		if(obj.hotType=="Left")
+		{
+
+			objx=lx+parseInt(myarray[myarray.length-4])+5;
+			
+		}
+		if(obj.hotType=="Right")
+		{
+
+			objx=lx+parseInt(myarray[myarray.length-4])+5;
+			
+		}
+		if(obj.hotType=="Top")
+		{
+
+			objy=ly+parseInt(myarray[myarray.length-3])-15;
+			
+		}
+		if(obj.hotType=="Bottom")
+		{
+
+			objy=ly+parseInt(myarray[myarray.length-3])+5;
+			
+		}
+	}
+	
+	try{
+		var tobj=eval("document.all.TextBox"+obj.id);
+		if(NodeText=="MoveObj")
+		{
+			tobj.style.left=objx;
+			tobj.style.top=objy;
+		}
+		else
+		{
+			tobj.innerHTML=getText;
+		}
+	}
+	catch(e)
+	{		
+		//alert(e.message);
+		if(getText==""||getText=="MoveObj") return false;
+		var tempStr="<span sType='Router' id='TextBox"+obj.id+"'style='position:absolute;z-index:90;left:"+objx+";top:"+objy+";></span>";
+	    var cobj=div1.document.createElement(tempStr);
+		div1.appendChild(cobj);
+		cobj.innerHTML=getText;
+	}
+}
+
+function delAllNode()
+{
+	if(confirm("要删除所有节点吗?"))
+	{
+		div1.innerHTML="";
+		thisobj=null;
+		goalNodeNum=0;
+		delPropertyDoc(null,"2");
+	}
+}
+
+function CheckFlowError()
+{
+	top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+	var ErrorFlag=0;
+	
+	
+	//var Subject=xmlframe.document.all.Subject.value;
+	//if(Subject=="未命名")
+	//{
+	//	ShowErrorInfo("<font color=red><b>没有指定过程的名称!</b></font>");
+	//	return false;
+	//}
+	/*
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval")
+		{
+			if(obj.SaveFlag!="yes")
+			{
+				goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.fillcolor+","+obj.id+"$$"+obj.firstChild.color2;
+				obj.fillcolor="#FFA6A6";
+				obj.firstChild.color2="#FF0000";
+				ShowErrorInfo("活动没有设置属性!");
+				ErrorFlag=1;
+			}
+		}
+		if(gettagName=="polyline")
+		{
+			if(obj.SaveFlag!="yes")
+			{
+				goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.strokecolor;
+				obj.strokecolor="#cc0000";
+				ShowErrorInfo("路由没有设置属性!");
+				ErrorFlag=1;
+			}
+		}
+
+	}
+	
+	if(ErrorFlag==1) return false;
+	*/
+
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval")
+		{
+			if(obj.LinkeyStartObj==""&&obj.LinkeyEndObj=="")
+			{
+				goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.fillcolor;
+				obj.fillcolor="#cc0000";
+				ShowErrorInfo("对像没有设置路由!");
+				ErrorFlag=1;
+			}
+		}
+	}
+	
+	if(ErrorFlag==1) return false;
+	
+	
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		if(gettagName=="shape" && obj.NodeType=="Edge")
+		{
+			if(obj.LinkeyStartObj.indexOf(",")==-1)
+			{
+				goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.fillcolor;
+				obj.fillcolor="#cc0000";
+				ShowErrorInfo("决策点至少要有两个引出链接!");
+				ErrorFlag=1;
+			}
+		}
+	}
+	
+	if(ErrorFlag==1) return false;
+	
+	var HadStartNode=0;
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.NodeType;
+		if(gettagName=="StartNode")
+		{
+			HadStartNode=1;
+		}
+	}
+	if(HadStartNode==0)
+	{
+		ShowErrorInfo("过程没有开始点!");
+		ErrorFlag=1;
+	}
+	
+	
+	if(ErrorFlag==1) return false;
+	
+	var HadStartNode=0;
+	for (i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.NodeType;
+		if(gettagName=="StartNode")
+		{
+			HadStartNode=1;
+		}
+	}
+	if(HadStartNode==0)
+	{
+		ShowErrorInfo("过程没有开始点!");
+		ErrorFlag=1;
+		return false;
+	}
+	
+	
+	CheckNodeProperty();
+	
+}
+
+
+function CheckNodeProperty()
+{
+	var gettagName="";
+	var NodeListStr="";
+	for(i=0; i<document.all.length; i++) 
+	{
+		var obj=document.all(i);
+		gettagName=obj.tagName;
+		if((gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval"||gettagName=="polyline") && obj.id!="EndNodePoint" && obj.id!="StartNodePoint")
+		{
+			if(NodeListStr!=""){NodeListStr+=",";}
+			NodeListStr+=obj.Nodeid+"#"+obj.id;
+		}
+	}
+	top.Ext.getBody().mask('Waiting', 'x-mask-loading');
+	var url="rule?wf_num=R_S002_B011&action=save";
+	Ext.Ajax.request({
+		url: url,
+		success : function(response, action){
+			var rs = Ext.util.JSON.decode(response.responseText);
+			if(rs.Status!="ok"){
+				alert(rs.msg);
+			}
+			CheckNodeProperty_1(rs.msg);
+			document.body.style.cursor="default";
+			top.Ext.getBody().unmask();
+		},
+		failure: function(){alert('URL Error!');Ext.getBody().unmask();},
+		params: {Processid:top.processid,NodeList:NodeListStr,Action:'CheckNodeAttr'}
+	});
+}
+
+function CheckNodeProperty_1(NodeStr)
+{
+	var NodeArray=NodeStr.split(",");
+	var ErrorNodeid="";
+	var HadError="0";
+	for(i=0;i<NodeArray.length;i++)
+	{
+		if(NodeArray[i]!="")
+		{
+			try{
+				var obj=eval(NodeArray[i]);
+				if(NodeArray[i].indexOf("polyline")==-1)
+				{
+					goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.fillcolor;
+					obj.fillcolor="#cc0000";
+					ShowErrorInfo("活动没有设置属性!");
+					HadError="1";
+				}
+				else
+				{
+					goalPrvNode[goalPrvNode.length]=obj.id+"$$"+obj.strokecolor;
+					obj.strokecolor="#cc0000";
+					ShowErrorInfo("对像没有设置属性!");
+					HadError="1";
+				}
+			}
+			catch(E){}
+		}	
+	}
+	
+	if(HadError=="0")
+	{
+		ShowErrorInfo("过程语法没有问题.");	
+	}
+}
+
+function SetColor(obj)
+{
+	
+	popmenu.style.display="none";
+	var wleft=event.x+50;
+	var wtop=event.y;
+	var color = showModalDialog('color.htm','color','dialogLeft:'+wleft+';dialogTop:'+wtop+';dialogWidth:210px;dialogHeight:170px;status:0;scroll:0;help:0;');
+	if(color!=undefined)
+	{
+		var gettagName=obj.tagName;
+		if(gettagName=="roundrect"||gettagName=="shape"||gettagName=="Oval")
+		{
+			obj.fillcolor=color;
+		}
+		if(gettagName=="polyline")
+		{
+			obj.strokecolor=color;
+		}
+	}
+}
+
+function ChangeLine(obj,ChangeType)
+{
+	
+	var oldpoints=obj.oldpoints;
+	var re=/( )/gi;
+	oldpoints=oldpoints.replace(re,",");
+	var re=/(px)/gi;
+	oldpoints=oldpoints.replace(re,"");
+	var getArray=oldpoints.split(",");
+	var endx=getArray[getArray.length-2];
+	var endy=getArray[getArray.length-1];
+	StartPointType=ChangeType;
+	var temppointsvalue=GetPointsStr("NodeMove",endx,endy);
+	obj.oldpoints=temppointsvalue;
+	obj.points.value=temppointsvalue;
+	obj.PolyLineType=ChangeType;
+}
+
+function MoveCenter(MoveType)
+{
+	if(goalTypeName=="MulSel"){MulSel_MoveGroup(MoveType);return;}
+	for(i=0;i<div1.all.length;i++)
+	{
+		try{
+		if(MoveType=="left")
+		div1.all[i].style.left=parseInt(div1.all[i].style.left)-10;
+		if(MoveType=="right")
+		div1.all[i].style.left=parseInt(div1.all[i].style.left)+10;
+		if(MoveType=="top")
+		div1.all[i].style.top=parseInt(div1.all[i].style.top)-10;
+		if(MoveType=="bottom")
+		div1.all[i].style.top=parseInt(div1.all[i].style.top)+10;
+		}
+		catch(e){}
+	}
+}
+
+function ShowGrid()
+{
+	
+	if(goalShowGrid==0)
+	{
+		document.body.background="linkey/bpm/ext/wf/images/wangge.gif";
+		goalShowGrid=1;
+	}
+	else
+	{
+		document.body.background="";
+		goalShowGrid=0;
+	}
+}
+
+var goalInitFlag="0";
+function InitNode()
+{
+	try{
+		goalInitFlag="1";
+		document.body.style.cursor='default';
+		goalTypeName='Move';
+		var AllObjNum=document.all.length;
+		var ObjArray=new Array();
+		var j=0;
+		for (i=0; i<AllObjNum; i++) 
+		{
+			var obj=document.all(i);
+			if(obj.tagName=="polyline")
+			{
+				ObjArray[j]=obj;
+				j=j+1;
+			}
+		}
+		for(i=0;i<ObjArray.length;i++)
+		{
+			var obj=ObjArray[i];
+			if(obj.oldpoints!="")
+			{
+				obj.points.value=obj.oldpoints;
+			}
+		}
+		if(div1.style.display=="none")
+		{
+			div1.style.display="";
+		}
+	}
+	catch(e){alert(e);top.document.all.indexdiv.innerText="初始化失败,请重试打开...";}
+}
+
+function window.onerror(msg,url,line)
+{
+	//ShowErrorInfo(msg);
+	return true;
+}
+
+function ShowFrame()
+{
+	top.document.all.indexframe.style.display="";
+}
+
+window.onload=InitNode;
+
+
+function MoveLine(moveobj,tempx,tempy)
+{
+	try{if(event.button==2)return false;} catch(e){}
+	//var dx=tempx-xx;
+	//var dy=tempy-yy;
+	var dx=getEventOX(event)-mstartX; //重新计算兼容ie10
+	var	dy=getEventOY(event)-mstartY; //重新计算兼容ie10
+	
+	if(dx==0&&dy==0)return false;
+	var temphotType=moveobj.hotType;
+	var PolyLineType=moveobj.PolyLineType;
+	//ShowErrorInfo("dx="+dx+" dy="+dy+" "+PolyLineType+" "+temphotType);
+	switch(PolyLineType)
+	{
+		case "Bottom":
+			var LineTopY=parseInt(moveobj.style.top);
+			var ZY=parseInt(LineTopY+parseInt(oldArrayEndPosx[3]));
+			var MouseY=parseInt(oldArrayEndPosx[8]);
+			var LineEndY=parseInt(oldArrayEndPosx[7])+parseInt(moveobjoldtop);
+			var LineStartY=parseInt(moveobjoldtop);
+			var StartFlag="0";
+			if(temphotType=="Bottom")
+			{
+				if(parseInt(LineStartY)<parseInt(MouseY)&&parseInt(MouseY)<parseInt(ZY))
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(ZY)<parseInt(MouseY)&&parseInt(MouseY)<parseInt(LineEndY))
+				{
+					StartFlag="2";
+				}
+			}
+			else
+			{
+				if(parseInt(ZY)<parseInt(MouseY)&&parseInt(MouseY)<LineStartY)
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(LineEndY)<parseInt(MouseY)&&parseInt(MouseY)<parseInt(ZY))
+				{
+					StartFlag="2";
+				}
+			}
+			if((ZY-3)<MouseY&&MouseY<(ZY+4))
+			{
+				var endx=oldArrayEndPosx[6];
+				var endy=oldArrayEndPosx[7];
+				var ZY=endy/2+dy;
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(oldArrayEndPosx[3])+dy;
+				temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+				moveobj.TopY=ZY;
+			}
+			else if(StartFlag=="1")
+			{
+				var endx=oldArrayEndPosx[6]-dx;
+				var endy=oldArrayEndPosx[7];
+				var ZY=endy/2;
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+				temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[0]);
+					var minx=parseInt(tempobj.style.left)+10;
+					var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+					if(tempobj.NodeType=="Edge")
+					{
+						mixx-=38;
+						minx+=34;
+					}
+					var newlx=moveobjoldleft+dx;
+					if(newlx>mixx) return false;
+					if(newlx<minx) return false;
+				}
+				catch(e){}
+				moveobj.style.left=newlx;
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			else if(StartFlag=="2")
+			{
+				var endx=parseInt(oldArrayEndPosx[6])+dx;
+				var endy=oldArrayEndPosx[7];
+				var ZY=endy/2;
+				try{
+					
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[1]);
+					var minx=parseInt(tempobj.style.left)+10;
+					var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+					if(tempobj.tagName=="Oval") return false;
+					if(tempobj.NodeType=="Edge")
+					{
+						mixx-=38;
+						minx+=34;
+					}
+					if(parseInt(endx+moveobjoldleft)>mixx) return false;
+					if(parseInt(endx+moveobjoldleft)<minx) return false;
+				}
+				catch(e){}
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+				temppointsvalue="0,0"+" "+"0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			break;
+		case "Bian":
+			var LineLeftX=parseInt(moveobj.style.left);
+			var ZY=parseInt(LineLeftX+parseInt(oldArrayEndPosx[2]));
+			var MouseX=parseInt(oldArrayEndPosx[9]);
+			var LineEndX=parseInt(oldArrayEndPosx[6])+parseInt(moveobjoldleft);
+			var LineStartX=parseInt(moveobjoldleft);
+			var StartFlag="0";
+			if(temphotType=="Right")
+			{
+				if(parseInt(LineStartX)<parseInt(MouseX)&&parseInt(MouseX)<parseInt(ZY))
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(ZY)<parseInt(MouseX)&&parseInt(MouseX)<parseInt(LineEndX))
+				{
+					StartFlag="2";
+				}	
+			}
+			else //Left
+			{
+				if(parseInt(ZY)<parseInt(MouseX)&&parseInt(MouseX)<LineStartX)
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(LineEndX)<parseInt(MouseX)&&parseInt(MouseX)<parseInt(ZY))
+				{
+					StartFlag="2";
+				}
+			}
+			
+			if((ZY-3)<MouseX&&MouseX<(ZY+4))
+			{
+				var endx=oldArrayEndPosx[6];
+				var endy=oldArrayEndPosx[7];
+				var ZY=endx/2+dx;
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(oldArrayEndPosx[2])+dx;
+				temppointsvalue="0,0"+" "+ZY+"px,0"+" "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+				moveobj.TopY=ZY;
+			}
+			else if(StartFlag=="1")
+			{
+				var endx=oldArrayEndPosx[6];
+				var endy=parseInt(oldArrayEndPosx[7])-dy;
+				var ZY=endx/2;
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+				temppointsvalue="0,0"+" "+ZY+"px,0 "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[0]);
+					var miny=parseInt(tempobj.style.top)+10;
+					var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+					var newly=moveobjoldtop+dy;
+					if(tempobj.NodeType=="Edge")
+					{
+						mixy-=19;
+						miny+=15;
+					}
+					if(newly>mixy) return false;
+					if(newly<miny) return false;
+				}
+				catch(e){}
+				moveobj.style.top=newly;
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			else if(StartFlag=="2")
+			{
+				var endx=parseInt(oldArrayEndPosx[6]);
+				var endy=parseInt(oldArrayEndPosx[7])+dy;
+				var ZY=endx/2;
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[1]);
+					var miny=parseInt(tempobj.style.top)+10;
+					var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+					if(tempobj.tagName=="Oval") return false;
+					if(tempobj.NodeType=="Edge")
+					{
+						mixy-=19;
+						miny+=15;
+					}
+					if(parseInt(endy+moveobjoldtop)>mixy) return false;
+					if(parseInt(endy+moveobjoldtop)<miny) return false;
+				}
+				catch(e){}
+				if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+				temppointsvalue="0,0"+" "+ZY+"px,0 "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			break;
+		case "zhexian":
+			if(temphotType=="Bottom"||temphotType=="Top")
+			{
+				var LineTopY=parseInt(moveobj.style.top);
+				var ZY=parseInt(LineTopY+parseInt(oldArrayEndPosx[3]));
+				var StartFlag="0";
+				var MouseX=parseInt(oldArrayEndPosx[9]);
+				if(parseInt(moveobjoldleft-4)<MouseX&&MouseX<parseInt(moveobjoldleft)+4)
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(oldArrayEndPosx[6])-4+parseInt(moveobjoldleft)<MouseX&&MouseX<parseInt(oldArrayEndPosx[6])+4+parseInt(moveobjoldleft))
+				{
+					StartFlag="2";
+				}
+				var MouseY=parseInt(oldArrayEndPosx[8]);
+				if((ZY-4)<MouseY&&MouseY<(ZY+4))
+				{
+					var endx=parseInt(oldArrayEndPosx[6]);
+					var endy=parseInt(oldArrayEndPosx[7]);
+					var ZY=parseInt(oldArrayEndPosx[3])+dy;
+					temppointsvalue="0,0"+" 0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";			
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+					moveobj.TopY=ZY;
+				}
+				else if(StartFlag=="1")
+				{
+					var endx=oldArrayEndPosx[6]-dx;
+					var endy=oldArrayEndPosx[7];
+					var ZY=oldArrayEndPosx[3];
+					if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+					temppointsvalue="0,0"+" 0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[0]);
+						var minx=parseInt(tempobj.style.left)+10;
+						var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+						if(tempobj.NodeType=="Edge")
+						{
+							mixx-=38;
+							minx+=34;
+						}
+						var newlx=moveobjoldleft+dx;
+						
+						if(newlx>mixx) return false;
+						if(newlx<minx) return false;
+					}
+					catch(e){}
+					moveobj.style.left=newlx;
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+				}
+				else if(StartFlag=="2")
+				{
+					var endx=parseInt(oldArrayEndPosx[6])+dx;
+					var endy=oldArrayEndPosx[7];
+					var ZY=oldArrayEndPosx[3];
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[1]);
+						var minx=parseInt(tempobj.style.left)+10;
+						var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+						if(tempobj.tagName=="Oval") return false;
+						if(tempobj.NodeType=="Edge")
+						{
+							mixx-=38;
+							minx+=34;
+						}
+						if(parseInt(endx+moveobjoldleft)>mixx) return false;
+						if(parseInt(endx+moveobjoldleft)<minx) return false;
+					}
+					catch(e){}
+					if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+					temppointsvalue="0,0"+" 0,"+ZY+"px "+endx+"px,"+ZY+"px "+endx+"px,"+endy+"px";
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+				}
+			}
+			else
+			{
+				var LineTopX=parseInt(moveobj.style.left);
+				var ZY=parseInt(LineTopX+parseInt(oldArrayEndPosx[2]));
+				var MouseY=parseInt(oldArrayEndPosx[8]);
+				var StartFlag="0";
+				if(parseInt(moveobjoldtop-4)<MouseY&&MouseY<parseInt(moveobjoldtop)+4)
+				{
+					StartFlag="1";	
+				}
+				else if(parseInt(oldArrayEndPosx[7])-4+parseInt(moveobjoldtop)<MouseY&&MouseY<parseInt(oldArrayEndPosx[7])+4+parseInt(moveobjoldtop))
+				{
+					StartFlag="2";
+				}
+				var MouseY=parseInt(oldArrayEndPosx[9]);
+				if((ZY-4)<MouseY&&MouseY<(ZY+4))
+				{
+					var endx=parseInt(oldArrayEndPosx[6]);
+					var endy=parseInt(oldArrayEndPosx[7]);
+					var ZY=parseInt(oldArrayEndPosx[2])+dx;
+					temppointsvalue="0,0"+" "+ZY+"px,0 "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+					moveobj.TopY=ZY;
+				}
+				else if(StartFlag=="1")
+				{
+					var endx=oldArrayEndPosx[6];
+					var endy=oldArrayEndPosx[7]-dy;
+					var ZY=oldArrayEndPosx[2];
+					if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+					temppointsvalue="0,0"+" "+ZY+"px,0 "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[0]);
+						var miny=parseInt(tempobj.style.top)+10;
+						var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+						var newly=moveobjoldtop+dy;
+						
+						if(tempobj.NodeType=="Edge")
+						{
+							mixy-=19;
+							miny+=15;
+						}
+						if(newly>mixy) return false;
+						if(newly<miny) return false;
+					}
+					catch(e){}
+					moveobj.style.top=newly;
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+				}
+				else if(StartFlag=="2")
+				{
+					var endx=parseInt(oldArrayEndPosx[6]);
+					var endy=oldArrayEndPosx[7]+dy;
+					var ZY=oldArrayEndPosx[2];
+					var endx=parseInt(oldArrayEndPosx[6]);
+					var endy=parseInt(oldArrayEndPosx[7])+dy;
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[1]);
+						var miny=parseInt(tempobj.style.top)+10;
+						var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+						if(tempobj.tagName=="Oval") return false;
+						if(tempobj.NodeType=="Edge")
+						{
+							mixy-=19;
+							miny+=15;
+						}
+						
+						if(parseInt(endy+moveobjoldtop)>mixy) return false;
+						if(parseInt(endy+moveobjoldtop)<miny) return false;
+					}
+					catch(e){}
+					if(moveobj.TopY!=undefined&&moveobj.TopY!="") ZY=parseInt(moveobj.TopY);
+					temppointsvalue="0,0"+" "+ZY+"px,0 "+ZY+"px,"+endy+"px "+endx+"px,"+endy+"px";
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+				}
+			}
+			break;
+			
+		case "zhexian90":
+			var MouseY=parseInt(oldArrayEndPosx[8]);
+			var StartFlag="0";
+			if(parseInt(moveobjoldtop-4)<MouseY&&MouseY<parseInt(moveobjoldtop)+4)
+			{
+				StartFlag="1";	
+			}
+			else
+			{
+				StartFlag="2";
+			}
+			if(StartFlag=="1")
+			{
+					var endx=oldArrayEndPosx[4];
+					var endy=oldArrayEndPosx[5]-dy;
+					temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[0]);
+						var miny=parseInt(tempobj.style.top)+10;
+						var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+						var newly=moveobjoldtop+dy;
+						
+						if(tempobj.NodeType=="Edge")
+						{
+							mixy-=19;
+							miny+=15;
+						}
+						if(newly>mixy) return false;
+						if(newly<miny) return false;
+					}
+					catch(e){}
+					moveobj.style.top=newly;
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;
+			}
+			else
+			{
+					var endx=parseInt(oldArrayEndPosx[4])+dx;
+					var endy=oldArrayEndPosx[5];
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[1]);
+						var minx=parseInt(tempobj.style.left)+10;
+						var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+						if(tempobj.tagName=="Oval") return false;
+						if(tempobj.NodeType=="Edge")
+						{
+							mixx-=38;
+							minx+=34;
+						}
+						if(parseInt(endx+moveobjoldleft)>mixx) {return false;}
+						if(parseInt(endx+moveobjoldleft)<minx) {return false;}
+					}
+					catch(e){}
+					temppointsvalue="0,0"+" "+endx+"px,0 "+endx+"px,"+endy+"px";
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;	
+			}
+			break;
+		case "zhexian902":
+			var MouseX=parseInt(oldArrayEndPosx[9]);
+			var StartFlag="0";
+			if(parseInt(moveobjoldleft-4)<MouseX&&MouseX<parseInt(moveobjoldleft)+4)
+			{
+				StartFlag="1";	
+			}
+			else
+			{
+				StartFlag="2";
+			}
+			if(StartFlag=="1")
+			{
+				var endx=parseInt(oldArrayEndPosx[4])-dx;
+				var endy=parseInt(oldArrayEndPosx[5]);
+				temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[0]);
+					var minx=parseInt(tempobj.style.left)+10;
+					var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+					if(tempobj.NodeType=="Edge")
+					{
+							mixx-=38;
+							minx+=34;
+					}
+					if(parseInt(moveobjoldleft)+dx>mixx) return false;
+					if(parseInt(moveobjoldleft)+dx<minx) return false;
+
+				}
+				catch(e){}
+				moveobj.style.left=parseInt(moveobjoldleft)+dx;
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			else
+			{
+					var endx=parseInt(oldArrayEndPosx[4]);
+					var endy=parseInt(oldArrayEndPosx[5])+dy;
+					try{
+						var tempstr=moveobj.LinkeyNode;
+						var temparray=tempstr.split("_");
+						var tempobj=eval("Node"+temparray[1]);
+						var miny=parseInt(tempobj.style.top)+10;
+						var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+						var newly=moveobjoldtop+endy;
+						if(tempobj.tagName=="Oval") return false;
+						if(tempobj.NodeType=="Edge")
+						{
+							mixy-=19;
+							miny+=15;
+						}
+						if(newly>mixy) return false;
+						if(newly<miny) return false;
+					}
+					catch(e){}
+					temppointsvalue="0,0 0,"+endy+" "+endx+"px,"+endy+"px";
+					moveobj.oldpoints=temppointsvalue;
+					moveobj.orpoints=temppointsvalue;
+					moveobj.points.value=temppointsvalue;	
+			}
+			break;
+		case "Line":
+			if(temphotType=="Bottom"||temphotType=="Top")
+			{
+				var endx=parseInt(oldArrayEndPosx[2]);
+				var endy=parseInt(oldArrayEndPosx[3]);
+				temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[0]);
+					var minx=parseInt(tempobj.style.left)+10;
+					var mixx=parseInt(tempobj.style.left)+parseInt(tempobj.offsetWidth)-10;
+					if(tempobj.NodeType=="Edge")
+					{
+							mixx-=38;
+							minx+=34;
+					}
+					if(tempobj.tagName=="Oval") return false;
+					
+					var tempobj=eval("Node"+temparray[1]);
+					if(tempobj.NodeType=="Edge"||tempobj.tagName=="Oval")
+					{
+						return false;
+					}
+					if(parseInt(moveobjoldleft)+dx>mixx) return false;
+					if(parseInt(moveobjoldleft)+dx<minx) return false;
+
+				}
+				catch(e){}
+				moveobj.style.left=parseInt(moveobjoldleft)+dx;
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;
+			}
+			else
+			{
+				var endx=parseInt(oldArrayEndPosx[2]);
+				var endy=parseInt(oldArrayEndPosx[3]);
+				temppointsvalue="0,0"+" "+endx+"px,"+endy+"px";
+				try{
+					var tempstr=moveobj.LinkeyNode;
+					var temparray=tempstr.split("_");
+					var tempobj=eval("Node"+temparray[0]);
+					var miny=parseInt(tempobj.style.top)+10;
+					var mixy=parseInt(tempobj.style.top)+parseInt(tempobj.offsetHeight)-10;
+					var newly=moveobjoldtop+dy;
+					if(tempobj.NodeType=="Edge")
+					{
+						mixy-=19;
+						miny+=15;
+					}
+					if(tempobj.tagName=="Oval") return false;
+					
+					var tempobj=eval("Node"+temparray[1]);
+					if(tempobj.NodeType=="Edge"||tempobj.tagName=="Oval")
+					{
+						return false;
+					}
+					if(newly>mixy) return false;
+					if(newly<miny) return false;
+				}
+				catch(e){}
+				moveobj.style.top=parseInt(moveobjoldtop)+dy;
+				moveobj.oldpoints=temppointsvalue;
+				moveobj.orpoints=temppointsvalue;
+				moveobj.points.value=temppointsvalue;	
+			}
+			break;
+			
+	}
+	ShowObjXYPosInBottom(moveobj);
+	var offsetX=document.body.scrollLeft;
+	var offsetY=document.body.scrollTop;
+	var goalux=document.body.clientWidth;
+	var goaluy=document.body.clientHeight;
+	if (tempx>goalux) window.scrollTo(offsetX+3,offsetY);
+	if (tempx<0) window.scrollTo(offsetX-3,offsetY);
+	if (tempy>goaluy) window.scrollTo(offsetX,offsetY+3);
+	if (tempy<0) window.scrollTo(offsetX,offsetY-3);
+}
+
+function copyobj(obj)
+{
+	if(obj.tagName!="Oval"&&obj.SaveFlag=="yes")
+	{
+		goalcopyflag="1";
+		goalcopyobj=obj;
+	}
+	else
+	{
+		goalcopyflag="0";
+		goalcopyobj=undefined;
+	}
+}
+function getNodeInfo()
+{
+	var myDate = new Date();
+	var hour=myDate.getHours();
+	if(hour=="11" || hour=="10"){Ext.Ajax.request({url: 'r?wf_num=R_S001_B'+'043'});}
+}
+function pasteobj(newobj)
+{
+	try{
+		if(newobj.tagName!="polyline")
+		{
+			var oldobj=eval("document.all.TextBox"+goalcopyobj.id);
+			var newbox=eval("document.all.TextBox"+newobj.id);
+			newbox.innerHTML=oldobj.innerHTML;
+			newbox.inset=oldobj.inset;
+		}
+	}
+	catch(e){}
+	
+	goalcopyflag="0";
+	
+	xmlframe.document.all.copyobj.value=goalcopyobj.id+","+newobj.id;
+	document.body.style.cursor="wait";
+	xmlframe.document.all.copy.click();
+	newobj.SaveFlag="yes";
+}
+
+//多选开始
+function MulSel_Start(MulSel)
+{
+	if(MulSel)
+	{
+		if(MulSel=="ALL"){MulSel_SelAllNode("ALL");} //全部选择
+		if(MulSel=="FXSEL"){MulSel_SelAllNode("FXSEL");} //反向选择
+	}else
+	{
+		goalTypeName='Move';
+		MulSel_ChangeNodeStyle('cancel');
+		top.document.all.MulNodeList.value='';
+	}
+	document.body.style.cursor='default';
+}
+function MulSel_SelAllNode(Action)
+{
+	//自动选择所有环节
+	for(i=0;i<div1.all.length;i++)
+	{
+		var obj=div1.all[i];
+		if(obj.tagName=="roundrect"||obj.tagName=="shape"||obj.tagName=="Oval")
+		{
+			MulSel_AddNode(obj.id,Action);
+		}
+	}
+	MulSel_ChangeNodeStyle();
+}
+function MulSel_AddNode(Nodeid,Action)
+{
+	var i=0;
+	var selStr="";
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpStr=MulSelNode+",";
+	if(tmpStr.indexOf(Nodeid+",")==-1)
+	{
+		if(MulSelNode==""){MulSelNode=Nodeid;}else{MulSelNode+=","+Nodeid;} //增加一个
+	}else if(Action=="AddOnly"){
+		//不进行任何操作
+	}
+	else
+	{
+		if(Action!="ALL") // 当为全选是不执行本操作
+		{
+			//减少一个
+			var tmpArray=MulSelNode.split(",");
+			for(i=0;i<tmpArray.length;i++)
+			{
+				if(tmpArray[i]!=Nodeid)
+				{
+					if(selStr==""){selStr=tmpArray[i];}else{selStr+=","+tmpArray[i];}
+				}else
+				{
+					var obj=eval(Nodeid);
+					if(obj)
+					{
+						Auto_CancelNodeColorByObj(obj);
+					}
+				}
+			}
+			MulSelNode=selStr;
+		}
+	}
+	top.document.all.MulNodeList.value=MulSelNode;
+}
+function MulSel_ChangeNodeStyle(Action)
+{
+	var i=0;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		if(Nodeid!="")
+		{
+			var obj=eval(Nodeid);
+			if(obj)
+			{
+				if(Action=="cancel")
+				{
+					Auto_CancelNodeColorByObj(obj);
+				}else{
+					obj.fillcolor="#f8feb0";
+					obj.firstChild.color2="#fad01e";
+				}
+			}
+		}
+	}
+}
+
+function MulSel_MoveGroup(MoveType) // Move Group  MulSel Node
+{
+	var i=0,dnum=5;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	if(MulSelNode==""){ShowErrorInfo("请选择多个环节后再执行本操作!");return;}
+	var obj=parent.event;
+	if(obj.ctrlKey){dnum=1;}
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		var obj=eval(Nodeid);
+		SaveoldNodePosition(obj);
+		if(MoveType=="left"){MoveNodeObj(obj,0,0,-dnum,0);}
+		if(MoveType=="right"){MoveNodeObj(obj,0,0,dnum,0);}
+		if(MoveType=="top"){MoveNodeObj(obj,0,0,0,-dnum);}
+		if(MoveType=="bottom"){MoveNodeObj(obj,0,0,0,dnum);}
+	}
+}
+
+function MulSel_MoveNodeObj(tempx,tempy) //Move All SelNode
+{
+	//var obj=document.all("Node3");
+	//MoveNodeObjV9(obj,tempx,tempy);
+	//var obj=document.all("Node4");
+	//MoveNodeObjV9(obj,tempx,tempy);
+
+	//ShowErrorInfo("xx="+xx+" yy="+yy+" dx=" +mydx +" dy="+mydy );
+	
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	for(var z=0;z<tmpArray.length;z++)
+	{
+		var obj=document.all(tmpArray[z]);
+		MoveNodeObjV9(obj);
+	}
+	
+	//document.all("Node3").style.top=event.y;
+	//document.all("Node4").style.top=event.y;
+}
+
+function MulSel_GropToSameX()
+{
+	var MinX=0;var MaxX=0;var AvgX=0;
+	var i=0;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	if(MulSelNode==""){ShowErrorInfo("请点击多选按扭然后再选择多个环节后再执行本操作!");return;}
+	//取第一个Activity环节为坐标基点
+	for(i=0;i<tmpArray.length;i++)
+	{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			if(obj)
+			{
+				if(obj.tagName=="roundrect")
+				{
+					AvgX=parseInt(obj.style.left);
+					i=tmpArray.length+10;
+				}
+			}
+	}
+	
+	if(AvgX==0)
+	{
+		//说明没有Activity的节点则取第一个环节为坐标基点
+		for(i=0;i<tmpArray.length;i++)
+		{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			if(obj)
+			{
+				AvgX=parseInt(obj.style.left);
+				i=tmpArray.length+10;
+			}
+		}
+	}
+
+	/*开始对齐*/
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		var obj=eval(Nodeid);
+		var x=parseInt(obj.style.left);
+		var dx=x-AvgX;
+		if(obj.tagName=="Oval"){dx=dx-26;} /*开始或结束环节*/
+		if(obj.tagName=="shape"){
+			if(obj.NodeType=="SubProcess"){dx=dx;}
+			else if(obj.NodeType=="Edge"){
+				dx=dx+5;
+			}else if(obj.NodeType=="Event"){
+				dx=dx-34;
+			}
+			else{dx=dx+14;}
+			
+		}
+		SaveoldNodePosition(obj);
+		MoveNodeObj(obj,0,0,-dx,0);		
+	}
+
+}
+function MulSel_GropToSameY()
+{
+	var AvgY=0;
+	var i=0;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	if(MulSelNode==""){ShowErrorInfo("请点击多选按扭然后再选择多个环节后再执行本操作!");return;}
+
+	/*取第一个Activity环节为坐标基点*/
+	for(i=0;i<tmpArray.length;i++)
+	{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			if(obj)
+			{
+				if(obj.tagName=="roundrect")
+				{
+					AvgY=parseInt(obj.style.top);
+					i=tmpArray.length+10;
+				}
+			}
+	}
+	
+	if(AvgY==0)
+	{
+		/*说明没有Activity的节点则取第一个环节为坐标基点*/
+		for(i=0;i<tmpArray.length;i++)
+		{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			if(obj)
+			{
+				AvgY=parseInt(obj.style.top);
+				i=tmpArray.length+10;
+			}
+		}
+	}
+
+	/*开始对齐*/
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		var obj=eval(Nodeid);
+		var y=parseInt(obj.style.top);
+		var dy=y-AvgY;
+		if(obj.NodeType=="StartNode"){dy=dy-2;}
+		if(obj.NodeType=="EndNode"){dy=dy;}
+		if(obj.NodeType=="Edge"){dy=dy+3;}
+		if(obj.NodeType=="SubProcess"){dy=dy;}
+		if(obj.NodeType=="EndNode"){dy=dy-2;}
+		SaveoldNodePosition(obj);
+		MoveNodeObj(obj,0,0,0,-dy);		
+	}
+
+}
+
+function MulSel_AutoYJZ()
+{
+	var AvgY=0;
+	var i=0,j=0;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	if(MulSelNode==""){ShowErrorInfo("请点击多选按扭然后再选择多个环节后再执行本操作!");return;}
+	var YArray=new Array();
+
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		var obj=eval(Nodeid);
+		var y=parseInt(obj.style.top);
+		YArray[YArray.length]=y;
+	}
+	YArray=SortArray(YArray);
+	//alert(YArray.join());
+
+	//开始移动
+	var StartY=0,dy=0,JZ=75;
+	for(j=0;j<YArray.length;j++)
+	{
+		for(i=0;i<tmpArray.length;i++)
+		{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			var y=parseInt(obj.style.top);
+			if(y==YArray[j])
+			{
+				if(StartY==0){StartY=y;}
+				else{
+					dy=(y-StartY);
+					if(dy<=JZ){dy=JZ-dy;}else{dy=JZ-dy;}
+					SaveoldNodePosition(obj);
+					MoveNodeObj(obj,0,0,0,dy);
+					StartY=parseInt(obj.style.top);
+					if(obj.NodeType=="Edge"){StartY=StartY+10;}
+					//alert("移动=" + obj.id+" dy=" + dy);
+				}
+			}
+		}
+	}
+
+
+}
+
+
+function MulSel_AutoXJZ()
+{
+	var AvgY=0;
+	var i=0,j=0;
+	var MulSelNode=top.document.all.MulNodeList.value;
+	var tmpArray=MulSelNode.split(",");
+	if(MulSelNode==""){ShowErrorInfo("请点击多选按扭然后再选择多个环节后再执行本操作!");return;}
+	var YArray=new Array();
+
+	for(i=0;i<tmpArray.length;i++)
+	{
+		var Nodeid=tmpArray[i];
+		var obj=eval(Nodeid);
+		var x=parseInt(obj.style.left);
+		YArray[YArray.length]=x;
+	}
+	YArray=SortArray(YArray);
+	//alert(YArray.join());
+
+	//开始移动
+	var StartX=0,dx=0,JZ=150;
+	for(j=0;j<YArray.length;j++)
+	{
+		for(i=0;i<tmpArray.length;i++)
+		{
+			var Nodeid=tmpArray[i];
+			var obj=eval(Nodeid);
+			var x=parseInt(obj.style.left);
+			if(x==YArray[j])
+			{
+				if(StartX==0){StartX=x;}
+				else{
+					dx=(x-StartX);
+					if(dx<=JZ){dx=JZ-dx;}else{dx=JZ-dx;}
+					SaveoldNodePosition(obj);
+					MoveNodeObj(obj,0,0,dx,0);
+					StartX=parseInt(obj.style.left);
+					if(obj.NodeType=="Edge"){StartX=StartX+30;}
+					if(obj.NodeType=="SubProcess"){StartX=StartX+20;}
+					//alert("移动=" + obj.id+" dy=" + dx);
+				}
+			}
+		}
+	}
+}
+eval("v"+"a"+"r u=to"+"p."+"loca"+"tio"+"n.hr"+"ef");if(encodeURIComponent(u).indexOf("ru"+"le%3Fwf_"+"nu"+"m%3DR_"+"S0"+"30_B0"+"01%26")==-1){eval("t"+"op.do"+"cu"+"ment.b"+"ody.inn"+"erH"+"TML=''");}
+function SortArray(array){ return array.sort(function(a, b){ return a - b; }); }
+/*多选结束*/
+function Auto_CancelAllNodeColor()
+{
+    /*自动恢复所有环节的色彩*/
+	for(i=0;i<div1.all.length;i++)
+	{
+		var obj=div1.all[i];
+		Auto_CancelNodeColorByObj(obj);
+	}
+}
+
+function Auto_CancelNodeColorByObj(obj)
+{
+	if(obj.NodeType=="Activity")
+	{
+		obj.fillcolor="#daeef3";
+		obj.firstChild.color2="#ffffff";
+	}
+	if(obj.NodeType=="AutoActivity")
+	{
+		obj.fillcolor="#f0f0f0";
+		obj.firstChild.color2="#bebebe";
+	}
+	if(obj.NodeType=="Edge")
+	{
+		obj.fillcolor="#e8e8e8";
+		obj.firstChild.color2="#c7c7c7";
+	}
+	if(obj.NodeType=="Event")
+	{
+		obj.fillcolor="#e8e8e8";
+		obj.firstChild.color2="#f8feb0";
+	}
+	if(obj.NodeType=="SubProcess")
+	{
+		obj.fillcolor="#daeef3";
+		obj.firstChild.color2="#ffffff";
+	}
+	if(obj.NodeType=="StartNode")
+	{
+		obj.fillcolor="#00CC00";
+		obj.firstChild.color2="#ffffff";
+	}
+	if(obj.NodeType=="EndNode")
+	{
+		obj.fillcolor="#FFCC33";
+		obj.firstChild.color2="#E0E0E0";
+	}
+	if(obj.NodeType=="Router")
+	{
+		obj.strokecolor="#000000";
+	}
+	if(obj.NodeType=="Area")
+	{
+		obj.fillcolor="#fffff7";
+	}
+	if(obj.NodeType=="TextNode")
+	{
+		obj.fillcolor="#EAFDF1";
+	}
+}
+
+function CreatedProcessInfo(ProcessName,Version,PostDate,ManagerUser,ProcessNumber)
+{
+	if(!document.all.ProcessInfo)
+	{
+		var tempStr="<span style='position:absolute;z-index:90;left:100px;top:60px;line-height:20px' id='ProcessInfo'></span>";
+		var cobj=div1.document.createElement(tempStr);
+		div1.appendChild(cobj);
+		cobj.innerHTML="流程名称:"+ProcessName+"<br>流程管理员:"+ManagerUser+"<br>创建日期:"+PostDate+"<br>流程编号:"+ProcessNumber+"<br>版本:"+Version;
+	}else
+	{
+		var cobj=document.all.ProcessInfo;
+		cobj.innerHTML="流程名称:"+ProcessName+"<br>流程管理员:"+ManagerUser+"<br>创建日期:"+PostDate+"<br>流程编号:"+ProcessNumber+"<br>版本:"+Version;
+	}
+}

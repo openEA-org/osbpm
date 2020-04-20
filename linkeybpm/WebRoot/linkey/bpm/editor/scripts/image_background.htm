@@ -1,0 +1,195 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments[1].oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/image_background.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function bodyOnLoad()
+	{	
+	var oCell = dialogArguments[0];
+	
+	sImgUrl=oCell.style.backgroundImage;
+	if(sImgUrl=="none")sImgUrl="";
+	else sImgUrl=sImgUrl.substring(4,sImgUrl.length-1);
+	inpCell_BgImgURL.value=sImgUrl;
+	
+	inpCell_BgImgRepeat.value=oCell.style.backgroundRepeat;
+
+	if(oCell.style.backgroundPositionX=="left"||oCell.style.backgroundPositionX=="center"||oCell.style.backgroundPositionX=="right")
+		{
+		inpCell_BgImgHAlign[0].checked=true;
+		inpCell_BgImgHAlignPos.value=oCell.style.backgroundPositionX;
+		}
+	else
+		{
+		var sPosX=oCell.style.backgroundPositionX;
+		if(sPosX.substring(sPosX.length-1)=="%")
+			{
+			sPosXVal=sPosX.substring(0,sPosX.length-1);
+			if(sPosXVal*1!=0)
+				{
+				inpCell_BgImgHAlign[1].checked=true;
+				inpCell_BgImgHAlignVal.value=sPosXVal;
+				inpCell_BgImgHAlignMeasure.value="%";				
+				}
+			}
+		else if(sPosX.substring(sPosX.length-2)=="px")
+			{
+			sPosXVal=sPosX.substring(0,sPosX.length-2);
+			if(sPosXVal*1!=0)
+				{
+				inpCell_BgImgHAlign[1].checked=true;
+				inpCell_BgImgHAlignVal.value=sPosXVal;
+				inpCell_BgImgHAlignMeasure.value="px";
+				}
+			}
+		}
+
+	if(oCell.style.backgroundPositionY=="top"||oCell.style.backgroundPositionY=="middle"||oCell.style.backgroundPositionY=="bottom")
+		{
+		inpCell_BgImgVAlign[0].checked=true;
+		inpCell_BgImgVAlignPos.value=oCell.style.backgroundPositionY;
+		}
+	else
+		{
+		var sPosY=oCell.style.backgroundPositionY;
+		
+		if(sPosY.substring(sPosY.length-1)=="%")
+			{
+			sPosYVal=sPosY.substring(0,sPosY.length-1);
+			if(sPosYVal*1!=0)
+				{
+				inpCell_BgImgVAlign[1].checked=true;
+				inpCell_BgImgVAlignVal.value=sPosYVal;
+				inpCell_BgImgVAlignMeasure.value="%";
+				}
+			}
+		else if(sPosY.substring(sPosY.length-2)=="px")
+			{
+			sPosYVal=sPosY.substring(0,sPosY.length-2);
+			if(sPosYVal*1!=0)
+				{
+				inpCell_BgImgVAlign[1].checked=true;
+				inpCell_BgImgVAlignVal.value=sPosYVal;
+				inpCell_BgImgVAlignMeasure.value="px";
+				}
+			}
+		}
+
+	if(dialogArguments[1].oUtil.obj.cmdAssetManager!="")btnAsset.style.display="block";
+	}
+function openAsset()
+	{
+	inpCell_BgImgURL.value=eval(dialogArguments[1].oUtil.obj.cmdAssetManager);	
+	}
+function modalDialogShow(url,width,height)
+	{
+	if(url.indexOf("?")==-1) url=url+"?ffilter=image";//no querystring
+	else url=url+"&ffilter=image";
+	
+	return window.showModalDialog(url,window,
+		"dialogWidth:"+width+"px;dialogHeight:"+height+"px;edge:Raised;center:Yes;help:No;Resizable:Yes;Maximize:Yes");
+	}
+
+function doApply()
+	{
+	var oCell = dialogArguments[0];
+	
+	sColor = oCell.style.backgroundColor;
+	
+	if(inpCell_BgImgVAlign[0].checked) sVAlign = inpCell_BgImgVAlignPos.value;
+	else if(inpCell_BgImgVAlign[1].checked) sVAlign = inpCell_BgImgVAlignVal.value + inpCell_BgImgVAlignMeasure.value;
+	else sVAlign = "";
+	
+	if(inpCell_BgImgHAlign[0].checked) sHAlign = inpCell_BgImgHAlignPos.value;
+	else if(inpCell_BgImgHAlign[1].checked) sHAlign = inpCell_BgImgHAlignVal.value + inpCell_BgImgHAlignMeasure.value;
+	else sHAlign = "";
+
+	if(inpCell_BgImgURL.value=="") oCell.style.background=sColor;	
+	else oCell.style.background = "url("+inpCell_BgImgURL.value+") " + sColor + " " + inpCell_BgImgRepeat.value + " "+sHAlign+" "+sVAlign;
+	}				
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+
+	<table width=100%>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Image Source</span>: </td>
+		<td style="width:100%">
+				<table cellpadding="0" cellspacing="0"  style="width:100%">
+				<tr>
+				<td style="width:100%"><input type="text" id="inpCell_BgImgURL" name=inpCell_BgImgURL style="width:100%" class="inpTxt"></td>
+				<td><input type="button" value="" onclick="openAsset()" id="btnAsset" name="btnAsset" style="display:none;background:url('openAsset.gif');width:23px;height:18px;border:#a5acb2 1px solid;margin-left:1px;"></td>
+				</tr>
+				</table>						
+		</td>
+	</tr>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Repeat</span>: </td>
+		<td>
+			<select name=inpCell_BgImgRepeat ID=inpCell_BgImgRepeat class="inpSel">
+				<option value=repeat id="optLang" name="optLang" selected>Repeat</option>
+				<option value=no-repeat id="optLang" name="optLang">No repeat</option>
+				<option value=repeat-x id="optLang" name="optLang">Repeat horizontally</option>
+				<option value=repeat-y id="optLang" name="optLang">Repeat vertically</option>
+			</select>		
+		</td>
+	</tr>
+	<tr>
+	<td nowrap><span id=txtLang name=txtLang>Horizontal Align</span>: &nbsp;</td>
+	<td>	
+			<input type=radio name=inpCell_BgImgHAlign class=inpRdo checked>
+			<select name=inpCell_BgImgHAlignPos  style="width:70" class="inpSel">
+				<option value=left id="optLang" name="optLang" selected>left</option>
+				<option value=center id="optLang" name="optLang">center</option>
+				<option value=right id="optLang" name="optLang">right</option>
+			</select>
+			
+			<input type=radio name=inpCell_BgImgHAlign class=inpRdo>
+			<input type=text name=inpCell_BgImgHAlignVal size=3 class="inpTxt">
+			<select name=inpCell_BgImgHAlignMeasure style="width:70" class="inpSel">
+				<option value=px id="optLang" name="optLang">pixels</option>
+				<option value="%" id="optLang" name="optLang">percent</option>
+			</select>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap><span id=txtLang name=txtLang>Vertical Align</span>: </td>
+	<td>
+		<input type=radio name=inpCell_BgImgVAlign class=inpRdo checked>
+		<select name=inpCell_BgImgVAlignPos style="width:70" class="inpSel">
+			<option value=top id="optLang" name="optLang" selected>top</option>
+			<option value=middle id="optLang" name="optLang">middle</option>
+			<option value=bottom id="optLang" name="optLang">bottom</option>
+		</select>
+								
+		<input type=radio name=inpCell_BgImgVAlign class=inpRdo>
+		<input type=text name=inpCell_BgImgVAlignVal size=3 class="inpTxt">
+		<select name=inpCell_BgImgVAlignMeasure style="width:70" class="inpSel">
+			<option value=px id="optLang" name="optLang">pixels</option>
+			<option value="%" id="optLang" name="optLang">percent</option>
+		</select>			
+	</td>
+	</tr>					
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

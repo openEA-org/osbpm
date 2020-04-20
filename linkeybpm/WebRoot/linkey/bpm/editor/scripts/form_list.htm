@@ -1,0 +1,354 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/form_list.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+	
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	realTime()
+	}	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if (oSel.parentElement)	oEl=GetElement(oSel.parentElement(),"SELECT");
+	else oEl=GetElement(oSel.item(0),"SELECT");
+
+	if (oEl)
+		{
+		btnInsert.style.display="none";
+		btnApply.style.display="block";
+		btnOk.style.display="block";
+
+		if(oEl.NAME)inpName.value=oEl.NAME;	
+		if(oEl.name)inpName.value=oEl.name;	
+		if(oEl.size)inpSize.value=oEl.size;
+		if(oEl.multiple) chkMultiple.checked=true;
+		else chkMultiple.checked=false;
+		doMultiple(); //MULTIPLE or NOT
+		
+		//remove all
+		var num = selOptions.options.length;
+		for(var i=0;i<num;i++) selOptions.remove(0);
+		
+		for(var i=0;i<oEl.options.length;i++)
+			{
+			var sDisplayed = oEl.options.item(i).text;		
+			var sValue = oEl.options.item(i).value;
+
+			var oOption = document.createElement("OPTION")
+			oOption.text = sValue + " ... " + sDisplayed
+			
+			if(oEl.options.item(i).selected) oOption.selected=true;
+			
+			selOptions.add(oOption)
+			}
+		}
+	else
+		{
+		btnInsert.style.display="block";
+		btnApply.style.display="none";
+		btnOk.style.display="none";
+
+		inpName.value="list1";
+		inpSize.value="1";
+		chkMultiple.checked=false;
+		
+		//remove all
+		var num = selOptions.options.length;
+		for(var i=0;i<num;i++) selOptions.remove(0);
+		}
+		
+	inpValue.value="";
+	inpDisplayed.value="";			
+	}
+
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(chkMultiple.checked)
+		{
+		oSel.execCommand("InsertSelectListbox");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"SELECT");
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}		
+		else oEl.NAME=inpName.value; 
+		
+		if(inpSize.value!="") oEl.size=inpSize.value;
+		oEl.multiple="multiple";
+		}
+	else
+		{
+		oSel.execCommand("InsertSelectDropdown");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"SELECT");
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}		
+		else oEl.NAME=inpName.value; 
+		
+		if(inpSize.value!="") oEl.size=inpSize.value;
+		oEl.removeAttribute("multiple",0);
+		}
+		
+	//remove all
+	var num = oEl.options.length;
+	for(var i=0;i<num;i++) oEl.remove(0);
+		
+	for(var i=0;i<selOptions.options.length;i++)
+		{
+		var sTmp = selOptions.options.item(i).text;		
+		var arrTmp = sTmp.split(" ... ");
+
+		var oOption = dialogArguments.document.createElement("OPTION")
+		oOption.text = arrTmp[1]
+		oOption.value = arrTmp[0]
+		
+		if(selOptions.options.item(i).selected) oOption.selected=true;
+		
+		oEl.add(oOption)
+		}
+
+	realTime();
+	
+	dialogArguments.realTime(dialogArguments.oUtil.oName);
+	dialogArguments.oUtil.obj.selectElement(0);
+	}
+
+/*** List ***/
+function doListAdd()
+	{
+	var oOption = document.createElement("OPTION")
+	oOption.text = inpValue.value + " ... " + inpDisplayed.value
+	selOptions.add(oOption)
+	
+	inpValue.value="";
+	inpDisplayed.value="";	
+	inpValue.focus();
+	}	
+function doListDel()
+	{
+	if(selOptions.selectedIndex==-1)return;
+	selOptions.remove(selOptions.selectedIndex)
+	}	
+function doListUp()
+	{
+	if(selOptions.selectedIndex==-1)return;
+	if(selOptions.selectedIndex==0) return;
+	
+	nSelectedIndex = selOptions.selectedIndex-1;
+	var oBefore = selOptions.options.item(selOptions.selectedIndex-1)
+	var oSelect = selOptions.options.item(selOptions.selectedIndex)
+	for(var i=0;i<selOptions.options.length;i++)
+		{
+		if(selOptions.options.item(i)==oBefore)
+			{
+			sTmp = oSelect.text
+			}
+		else if(selOptions.options.item(i)==oSelect)
+			{
+			sTmp = oBefore.text
+			}
+		else
+			{
+			sTmp = selOptions.options.item(i).text
+			}
+		var oOption = document.createElement("OPTION")
+		oOption.text = sTmp
+		selTmp.add(oOption)
+		}
+	
+	//remove all
+	var num = selOptions.options.length;
+	for(var i=0;i<num;i++) selOptions.remove(0);
+	
+	//fill
+	for(var i=0;i<selTmp.options.length;i++)
+		{
+		var oOption = document.createElement("OPTION")
+		oOption.text = selTmp.options.item(i).text
+		selOptions.add(oOption)
+		}
+	
+	//remove all
+	var num = selTmp.options.length;
+	for(var i=0;i<num;i++) selTmp.remove(0);
+	
+	selOptions.selectedIndex = nSelectedIndex
+	}	
+function doListDown()
+	{
+	if(selOptions.selectedIndex==-1)return;
+	if(selOptions.selectedIndex+1==selOptions.options.length) return;
+	
+	nSelectedIndex = selOptions.selectedIndex+1;	
+	var oSelect = selOptions.options.item(selOptions.selectedIndex)
+	var oAfter = selOptions.options.item(selOptions.selectedIndex+1)
+	for(var i=0;i<selOptions.options.length;i++)
+		{
+		if(selOptions.options.item(i)==oSelect)
+			{
+			sTmp = oAfter.text
+			}
+		else if(selOptions.options.item(i)==oAfter)
+			{
+			sTmp = oSelect.text
+			}
+		else
+			{
+			sTmp = selOptions.options.item(i).text
+			}
+		var oOption = document.createElement("OPTION")
+		oOption.text = sTmp
+		selTmp.add(oOption)
+		}
+	
+	//remove all
+	var num = selOptions.options.length;
+	for(var i=0;i<num;i++) selOptions.remove(0);
+	
+	//fill
+	for(var i=0;i<selTmp.options.length;i++)
+		{
+		var oOption = document.createElement("OPTION")
+		oOption.text = selTmp.options.item(i).text
+		selOptions.add(oOption)
+		}
+	
+	//remove all
+	var num = selTmp.options.length;
+	for(var i=0;i<num;i++) selTmp.remove(0);
+	
+	selOptions.selectedIndex = nSelectedIndex
+	}
+	
+function doMultiple()
+	{
+	if(chkMultiple.checked)selOptions.multiple="multiple";
+	else selOptions.removeAttribute("multiple",0);
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;margin:0;">
+
+
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Name</span>:&nbsp;&nbsp;</td>
+		<td width=100% style="padding-left:5;"><INPUT type="text" ID="inpName" NAME="inpName" style="width:100%" value="list1" class="inpTxt"></td>
+	</tr>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Size</span>:&nbsp;&nbsp;</td>
+		<td style="padding-left:5"><INPUT type="text" ID="inpSize" NAME="inpSize" size=3 class="inpTxt"></td>
+	</tr>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Multiple select</span>:&nbsp;&nbsp;</td>
+		<td style="padding-left:5"><INPUT type="checkbox" ID="chkMultiple" NAME="chkMultiple" onclick="doMultiple()" class="inpChk">
+		</td>
+	</tr>
+	<tr>
+		<td nowrap colspan=2><span id=txtLang name=txtLang>Values</span>:</td>
+	</tr>
+
+	</table>
+	
+	<table width=100%>
+	<tr>
+		<td>
+			
+		<table cellpadding=0 cellspacing=0 width=100%>
+		<tr>
+		<td nowrap style="padding-right:4">
+			<INPUT type="text" ID="inpValue" NAME="inpValue" style="width:50%" class="inpTxt">
+			<INPUT type="text" ID="inpDisplayed" NAME="inpDisplayed" style="width:50%" class="inpTxt">
+		</td>
+		<td>
+			<INPUT type="button" name=btnAdd id=btnAdd value="  add  " style="width:70px" onclick="doListAdd()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+		</tr>		
+		<tr>
+		<td width=100%>
+			<SELECT size=8 style="width:100%" ID="selOptions" NAME="selOptions" multiple class="inpSel">
+			</SELECT>
+		</td>
+		<td>
+			<INPUT type="button" name=btnUp id=btnUp value=" up " style="width:70px" onclick="doListUp()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'"><br>
+			<INPUT type="button" name=btnDown id=btnDown value=" down " style="width:70px" onclick="doListDown()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'"><br>
+			<INPUT type="button" name=btnDel id=btnDel value=" del " style="width:70px" onclick="doListDel()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+		</tr>
+		</table>
+		<SELECT size=3 ID="selTmp" NAME="selTmp" style="display:none"></SELECT>
+		
+		</td>
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:6;" align="right">
+	<table cellpadding=1 cellspacing=0>
+	<td>
+	<input type=button name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnInsert id=btnInsert value="insert" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnApply id=btnApply value="apply" style="display:none" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnOk id=btnOk value=" ok " style="display:none;" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	</table>
+</td>
+</tr>
+</table>
+
+
+</body>
+</html>

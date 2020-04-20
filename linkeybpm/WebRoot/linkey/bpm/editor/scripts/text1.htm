@@ -1,0 +1,544 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/text1.js'></scr"+"ipt>");
+</script>
+<script language="JavaScript" src="color_picker.js"></script>
+<script>writeTitle()</script>
+<script language="JavaScript" src="list.js"></script>
+<script>
+document.onclick=hideAll;
+function hideAll()
+	{
+	oColor1.hide();oColor2.hide();
+	}
+
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+
+function doWindowFocus()
+	{	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+var obj1 = new ListEditor("obj1")
+function bodyOnLoad()
+	{
+	window.onfocus=doWindowFocus;
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	var obj=dialogArguments.oUtil.obj;
+	
+	//Font-Family
+	var sTmp="["
+	for(var i=0;i<obj.arrFontName.length;i++)
+		{
+		sFontName=obj.arrFontName[i];
+		sTmp+="['"+sFontName+"','"+sFontName+"','font:8pt "+sFontName+";']," 
+		}
+	sTmp=sTmp.substr(0,sTmp.length-1)
+	sTmp+="]";
+	obj1.items=eval(sTmp);
+	divFont_family.innerHTML=obj1.RUN()
+	obj1.onEdit = updateFont_Family
+
+	realTime();
+	}
+
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement;
+		}
+	else
+		{
+		if (oSel.parentElement)	oElement=oSel.parentElement();
+		else oElement=oSel.item(0);
+		}
+	
+	//~~~~~~~~~~~
+	/*
+	if(oElement.style.fontFamily!="")
+		inpFont_Family.value=oElement.style.fontFamily;
+	else
+		inpFont_Family.value=oEditor.document.queryCommandValue("FontName");
+
+	if(oEditor.document.queryCommandState("Bold") && oEditor.document.queryCommandState("Italic"))
+		inpFont_StyleWeight.value="Bold Italic";
+	else if(oEditor.document.queryCommandState("Bold"))
+		inpFont_StyleWeight.value="Bold";
+	else if(oEditor.document.queryCommandState("Italic"))
+		inpFont_StyleWeight.value="Italic";
+	else
+		{
+		inpFont_StyleWeight.value="";
+		if(oElement.style.fontWeight=="normal")
+			inpFont_StyleWeight.value="Regular";
+		if(oElement.style.fontStyle=="normal")
+			inpFont_StyleWeight.value="Regular";
+		}*/
+		
+	inpFont_Family.value=oElement.style.fontFamily;
+
+	if(oElement.style.fontWeight=="normal" && oElement.style.fontStyle=="normal")
+		inpFont_StyleWeight.value=sStyleWeight1;
+	else if(oElement.style.fontWeight=="normal" && oElement.style.fontStyle=="italic")
+		inpFont_StyleWeight.value=sStyleWeight2;
+	else if(oElement.style.fontWeight=="bold" && oElement.style.fontStyle=="normal")
+		inpFont_StyleWeight.value=sStyleWeight3;
+	else if(oElement.style.fontWeight=="bold" && oElement.style.fontStyle=="italic")
+		inpFont_StyleWeight.value=sStyleWeight4;
+	else inpFont_StyleWeight.value=""
+	
+	inpFont_Size.value=oElement.style.fontSize;
+	
+	inpText_ForegroundColor.style.backgroundColor=oElement.style.color;
+	inpText_BackgroundColor.style.backgroundColor=oElement.style.backgroundColor;
+	
+	if(oElement.style.textDecoration=="")inpText_Decoration[0].checked=true;
+	if(oElement.style.textDecoration=="underline")inpText_Decoration[1].checked=true;
+	if(oElement.style.textDecoration=="overline")inpText_Decoration[2].checked=true;
+	if(oElement.style.textDecoration=="line-through")inpText_Decoration[3].checked=true;
+	if(oElement.style.textDecoration=="none")inpText_Decoration[4].checked=true;
+	
+	if(oElement.style.textTransform=="")inpText_Case[0].checked=true;
+	if(oElement.style.textTransform=="capitalize")inpText_Case[1].checked=true;
+	if(oElement.style.textTransform=="uppercase")inpText_Case[2].checked=true;
+	if(oElement.style.textTransform=="lowercase")inpText_Case[3].checked=true;
+	if(oElement.style.textTransform=="none")inpText_Case[4].checked=true;
+	
+	if(oElement.style.fontVariant=="")inpFont_Variant[0].checked=true;
+	if(oElement.style.fontVariant=="small-caps")inpFont_Variant[1].checked=true;
+	if(oElement.style.fontVariant=="normal")inpFont_Variant[2].checked=true;
+	
+	if(oElement.style.verticalAlign=="")
+		{
+		inpText_VAlign[0].checked=true;
+		inpText_VAlign_Relative.value="";
+		}
+	if(oElement.style.verticalAlign=="super")
+		{
+		inpText_VAlign[1].checked=true;
+		inpText_VAlign_Relative.value="";
+		}
+	if(oElement.style.verticalAlign=="sub")
+		{
+		inpText_VAlign[2].checked=true;	
+		inpText_VAlign_Relative.value="";
+		}			
+	if(oElement.style.verticalAlign=="top" ||
+		oElement.style.verticalAlign=="middle" ||
+		oElement.style.verticalAlign=="bottom" ||
+		oElement.style.verticalAlign=="text-top" ||
+		oElement.style.verticalAlign=="text-bottom")
+		{		
+		inpText_VAlign[3].checked=true;
+		inpText_VAlign_Relative.value=oElement.style.verticalAlign;
+		}
+	if(oElement.style.verticalAlign=="baseline")
+		{
+		inpText_VAlign[4].checked=true;
+		inpText_VAlign_Relative.value="";
+		}
+	
+	inpText_LetterSpacing.value=oElement.style.letterSpacing;
+	}
+
+function updateFont_Family()
+	{
+	sVal = ""
+	var arrList = obj1.getResultValues()
+	for(var i=0;i<arrList.length;i++) sVal += arrList[i] + ", ";
+	sVal = sVal.substring(0,sVal.length-2)
+	inpFont_Family.value = sVal
+	
+	preview()
+	}
+
+function preview()
+	{
+	//divPreview selalu di-renew (bukan di-update) setiap kali style berubah (shg tdk perlu remove rule).
+	divPreview.innerHTML= "<table height=100% width=100%><tr><td valign=middle align=center>____________ <span id=spanPreview></span> ____________</td></tr></table>"
+	if(inpFont_Family.value!="") spanPreview.innerHTML=inpFont_Family.value;
+	else spanPreview.innerHTML="Text Preview";
+	format(spanPreview);
+	}
+
+function getArrStyle()
+	{
+	var arrStyle=[];
+
+	arrStyle.push(["fontFamily",inpFont_Family.value]);
+	arrStyle.push(["fontSize",inpFont_Size.value]);
+
+	if(inpFont_StyleWeight.value==sStyleWeight1)
+		{
+		arrStyle.push(["fontWeight","normal"]);
+		arrStyle.push(["fontStyle","normal"]);
+		}
+	else if(inpFont_StyleWeight.value==sStyleWeight2)
+		{
+		arrStyle.push(["fontWeight","normal"]);
+		arrStyle.push(["fontStyle","italic"]);
+		}
+	else if(inpFont_StyleWeight.value==sStyleWeight3)
+		{
+		arrStyle.push(["fontWeight","bold"]);
+		arrStyle.push(["fontStyle","normal"]);
+		}
+	else if(inpFont_StyleWeight.value==sStyleWeight4)
+		{
+		arrStyle.push(["fontWeight","bold"]);
+		arrStyle.push(["fontStyle","italic"]);
+		}
+	else
+		{
+		arrStyle.push(["fontWeight",""]);
+		arrStyle.push(["fontStyle",""]);
+		}
+
+	if(inpText_Decoration[0].checked) 
+		arrStyle.push(["textDecoration",""]);
+	if(inpText_Decoration[1].checked) 
+		arrStyle.push(["textDecoration","underline"]);
+	if(inpText_Decoration[2].checked)
+		arrStyle.push(["textDecoration","overline"]);
+	if(inpText_Decoration[3].checked)
+		arrStyle.push(["textDecoration","line-through"]);
+	if(inpText_Decoration[4].checked)
+		arrStyle.push(["textDecoration","none"]);
+		
+	if(inpText_Case[0].checked)
+		arrStyle.push(["textTransform",""]);
+	if(inpText_Case[1].checked)
+		arrStyle.push(["textTransform","capitalize"]);
+	if(inpText_Case[2].checked)
+		arrStyle.push(["textTransform","uppercase"]);
+	if(inpText_Case[3].checked)
+		arrStyle.push(["textTransform","lowercase"]);
+	if(inpText_Case[4].checked)
+		arrStyle.push(["textTransform","none"]);
+	
+	if(inpFont_Variant[0].checked) 
+		arrStyle.push(["fontVariant",""]);
+	if(inpFont_Variant[1].checked)
+		arrStyle.push(["fontVariant","small-caps"]);
+	if(inpFont_Variant[2].checked)
+		arrStyle.push(["fontVariant","normal"]);
+	
+	if(inpText_VAlign[0].checked)
+		arrStyle.push(["verticalAlign",""]);
+	if(inpText_VAlign[1].checked)
+		arrStyle.push(["verticalAlign","super"]);
+	if(inpText_VAlign[2].checked)
+		arrStyle.push(["verticalAlign","sub"]);
+	if(inpText_VAlign[3].checked)
+		arrStyle.push(["verticalAlign",inpText_VAlign_Relative.value]);	
+	if(inpText_VAlign[4].checked)
+		arrStyle.push(["verticalAlign","baseline"]);
+	
+	arrStyle.push(["color",inpText_ForegroundColor.style.backgroundColor]);
+	arrStyle.push(["backgroundColor",inpText_BackgroundColor.style.backgroundColor]);
+	
+	if(inpText_LetterSpacing.value=="")
+		arrStyle.push(["letterSpacing",""]);
+	else
+		arrStyle.push(["letterSpacing",inpText_LetterSpacing.value+"px"]);
+	
+	return arrStyle;
+	}
+
+function format(s)
+	{	
+	if(inpFont_Family.value!="")s.style.fontFamily=inpFont_Family.value;
+	else
+		{//Not Set
+		s.style.fontFamily="";	
+		s.style.cssText = s.style.cssText.replace("FONT-FAMILY: ; ","");
+		s.style.cssText = s.style.cssText.replace("FONT-FAMILY: ","");
+		}
+	
+	if(inpFont_Size.value!="")s.style.fontSize=inpFont_Size.value;
+	else
+		{//Not Set
+		s.style.fontSize="";
+		s.style.cssText = s.style.cssText.replace("FONT-SIZE: ; ","");
+		s.style.cssText = s.style.cssText.replace("FONT-SIZE: ","");
+		}	
+	
+	if(inpFont_StyleWeight.value=="")
+		{//Not Set
+		s.style.fontWeight="normal";s.style.fontStyle="normal"
+		s.style.cssText = s.style.cssText.replace("FONT-WEIGHT: normal; ","");
+		s.style.cssText = s.style.cssText.replace("FONT-WEIGHT: normal","");
+		
+		s.style.cssText = s.style.cssText.replace("FONT-STYLE: normal; ","");
+		s.style.cssText = s.style.cssText.replace("FONT-STYLE: normal","");
+		}
+	if(inpFont_StyleWeight.value==sStyleWeight1){s.style.fontWeight="normal";s.style.fontStyle="normal"}
+	if(inpFont_StyleWeight.value==sStyleWeight2){s.style.fontWeight="normal";s.style.fontStyle="italic"}
+	if(inpFont_StyleWeight.value==sStyleWeight3){s.style.fontWeight="bold";s.style.fontStyle="normal"}
+	if(inpFont_StyleWeight.value==sStyleWeight4){s.style.fontWeight="bold";s.style.fontStyle="italic";}
+	
+	if(inpText_Decoration[0].checked) 
+		{
+		s.style.textDecoration="none";		
+		s.style.cssText = s.style.cssText.replace("TEXT-DECORATION: none; ","");
+		s.style.cssText = s.style.cssText.replace("TEXT-DECORATION: none","");
+		}
+	if(inpText_Decoration[1].checked) s.style.textDecoration="underline";
+	if(inpText_Decoration[2].checked) s.style.textDecoration="overline";
+	if(inpText_Decoration[3].checked) s.style.textDecoration="line-through";
+	if(inpText_Decoration[4].checked) s.style.textDecoration="none";
+	
+	if(inpText_Case[0].checked) s.style.textTransform = "";
+	if(inpText_Case[1].checked) s.style.textTransform = "capitalize";
+	if(inpText_Case[2].checked) s.style.textTransform = "uppercase";
+	if(inpText_Case[3].checked) s.style.textTransform = "lowercase";
+	if(inpText_Case[4].checked) s.style.textTransform = "none";
+	
+	if(inpFont_Variant[0].checked) s.style.fontVariant=""
+	if(inpFont_Variant[1].checked) s.style.fontVariant="small-caps";
+	if(inpFont_Variant[2].checked) s.style.fontVariant="normal";	
+	
+	if(inpText_VAlign[0].checked)s.style.verticalAlign = "";
+	if(inpText_VAlign[1].checked) s.style.verticalAlign = "super";
+	if(inpText_VAlign[2].checked) s.style.verticalAlign = "sub"	;	
+	if(inpText_VAlign[3].checked) s.style.verticalAlign = inpText_VAlign_Relative.value;	
+	if(inpText_VAlign[4].checked) s.style.verticalAlign = "baseline";	
+	
+	s.style.color=inpText_ForegroundColor.style.backgroundColor;
+	s.style.backgroundColor=inpText_BackgroundColor.style.backgroundColor;
+
+	if(inpText_LetterSpacing.value=="") 
+		{
+		s.style.letterSpacing=0
+		s.style.cssText = s.style.cssText.replace("LETTER-SPACING: 0px; ","");
+		s.style.cssText = s.style.cssText.replace("LETTER-SPACING: 0px","");
+		}
+	else s.style.letterSpacing=inpText_LetterSpacing.value+"px";	
+	}
+	
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var obj=dialogArguments.oUtil.obj;
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement;
+		format(oElement);
+		}
+	else
+		{
+		if(oSel.parentElement)
+			{
+			if(oSel.text=="")
+				{
+				oElement=oSel.parentElement();
+				if(oElement)
+				if(oElement.tagName!="BODY") format(oElement);
+				}
+			else
+				{
+				//var idNewSpan=obj.applySpan();
+				//if(idNewSpan)//if there is selected text
+				//	{
+				//	format(idNewSpan);
+				//	}
+				obj.applySpanStyle(getArrStyle());
+				}
+			}
+		else
+			{
+			oElement=oSel.item(0);
+			if(oElement)
+			format(oElement);
+			}
+		}
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height="100%" align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+
+	<table width=100%>
+	<tr>
+	<td valign=top style="padding-left:5;padding-right:5;">
+
+	<div style="margin-bottom:3;"><b><span id=txtLang name=txtLang>Font</span> :</b></div>
+	<input type=text name=inpFont_Family style="width:100%" onchange="preview()" class="inpTxt"><div style="padding:1;"></div>
+	<div id=divFont_family></div>
+
+	</td>
+	<td valign=top style="width:80">
+
+			<div style="margin-bottom:3;"><b><span id=txtLang name=txtLang>Style</span> :</b></div>
+			<input type=text name=inpFont_StyleWeight style="width:100%" onchange="preview()" class="inpTxt"><div style="padding:1;"></div>
+			<select size=6 style="width:100%" name="selFont_StyleWeight" onchange="inpFont_StyleWeight.value=selFont_StyleWeight.value; preview();" class="inpSel">
+				<option id="optLang" name="optLang" selected>Regular</option>
+				<option id="optLang" name="optLang">Italic</option>
+				<option id="optLang" name="optLang">Bold</option>
+				<option id="optLang" name="optLang">Bold Italic</option>
+			</select>
+
+	</td>
+	<td valign=top style="padding-right:5;width:80">
+
+			<div style="margin-bottom:3;"><b><span id=txtLang name=txtLang>Size</span> :</b></div>
+			<input type=text name=inpFont_Size style="width:100%" onchange="preview()" class="inpTxt"><div style="padding:1;"></div>
+			<select size=6 style="width:100%" name="selFont_Size" onchange="inpFont_Size.value=selFont_Size.value+'pt'; preview();" class="inpSel">
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="14">14</option>
+				<option value="16">16</option>
+				<option value="18">18</option>
+				<option value="20">20</option>
+				<option value="22">22</option>
+				<option value="24">24</option>
+				<option value="26">26</option>
+				<option value="28">28</option>
+				<option value="36">36</option>
+				<option value="48">48</option>
+				<option value="72">72</option>
+			</select>
+
+	</td>
+	</tr>
+	<tr>
+	<td colspan=3 style="padding-left:5;padding-right:5;">
+
+			<div style="margin-bottom:5;margin-top:2;"><b><span id=txtLang name=txtLang>Foreground</span>:</b>
+			<span style="background:#ffffff">
+			<span id="inpText_ForegroundColor" style="margin-left:17;border:gray 1 solid;width:20;margin-right:3;"></span>
+			</span>
+			<input type=button name=btnPick1 value=Pick onclick="oColor1.show(this);event.cancelBubble=true;" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+			<script>
+			var oColor1 = new ColorPicker("oColor1");
+			oColor1.onPickColor = new Function("inpText_ForegroundColor.style.backgroundColor=oColor1.color;preview()");
+			oColor1.onRemoveColor = new Function("inpText_ForegroundColor.style.backgroundColor='';preview()");
+			oColor1.align="left";
+			oColor1.txtCustomColors=getTxt("Custom Colors");
+			oColor1.txtMoreColors=getTxt("More Colors...");
+			oColor1.RENDER();
+			</script>	
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><span id=txtLang name=txtLang>Background</span>:</b>
+			<span style="background:#ffffff">
+			<span id="inpText_BackgroundColor" style="margin-left:17;border:gray 1 solid;width:20;margin-right:3;"></span>
+			</span>
+			<input type=button name=btnPick2 value=Pick onclick="oColor2.show(this);event.cancelBubble=true;" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+			<script>
+			var oColor2 = new ColorPicker("oColor2");
+			oColor2.onPickColor = new Function("inpText_BackgroundColor.style.backgroundColor=oColor2.color;preview()");
+			oColor2.onRemoveColor = new Function("inpText_BackgroundColor.style.backgroundColor='';preview()");
+			oColor2.align="left";
+			oColor2.onShow = new Function("inpText_VAlign_Relative.style.visibility='hidden';");
+			oColor2.onHide = new Function("inpText_VAlign_Relative.style.visibility='visible';");
+			oColor2.txtCustomColors=getTxt("Custom Colors");
+			oColor2.txtMoreColors=getTxt("More Colors...");
+			oColor2.RENDER();
+			</script>	
+			</div>	
+			
+			
+			<div style="margin-bottom:5;margin-top:5;">
+			<table width=100% style="border:white 1px solid;background:#F2F1F8">
+			<tr>
+			<td><span id=txtLang name=txtLang>Decoration</span>:</td>
+			<td><span id=txtLang name=txtLang>Text Case</span>:</td>
+			<td><span id=txtLang name=txtLang>Minicaps</span>:</td>
+			<td><span id=txtLang name=txtLang>Vertical</span>:</td>
+			</tr>
+			<tr><td valign=top>
+			<input type=radio class=inpRdo name="inpText_Decoration" onclick="preview()" checked> <span id=txtLang name=txtLang>Not Set</span><br>
+			<input type=radio class=inpRdo name="inpText_Decoration" onclick="preview()"> <span id=txtLang name=txtLang>Underline</span><br>
+			<input type=radio class=inpRdo name="inpText_Decoration" onclick="preview()"> <span id=txtLang name=txtLang>Overline</span><br>
+			<input type=radio class=inpRdo name="inpText_Decoration" onclick="preview()"> <span id=txtLang name=txtLang>Line-through</span><br>
+			<input type=radio class=inpRdo name="inpText_Decoration" onclick="preview()"> <span id=txtLang name=txtLang>None</span>
+			</td>
+			<td valign=top>
+			<input type=radio class=inpRdo name="inpText_Case" onclick="preview()" checked> <span id=txtLang name=txtLang>Not Set</span><br>
+			<input type=radio class=inpRdo name="inpText_Case" onclick="preview()"> <span id=txtLang name=txtLang>Capitalize</span><br>
+			<input type=radio class=inpRdo name="inpText_Case" onclick="preview()"> <span id=txtLang name=txtLang>Uppercase</span><br>
+			<input type=radio class=inpRdo name="inpText_Case" onclick="preview()"> <span id=txtLang name=txtLang>Lowercase</span><br>
+			<input type=radio class=inpRdo name="inpText_Case" onclick="preview()"> <span id=txtLang name=txtLang>None</span>
+			</td>
+			<td valign=top>
+			<input type=radio class=inpRdo name="inpFont_Variant" onclick="preview()" checked> <span id=txtLang name=txtLang>Not Set</span><br>
+			<input type=radio class=inpRdo name="inpFont_Variant" onclick="preview()"> <span id=txtLang name=txtLang>Small-Caps</span><br>
+			<input type=radio class=inpRdo name="inpFont_Variant" onclick="preview()"> <span id=txtLang name=txtLang>Normal</span>
+			</td>
+			<td valign=top>
+			<input type=radio class=inpRdo name="inpText_VAlign" onclick="preview()" checked> <span id=txtLang name=txtLang>Not Set</span><br>
+			<input type=radio class=inpRdo name="inpText_VAlign" onclick="preview()"> <span id=txtLang name=txtLang>Superscript</span><br>
+			<input type=radio class=inpRdo name="inpText_VAlign" onclick="preview()"> <span id=txtLang name=txtLang>Subscript</span><br>
+			
+			
+			<table cellpadding=0 cellspacing=0><tr><td>
+			<input type=radio class=inpRdo name="inpText_VAlign" onclick="preview()">&nbsp;
+			</td><td>
+			<span id="txtLang" name=txtLang>Relative</span> :&nbsp;
+			</td><td>
+				<select name="inpText_VAlign_Relative" style="vertical:bottom" onchange="preview();inpText_VAlign[3].checked=true;" class="inpSel">
+					<option value="top" id="optLang" name="optLang">Top</option>
+					<option value="middle" id="optLang" name="optLang" selected>Middle</option>
+					<option value="bottom" id="optLang" name="optLang">Bottom</option>
+					<option value="text-top" id="optLang" name="optLang">Text-Top</option>
+					<option value="text-bottom" id="optLang" name="optLang">Text-Bottom</option>
+				</select>
+			</td></tr></table>			
+
+			<input type=radio class=inpRdo name="inpText_VAlign" onclick="preview()"> <span id="txtLang" name=txtLang>Baseline</span><br>
+			</td>
+			</tr></table>
+			</div>
+
+			<div style="margin-bottom:5;margin-top:5;">
+			<b><span id=txtLang name=txtLang>Character Spacing</span> : </b><input type=text name=inpText_LetterSpacing size=3 value="" style="text-align:right" onblur="preview()" class="inpTxt">
+			</div>
+
+			<div style="margin-bottom:2;">
+			<div id="divPreview" style="overflow:auto;border:1 dimgray solid;width:100%;height:70;background:#ffffff"></div>
+			</div>
+	</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

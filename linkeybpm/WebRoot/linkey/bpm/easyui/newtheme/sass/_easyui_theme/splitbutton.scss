@@ -1,0 +1,44 @@
+@charset "UTF-8";
+.s-btn-downarrow {
+    display: inline-block;
+    margin: 0 0 0 4px;
+    padding: 0 0 0 1px;
+    width: 14px;
+    height: 16px;
+    line-height: 16px;
+    border-width: 0;
+    border-style: solid;
+    font-size: 12px;
+    _vertical-align: middle;
+    background: url($s-btn-downarrow-background) no-repeat 2px center;
+    border-color: $s-btn-downarrow-border-color;
+}
+a {
+    &.s-btn-active {
+        background-position: bottom right;
+        span {
+            &.l-btn-left {
+                background-position: bottom left;
+            }
+        }
+    }
+    &.s-btn-plain-active {
+        background: transparent;
+        padding: 0 5px 0 0;
+        border-width: 1px;
+        border-style: solid;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        background: $splitbutton-s-btn-plain-active;  //detail 鼠标移动时背景颜色
+        color: $splitbutton-s-btn-plain-active2;  //detail 鼠标移动时文字颜色
+        border: 1px solid $splitbutton-s-btn-plain-active3; //detail 鼠标移动时边框颜色
+    }
+}
+a:hover.l-btn .s-btn-downarrow,
+a.s-btn-active .s-btn-downarrow,
+a.s-btn-plain-active .s-btn-downarrow {
+    background-position: 1px center;
+    padding: 0;
+    border-width: 0 0 0 1px;
+}

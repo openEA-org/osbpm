@@ -1,0 +1,263 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/source_html.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function doCmd(sCmd,sOption)
+	{
+	var oSel=idSource.document.selection.createRange();
+	var sType=idSource.document.selection.type;
+	var oTarget=(sType=="None"?idSource.document:oSel);
+	oTarget.execCommand(sCmd,false,sOption);
+	}
+function jsReplace(sText, sFind, sReplace)
+	{
+	var arrTmp = sText.split(sFind);
+	if (arrTmp.length > 1) sText = arrTmp.join(sReplace);
+	return sText;
+	}
+var sBodyHeader;
+var sBodyFooter;
+var sBodyTag;
+
+function bodyOnLoad()
+	{
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var obj = dialogArguments.oUtil.obj;
+
+	//Save sBodyHeader, sBodyFooter, sBodyTag
+	var s=oEditor.document.documentElement.outerHTML;
+	var arrTmp=s.split("<BODY");
+	sBodyHeader=arrTmp[0];
+	s=arrTmp[1];
+	arrTmp=s.split("</BODY>");
+	sBodyFooter=arrTmp[1];
+	s=oEditor.document.documentElement.outerHTML;
+	s=s.substr(s.indexOf("<BODY"));
+	s=s.substr(0,s.indexOf(">")+1);
+	sBodyTag=s;
+
+	var sHTML="";
+	sHTML = oEditor.document.body.innerHTML;
+	sHTML = jsReplace(sHTML," contentEditable=true","");
+
+	idSource.document.body.innerText=sHTML;
+	idSource.document.body.style.cssText="overflow-x:scroll;overflow-y:scroll;white-space:nowrap";
+
+	idSource.document.body.contentEditable=true;	
+	idSource.document.body.clearAttributes;
+	idSource.document.body.style.marginTop='4';
+	idSource.document.body.style.marginLeft='10';
+	idSource.document.body.style.fontFamily='Tahoma';
+	idSource.document.body.style.fontSize='11px';
+	idSource.document.body.style.color='black';
+	idSource.document.body.style.background='white';
+	idSource.document.body.onkeydown = new Function("doKeyPress(idSource.event)");
+	
+	doWrap()
+
+
+	}
+function doKeyPress(evt)
+	{
+	if (evt.keyCode==9)
+	{
+		var thisSel = document.selection.createRange();
+		thisSel.pasteHTML('&nbsp;&nbsp;&nbsp;&nbsp;');
+		return false;
+		idSource.focus();
+	}
+	if (evt.keyCode==13)
+		{
+		var thisSel = document.selection.createRange();
+		thisSel.pasteHTML('<br>');
+		evt.cancelBubble = true;
+		evt.returnValue = false;
+		thisSel.select();
+		thisSel.moveEnd("character", 1);
+		thisSel.moveStart("character", 1);
+		thisSel.collapse(false);
+		return false;
+		idSource.focus();
+		}
+	if (evt.ctrlKey)
+		{
+		if(evt.keyCode==65)doCmd("SelectAll");
+		}
+	}
+function doUpdate()
+	{
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	var obj = dialogArguments.oUtil.obj;
+
+	sBodyContent = idSource.document.body.innerText;
+	var sHTML = obj.docType + sBodyHeader + sBodyTag + sBodyContent + "</BODY>" + sBodyFooter;
+	obj.putHTML(sHTML);//tdk menggunakan loadHTML() krn loadHTML() hanya utk first load.
+
+	//*** RUNTIME STYLES ***
+	obj.runtimeBorder(false);
+	obj.runtimeStyles();
+	//***********************
+	}
+
+function doWrap()
+	{
+	if(inpWrap.checked==true)
+		{
+		//Wrap Text
+		idSource.document.body.style.whiteSpace="normal";
+		}
+	else
+		{
+		idSource.document.body.style.whiteSpace="nowrap";
+		}
+	}
+	
+//*******************
+var buttonArrays=[];
+var buttonArraysCount=0;
+function writeIconStandard(id,command,img,title)
+	{
+	var oEditor=dialogArguments.oUtil.oEditor;
+	try{var oSel=oEditor.document.selection.createRange();}
+	catch(e){return "";}
+	var obj = dialogArguments.oUtil.obj;
+	w=obj.iconWidth;
+	h=obj.iconHeight;
+	imgPath=obj.iconPath+img;
+	sHTML=""+
+		"<td unselectable='on' style='padding-right:1px;VERTICAL-ALIGN: top;margin-left:0;margin-right:1px;margin-bottom:1px;width:"+w+"px;height:"+h+"px;'>"+
+		"<span unselectable='on' style='position:absolute;clip: rect(0 "+w+"px "+h+"px 0)'>"+
+		"<img name=\""+id+"\" id=\""+id+"\" btnIndex=\""+buttonArraysCount+"\" unselectable='on' src='"+imgPath+"' style='position:absolute;top:0;width:"+w+"px'"+
+		"onmouseover='doOver(this)' "+
+		"onmouseout='doOut(this)' "+
+		"onmousedown='doDown(this)' "+
+		"onmouseup=\"if(doUp(this)){"+command+"}\" alt=\""+title+"\">"+
+		"</span></td>";
+	sHTML="<table align=left cellpadding=0 cellspacing=0 style='table-layout:fixed;'><tr>"+sHTML+"</tr></table>";
+	buttonArrays.push(["inactive"]);
+	buttonArraysCount++;
+	return sHTML;
+	}
+	
+function writeBreakSpace()
+	{
+	var oEditor=dialogArguments.oUtil.oEditor;
+	try{var oSel=oEditor.document.selection.createRange();}
+	catch(e){return "";}
+	var obj = dialogArguments.oUtil.obj;
+	w=obj.iconWidth;
+	h=obj.iconHeight;
+	imgPath=obj.iconPath+"brkspace.gif";
+	sHTML=""+
+		"<td unselectable='on' style='padding-left:0px;padding-right:0px;VERTICAL-ALIGN:top;margin-bottom:1px;width:5px;height:"+h+"px;'>"+
+		"<img unselectable='on' src='"+imgPath+"'></td>";
+	sHTML="<table align=left cellpadding=0 cellspacing=0 style='table-layout:fixed;'><tr>"+sHTML+"</tr></table>";
+	return sHTML;
+	}
+
+function setupToolbar()
+	{
+	var obj = dialogArguments.oUtil.obj;
+	var sHTMLIcons="";
+	sHTMLIcons+=writeIconStandard("btnCut","doCmd('Cut')","btnCut.gif",getTxt("Cut"));
+	sHTMLIcons+=writeIconStandard("btnCopy","doCmd('Copy')","btnCopy.gif",getTxt("Copy"));
+	sHTMLIcons+=writeIconStandard("btnPaste","doCmd('Paste')","btnPaste.gif",getTxt("Paste"));
+	sHTMLIcons+=writeBreakSpace();
+	sHTMLIcons+=writeIconStandard("btnUndo","doCmd('Undo')","btnUndo.gif",getTxt("Undo"));
+	sHTMLIcons+=writeIconStandard("btnRedo","doCmd('Redo')","btnRedo.gif",getTxt("Redo"));
+	sHTMLIcons+=writeBreakSpace();
+	sHTMLIcons+=writeIconStandard("btnSearch","modelessDialogShow('search2.htm',375,163)","btnSearch.gif",getTxt("Search"));
+	sHTML="<table border=0 cellpadding=0 cellspacing=0 width='100%'>"+
+		"<tr><td colspan=2>"+
+		"<table cellpadding=0 cellspacing=0 width=100%><tr><td dir=ltr style=\"padding-left:1px;background:url('"+obj.scriptPath+"icons/bg.gif')\">"+
+		sHTMLIcons+
+		"</td></tr></table>"+
+		"</td></tr></table>";
+	idToolbar.innerHTML=sHTML;
+	}
+function doOver(btn)
+	{
+	btnArr=buttonArrays[btn.btnIndex];
+	if(btnArr[0]=="inactive")btn.style.top=-25;//no.2
+	}
+function doDown(btn)
+	{
+	btnArr=buttonArrays[btn.btnIndex];
+	if(btnArr[0]!="disabled")btn.style.top=-50;//no.3
+	}
+var bCancel=false;
+function doOut(btn)
+	{
+	if(btn.style.top=="-50px")
+		{
+		//lagi pushed tapi mouseout (cancel)
+		bCancel=true;
+		}
+
+	btnArr=buttonArrays[btn.btnIndex];
+	if(btnArr[0]=="active")btn.style.top=-75;//no.4 (remain active/pushed)
+	if(btnArr[0]=="inactive")btn.style.top=0;//no.1 (remain inactive)
+	}
+function doUp(btn)//return true/false
+	{
+	if(bCancel)
+		{
+		//lagi pushed tapi mouseout (cancel)
+		bCancel=false;btn.style.top=0;
+		return false;
+		}
+	btnArr=buttonArrays[btn.btnIndex];
+	if(btnArr[0]=="disabled") return false;
+	btn.style.top=-25;//no.2
+	return true;
+	}
+//*******************
+function modelessDialogShow(url,width,height)
+	{
+	window.showModelessDialog(url,window,
+		"dialogWidth:"+width+"px;dialogHeight:"+height+"px;edge:Raised;center:1;help:0;resizable:1;");
+	}
+</script>
+</head>
+<body onload="setupToolbar();loadTxt();bodyOnLoad()" style="overflow:hidden;margin:0;background: #f4f4f4;">
+
+<table width="100%" height="100%" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td id="idToolbar">
+
+</td>
+</tr>
+<tr>
+<td style="height:100%">
+	<iframe style="width:100%;height:100%;" src="blank.gif"  name="idSource" id="idSource" contentEditable="true"></iframe>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right" valign="right">
+	<table cellpadding=1 cellspacing=0>
+	<td width="100%">
+		&nbsp;<input type="checkbox" ID="inpWrap" NAME="inpWrap" class="inpChk" onclick="doWrap()" checked> <span id="txtLang" name="txtLang">Wrap Text</span>
+	</td>
+	<td>
+		<input type="button" name="btnCancel" id="btnCancel" value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+		<input type="button" name="btnApply" id="btnApply" value="apply" onclick="doUpdate();bodyOnLoad()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+		<input type="button" name="btnOk" id="btnOk" value=" ok " onclick="doUpdate();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

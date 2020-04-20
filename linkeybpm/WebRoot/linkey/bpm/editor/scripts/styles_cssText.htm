@@ -1,0 +1,223 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/styles_cssText.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function doWindowFocus()
+	{	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{
+	window.onfocus=doWindowFocus;
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+
+	var obj=dialogArguments.oUtil.obj;
+	
+	arrStyle = obj.arrStyle;
+	var sStyle=""
+	for(var i=0;i<arrStyle.length;i++)
+		{
+		sStyle+=arrStyle[i][0]+"{"+	arrStyle[i][3]+"}"+ "\n"
+		}			
+		
+	var sHTML="<HTML><HEAD><STYLE>"+sStyle+"</STYLE></HEAD><BODY margin-left=0 margin-top=0 margin-right=0 margin-bottom=0 style='border:#808080 1 solid' id=idPreviewTarget></BODY></HTML>"
+	var oDoc=idPreview.document.open("text/html", "replace");
+	if(obj.publishingPath!="") oDoc.write("<BASE HREF=\""+obj.publishingPath+"\"/>" + sHTML);
+	else oDoc.write(sHTML);		
+	oDoc.close();
+			
+	realTime();
+	}
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement
+		}
+	else
+		{
+		if (oSel.parentElement)	oElement=oSel.parentElement();
+		else oElement=oSel.item(0);
+		}	
+	
+	var tagName=oElement.tagName;
+	
+	if(tagName=="TD")
+		idPreview.document.all.idPreviewTarget.innerHTML="<table caption='styles_cssText_internal_use'><tr>" + oElement.outerHTML + "</tr></table>"
+	else
+		idPreview.document.all.idPreviewTarget.innerHTML=oElement.outerHTML
+
+	inpCssText.value=oElement.style.cssText
+	inpClassName.value=oElement.className;
+	}
+		
+function doApply()
+	{	
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var sType=oEditor.document.selection.type;
+	var obj=dialogArguments.oUtil.obj;
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(inpCssText.value=="" && inpClassName.value=="")//Selalu berarti me-remove style & class di CURRENT TAG!
+		{
+		if (oSel.parentElement)	oElement=oSel.parentElement();
+		else oElement=oSel.item(0);
+				
+		if(oElement)
+			{
+			if(oElement.tagName!="BODY") 
+				{				
+				oElement.removeAttribute("style",0);
+				oElement.removeAttribute("className",0);
+
+				if(oElement.tagName=="FONT" && oElement.color=="" && oElement.face=="" && oElement.size=="" && oElement.id=="")
+					obj.doCmd('RemoveFormat');
+				}
+			else
+				{
+				alert(getTxt("You're selecting BODY element."));
+				return;
+				}
+			}
+		}	
+	else if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement
+		
+		if(inpCssText.value=="") oElement.removeAttribute("style",0);
+		else oElement.style.cssText=inpCssText.value;
+				
+		if(inpClassName.value=="") oElement.removeAttribute("className",0);
+		else oElement.className=inpClassName.value;	
+		}
+	else
+		{		
+		if (oSel.parentElement)	
+			{
+			if(oSel.text=="")
+				{
+				oElement=oSel.parentElement();
+				if(oElement)
+					{
+					if(oElement.tagName!="BODY") 
+						{
+						if(inpCssText.value=="") oElement.removeAttribute("style",0);
+						else oElement.style.cssText=inpCssText.value;
+								
+						if(inpClassName.value=="") oElement.removeAttribute("className",0);
+						else oElement.className=inpClassName.value;	
+						}
+					}
+				}
+			else
+				{
+				var idNewSpan=obj.applySpan();
+				if(idNewSpan)//if there is selected text
+					{
+					if(inpCssText.value=="") idNewSpan.removeAttribute("style",0);//jadi kalo CSS Text input dibuat empty, tetap akan melakukan remove
+					else idNewSpan.style.cssText=inpCssText.value;			
+					
+					if(inpClassName.value=="") idNewSpan.removeAttribute("className",0);
+					else idNewSpan.className=inpClassName.value;
+					}	
+				}
+			}
+		else 
+			{
+			oElement=oSel.item(0);
+			if(oElement)
+				{
+				if(inpCssText.value=="") oElement.removeAttribute("style",0);
+				else oElement.style.cssText=inpCssText.value;
+						
+				if(inpClassName.value=="") oElement.removeAttribute("className",0);
+				else oElement.className=inpClassName.value;	
+				}
+			}
+		}
+
+	realTime()
+	
+	//*** RUNTIME BORDERS ***
+	obj.runtimeBorder(false);
+	//***********************		
+	}
+	
+function doCssTextChange()
+	{
+	if(idPreview.document.all.idPreviewTarget.innerHTML.substring(0,1)=="<")//means there is a tag for the style to be applied. Kalau tdk ada berarti BODY.
+		{
+		if(idPreview.document.all.idPreviewTarget.innerHTML.substring(0,6)=="<TABLE")
+			{
+			if(idPreview.document.all.idPreviewTarget.childNodes(0).caption=="styles_cssText_internal_use")
+				{//kalau yg di select text dalam table cell (TD)
+				idPreview.document.all.idPreviewTarget.childNodes(0).childNodes(0).childNodes(0).childNodes(0).style.cssText=inpCssText.value;
+				idPreview.document.all.idPreviewTarget.childNodes(0).childNodes(0).childNodes(0).childNodes(0).className=inpClassName.value;
+				}
+			else
+				{//kalau yg di select TABLE
+				idPreview.document.all.idPreviewTarget.childNodes(0).style.cssText=inpCssText.value;
+				idPreview.document.all.idPreviewTarget.childNodes(0).className=inpClassName.value;
+				}
+			}
+		else
+			{
+			idPreview.document.all.idPreviewTarget.childNodes(0).style.cssText=inpCssText.value;
+			idPreview.document.all.idPreviewTarget.childNodes(0).className=inpClassName.value;
+			}
+		}
+	//else => BODY
+	//	idPreview.document.all.idPreviewTarget.style.cssText=inpCssText.value;		
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+	<td nowrap>
+		<div style='font-family:Verdana;font-size:10px;padding-bottom:3'><b><span id="txtLang" name="txtLang">CSS Text</span>:</b></div>
+		<textarea rows=8 style="width:100%;" id="inpCssText" name="inpCssText" onblur="doCssTextChange()" style="font-family:vardana;font-size:10px" class="inpTxt"></textarea>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap>
+		<span style='font-family:Verdana;font-size:10px;'><b><span id="txtLang" name="txtLang">Class Name</span>:</b></span>
+		<input type="text" name="inpClassName" onblur="doCssTextChange()" style="width:225" class="inpTxt">
+	</td>
+	</tr>
+	<tr>
+	<td nowrap style="padding-top:5;padding-bottom:5">
+		<iframe style="width:100%;height:75;" src="blank.gif" name=idPreview id=idPreview></iframe>	
+	</td>
+	</tr>
+	</table>	
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+@charset "UTF-8";
+/*定义变量*/
+$icon-margin-right: 3px; /*这里可以控制图标右侧的大小*/
+$icon-font-size: 1.2em; /*这里可以自定义图标大小*/
+$icon-font-sm-size: 1.0em; /*这里可以自定义小型图标大小，主要给视图换页的工具栏用*/
+$icon-font-color: $common-icon-font-color; /*这里可以自定义颜色, false为不设置*/// 81CCCC 8399BF
+$icon-font-family: false; /*这里可以自定义字体, false为不设置*/
+
+/*为fa-lg添加一些新属性，以及覆盖掉一些原来的属性*/
+.#{$fa-css-prefix}-lg {
+	font-size: $icon-font-size !important;
+  	/*自定义新增属性*/
+	padding-top:3px;
+	min-width:17px;
+	text-align:center;
+	background:none;
+	@if $icon-font-color{
+		color:$icon-font-color;
+	}
+}
+.#{$fa-css-prefix}-sm {
+	font-size: $icon-font-sm-size !important;
+  	/*自定义新增属性*/
+	padding-top:3px;
+	min-width:17px;
+	text-align:center;
+	background:none;
+	@if $icon-font-color{
+		color:$icon-font-color;
+	}
+}
+/*修改图标的中文字体*/
+.#{$fa-css-prefix}{
+	@if $icon-font-family{
+		font: normal normal normal 14px/1 $icon-font-family,FontAwesome;
+	}
+}
+/*自定义新增icon*/
+.icon-1 { @extend .fa,.fa-lg; &:before{ content: $fa-var-home; margin-right:$icon-margin-right;} }
+.icon-2 { @extend .fa,.fa-lg; &:before{ content: $fa-var-bar-chart; margin-right:$icon-margin-right;} }  
+.icon-3 { @extend .fa,.fa-lg; &:before{ content: $fa-var-volume-up; margin-right:$icon-margin-right;} }  
+.icon-4 { @extend .fa,.fa-lg; &:before{ content: $fa-var-cloud-upload; margin-right:$icon-margin-right;} }  
+.icon-5 { @extend .fa,.fa-lg; &:before{ content: $fa-var-heart; margin-right:$icon-margin-right;} }  
+.icon-6 { @extend .fa,.fa-lg; &:before{ content: $fa-var-star; margin-right:$icon-margin-right;} }  
+.icon-7 { @extend .fa,.fa-lg; &:before{ content: $fa-var-hourglass-half; margin-right:$icon-margin-right;} }  
+.icon-8 { @extend .fa,.fa-lg; &:before{ content: $fa-var-hourglass-end; margin-right:$icon-margin-right;} }  
+.icon-9 { @extend .fa,.fa-lg; &:before{ content: $fa-var-paper-plane; margin-right:$icon-margin-right;} }  
+.icon-10 { @extend .fa,.fa-lg; &:before{ content: $fa-var-desktop; margin-right:$icon-margin-right;} }  
+.icon-11 { @extend .fa,.fa-lg; &:before{ content: $fa-var-circle-o; margin-right:$icon-margin-right;} }  
+.icon-12 { @extend .fa,.fa-lg; &:before{ content: $fa-var-folder; margin-right:$icon-margin-right;} }  
+.icon-13 { @extend .fa,.fa-lg; &:before{ content: $fa-var-file; margin-right:$icon-margin-right;} } 
+.icon-14 { @extend .fa,.fa-lg; &:before{ content: $fa-var-bookmark; margin-right:$icon-margin-right;} }  
+.icon-15 { @extend .fa,.fa-lg; &:before{ content: $fa-var-envelope; margin-right:$icon-margin-right;} }  
+.icon-16 { @extend .fa,.fa-lg; &:before{ content: $fa-var-search; margin-right:$icon-margin-right;} }  
+.icon-17 { @extend .fa,.fa-lg; &:before{ content: $fa-var-folder-open; margin-right:$icon-margin-right;} }  
+.icon-18 { @extend .fa,.fa-lg; &:before{ content: $fa-var-cog; margin-right:$icon-margin-right;} }  
+.icon-19 { @extend .fa,.fa-lg; &:before{ content: $fa-var-quora; margin-right:$icon-margin-right;} }  
+.icon-20 { @extend .fa,.fa-lg; &:before{ content: $fa-var-save; margin-right:$icon-margin-right;} }  
+.icon-21 { @extend .fa,.fa-lg; &:before{ content: $fa-var-folder-o; margin-right:$icon-margin-right;} }  
+.icon-22 { @extend .fa,.fa-lg; &:before{ content: $fa-var-file-text-o; margin-right:$icon-margin-right;} }  
+.icon-23 { @extend .fa,.fa-lg; &:before{ content: $fa-var-square; margin-right:$icon-margin-right;} }  
+.icon-24 { @extend .fa,.fa-lg; &:before{ content: $fa-var-square-o; margin-right:$icon-margin-right;} }  
+.icon-25 { @extend .fa,.fa-lg; &:before{ content: $fa-var-square-o; margin-right:$icon-margin-right;} }
+.icon-cmp, 			.icon-cmp1			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-puzzle-piece; margin-right:$icon-margin-right;} }
+.icon-plugin, 		.icon-plugin1		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-plug ; margin-right:$icon-margin-right;} }
+.icon-add, 			.icon-add1			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-plus-circle; margin-right:$icon-margin-right;} }
+.icon-edit, 		.icon-edit1			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-edit; margin-right:$icon-margin-right;} }
+.icon-remove,		.icon-remove1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-remove; margin-right:$icon-margin-right;} }
+.icon-save,			.icon-save1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-save; margin-right:$icon-margin-right;} }
+.icon-cut,			.icon-cut1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-cut; margin-right:$icon-margin-right;} }
+.icon-ok,			.icon-ok1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-check-square; margin-right:$icon-margin-right;} }
+.icon-reload,		.icon-reload1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-refresh; margin-right:$icon-margin-right;} }
+.icon-search,		.icon-search1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-search; margin-right:$icon-margin-right;} }
+.icon-print,		.icon-print1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-print; margin-right:$icon-margin-right;} }
+.icon-undo,			.icon-undo1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-undo; margin-right:$icon-margin-right;} }
+.icon-redo,			.icon-redo1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-share; margin-right:$icon-margin-right;} }
+.icon-back,			.icon-back1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-arrow-left; margin-right:$icon-margin-right;} }
+.icon-sum,			.icon-sum1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-etsy; margin-right:$icon-margin-right;} }
+.icon-down,			.icon-down1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-arrow-down; margin-right:$icon-margin-right;} }
+.icon-up,			.icon-up1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-arrow-up; margin-right:$icon-margin-right;} }
+.icon-config,		.icon-config1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-cog; margin-right:$icon-margin-right;} }
+.icon-class,		.icon-class1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-square; margin-right:$icon-margin-right;} }
+.icon-field,		.icon-field1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-square-o; margin-right:$icon-margin-right;} }
+.icon-flow,			.icon-flow1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-cogs; margin-right:$icon-margin-right;} }
+.icon-form,			.icon-form1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-wpforms; margin-right:$icon-margin-right;} }
+.icon-pkg,			.icon-pkg1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-sitemap; margin-right:$icon-margin-right;} }
+.icon-userbtn,		.icon-userbtn1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-users; margin-right:$icon-margin-right;} }
+.icon-user,			.icon-user1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-user; margin-right:$icon-margin-right;} }
+.icon-usergreen,	.icon-usergreen1	{ @extend .fa,.fa-lg; &:before{ content: $fa-var-user-o; margin-right:$icon-margin-right;} }
+.icon-userjob,		.icon-userjob1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-user-circle; margin-right:$icon-margin-right;} }
+.icon-mail,			.icon-mail1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-envelope-o; margin-right:$icon-margin-right;} }
+.icon-grid,			.icon-grid1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-table; margin-right:$icon-margin-right;} }
+.icon-copy,			.icon-copy1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-copy; margin-right:$icon-margin-right;} }
+.icon-task,			.icon-task1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-clone; margin-right:$icon-margin-right;} }
+.icon-rss,			.icon-rss1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-rss; margin-right:$icon-margin-right;} }
+.icon-method,		.icon-method1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-microchip; margin-right:$icon-margin-right;} }
+.icon-log,			.icon-log1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file-text-o; margin-right:$icon-margin-right;} }
+.icon-data,			.icon-data1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file-archive-o; margin-right:$icon-margin-right;} }
+.icon-event,		.icon-event1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-flash; margin-right:$icon-margin-right;} }
+.icon-erinfo,		.icon-erinfo1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-exclamation-triangle; margin-right:$icon-margin-right;} }
+.icon-home,			.icon-home1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-home; margin-right:$icon-margin-right;} }
+.icon-menu,			.icon-menu1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file-text; margin-right:$icon-margin-right;} }
+.icon-xls,			.icon-xls1 			{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file-code-o; margin-right:$icon-margin-right;} }
+.icon-word,			.icon-word1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file-word-o; margin-right:$icon-margin-right;} }
+.icon-file,			.icon-file1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-file; margin-right:$icon-margin-right;} }
+.icon-folder,		.icon-folder1 		{ @extend .fa,.fa-lg; &:before{ content: $fa-var-folder; margin-right:$icon-margin-right;} }
+.icon-folder-open,	.icon-folder-open1 	{ @extend .fa,.fa-lg; &:before{ content: $fa-var-folder-open; margin-right:$icon-margin-right;} }
+.pagination-next 	{ @extend .fa,.fa-sm; padding-top: 6px; &:before{ content: $fa-var-chevron-right ;} height:auto; width: 15px !important; height: 18px !important; }
+.pagination-prev 	{ @extend .fa,.fa-sm; padding-top: 6px; &:before{ content: $fa-var-chevron-left  ;} height:auto; width: 15px !important; height: 18px !important; }
+.pagination-last 	{ @extend .fa,.fa-sm; padding-top: 6px; &:before{ content: $fa-var-step-forward  ;} height:auto; width: 15px !important; height: 18px !important; }
+.pagination-first 	{ @extend .fa,.fa-sm; padding-top: 6px; &:before{ content: $fa-var-step-backward ;} height:auto; width: 15px !important; height: 18px !important; }
+.pagination-load 	{ @extend .fa,.fa-sm; padding-top: 6px; &:before{ content: $fa-var-refresh ;} 		height:auto; width: 15px !important; height: 18px !important; }
+
+/*修正偏移位移*/
+.l-btn span .l-btn-icon-left {line-height : 24px; padding: 1px 1px 1px 1px;}

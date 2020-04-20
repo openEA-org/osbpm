@@ -1,0 +1,65 @@
+@charset "UTF-8";
+/*page*/
+//page页面专门处理
+//=======================================================
+
+//common
+//==========================================
+
+$common-background: #ffffff;
+$common-background-black: #000000;
+$common-color-3b5383: #3b5383; 
+$common-color-969696: #969696;
+
+//==========================================
+
+$table-tr-td-item-background-color: #668ac8;
+$table-tr-td-cue-color: $common-background;
+$table-tr-td-cue-font-size: 13px;
+
+$table-tr-td-hover-color: #324b74;
+
+$news-notice-office-color: #668ac8;
+
+$ui-li-content-color: #3d3d3d;
+$ui-li-date-color: $common-color-969696;
+$ui-li-editor-color: $common-color-969696;
+
+$title-span-color: #334d78;
+$fdate-color: $common-color-969696;
+
+$container-item-background-color: #668ac8;
+$container-item-hover-color: #324b74;
+
+$topic_icon-background-image: url("images/topic.png");
+$error-color: $common-color-969696;
+$error-tip1-color: $common-background-black;
+
+$container-fluid-padding-left: 0px !important;
+
+$nav-tabs-active-color: $page-flowclassname-text-color;   //流程中心分类文字颜色
+$nav-tabs-active-hover-color: $page-flowclassname-text-color-hover;  //流程中心分类文字颜色（鼠标移动时）
+//$nav-tabs-active-focus-color: $common-color-3b5383;
+
+$active-background-image: url("images/topic.png");
+
+$thumbnail-caption-color: $page-flow-text-color; ////流程中心流程文字颜色
+
+
+$id_1-background-image: url("icon/app_icon1.png");
+$id_2-background-image: url("icon/app_icon2.png");
+$id_3-background-image: url("icon/app_icon3.png");
+$id_4-background-image: url("icon/app_icon4.png");
+$id_5-background-image: url("icon/app_icon5.png");
+$id_6-background-image: url("icon/app_icon6.png");
+$id_7-background-image: url("icon/app_icon7.png");
+$id_8-background-image: url("icon/app_icon8.png");
+$id_9-background-image: url("icon/app_icon9.png");
+$id_10-background-image: url("icon/app_icon10.png");
+$id_11-background-image: url("icon/app_icon11.png");
+
+$thumbnail_bgcolor-color: $page-flow-background; //流程图标背景 #6A89BA
+$thumbnail_bgcolor-colorhover: $page-flow-background-hover; //鼠标移动到流程时背景颜色；#324b74  397373
+
+$cal_img-background-image: url("images/calendar.png");
+$kpi_img-background-image: url("images/kpi.png");

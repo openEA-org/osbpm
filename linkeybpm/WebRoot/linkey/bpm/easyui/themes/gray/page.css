@@ -1,0 +1,466 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  outline: 0px;
+  font-family: "Microsoft YaHei";
+}
+body{
+  background-color: #FFFFFF;
+}
+.left{
+  width: 69.9%;
+  float: left;
+  border-right: 1px #dddddd solid;
+  margin-left: 0px;
+}
+.left .title{
+  background-image: none;
+}
+.right .title{
+  background-image: none;
+}
+.right{
+  width: 30%;
+  float: left;
+}
+.left .panel{
+  height: 180px;
+  border-bottom: 1px #dddddd solid;
+}
+.left table{
+  margin-top: 20px;
+  margin-left: 0px;
+  border-spacing: 30px 0px;
+}
+.left table tr td{
+  text-align: center;
+}
+.left table tr td:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.left table tr td:hover span{
+  text-decoration: underline;
+}
+.left table tr td span{
+  font-size: 12px;
+  position: relative;
+  top: 35px;
+  left: 0px;
+  display: inline-block;
+}
+.left table tr td .item{
+  width: 90px;
+  height: 90px;
+  background-color: #668ac8;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.left table tr td .item img{
+  position: relative;
+  top: 21px;
+  left: 10px;
+}
+.left table tr td .item .cue{
+  height: 20px;
+  width: 20px;
+  background-color: #f74d4d;
+  float: right;
+  position: relative;
+  left: 10px;
+  top: -10px;
+  color: #ffffff;
+  font-size: 13px;
+}
+.left .fast table tr td .item .cue{
+  visibility: hidden;
+}
+.left table tr td .item:hover{
+  background-color: #324b74;
+}
+.left .fast{
+  height: 180px;
+  border-bottom: 1px #dddddd solid;
+}
+.left .news{
+  height: 170px;
+}
+.left .news .notice{
+  float: left;
+  width: 51%;
+  border-right: 1px #dddddd solid;
+  height: 170px;
+  overflow: hidden;
+}
+.left .news .flow{
+  float: left;
+  width: 48%;
+  height: 170px;
+}
+.right .calendar{
+  height: 270px;
+  border-bottom: 1px #dddddd solid;
+}
+.right .kpi{
+  height: 150px;
+}
+.title span{
+  font-family: "Microsoft YaHei";
+  font-size: 14px;
+  font-weight: 600;
+  color: #334d78;
+  position: relative;
+  top: -5px;
+  left: 6px;
+}
+.left .news ul{
+  margin: 5px 5px 0px 10px;
+}
+.left .news ul li{
+  list-style: none;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 3px;
+  font-size: 14px;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.left .news .notice ul li .office{
+  float: left;
+  color: #668ac8;
+  cursor: pointer;
+}
+.office:hover,
+.content:hover{
+  text-decoration: underline;
+}
+
+.left .news ul li .content{
+  float: left;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+  white-space:nowrap;
+  color: #3d3d3d;
+  width: 100px;
+  cursor: pointer;
+}
+.left .news ul li .date{
+  float: right;
+  margin-left: 5px;
+  color: #969696;
+}
+.fdate{
+  float: right;
+  color: #969696;
+}
+.left .news ul li .editor{
+  float: right;
+  margin-left: 5px;
+  color: #969696;
+}
+.container{
+  margin: 30px 0px 0px 0px;
+}
+.container .item{
+  display: inline-block;
+  height: 90px;
+  width: 90px;
+  background-color: #668ac8;
+  margin-bottom: 50px;
+  text-align: center;
+  margin-left: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+.container .item:hover{
+  background-color: #358c01;
+  cursor: pointer;
+}
+.container .item:hover span{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.container .item img{
+  position: relative;
+  top: 20px;
+}
+.container .item span{
+  display: inline-block;
+  position: relative;
+  top: 38px;
+  font-size: 12px;
+}
+.title{
+  padding: 5px 0px 0px 15px;
+  border-top: 1px #dddddd solid;
+}
+.title span{
+  position: relative;
+  top: -5px;
+  left: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #324b74;
+  display: inline-block;
+}
+.topic_icon{
+  display: inline-block;
+  height: 22px;
+  width: 6px;
+  background-image: url("images/topic.png");
+  background-repeat: no-repeat;
+}
+.container{
+  margin: 20px 0px 0px 20px;
+}
+.container .item{
+  display: inline-block;
+  height: 90px;
+  width: 90px;
+  background-color: #668ac8;
+  margin-bottom: 50px;
+  text-align: center;
+  margin-right: 30px;
+  cursor: pointer;
+}
+.container .item:hover{
+  cursor: pointer;
+  background-color: #324b74;
+}
+.container .item:hover span{
+  text-decoration: underline;
+}
+.container .item span{
+  font-size: 12px;
+  display: inline-block;
+  position: relative;
+  top: 35px;
+}
+.container .item img{
+  position: relative;
+  top: 20px;
+}
+.head{
+  height: 65px;
+  width: 100%;
+  background-color: #f8f8f8;
+  font-size: 20px;
+  font-weight: 600;
+}
+.head .logo{
+  padding: 28px 0px 0px 256px;
+}
+.head .logo #img2{
+  position: relative;
+  top: 0px;
+  left: 6px;
+}
+.head .logo span{
+  position: relative;
+  top: -4px;
+  left: 10px;
+}
+.error{
+  text-align: center;
+  margin-top: 17vh;
+  font-size: 12px;
+  color: #969696;
+}
+.error .tip1{
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+  display: block;
+  margin-bottom: 10px;
+}
+.error .img_tip{
+  margin: 0px 0px 15px 0px;
+}
+.error .btn1,.btn2{
+  display: inline-block;
+}
+.error .reason{
+  margin: 0px 0px 5px 0px;
+}
+.error .btn{
+  margin: 8px 0px 0px 0px;
+  position: relative;
+  left: -2px;
+}
+.error .btn img{
+  position: relative;
+  top: 3px;
+  margin-right: 5px;
+}
+.error .btn1{
+  margin: 0px 10px 0px 0px;
+  cursor: pointer;
+}
+.error .btn1:hover{
+  text-decoration: underline;
+}
+.error .btn2{
+  margin: 0px 0px 0px 10px;
+  cursor: pointer;
+}
+.error .btn2:hover{
+  text-decoration: underline;
+}
+/*流程中心*/
+.container-fluid{
+  padding-left: 0px !important;
+}
+.nav-tabs {
+   border-bottom: none;
+}
+.nav-tabs>li.active>a{
+  color: #3b5383;
+  border: none;
+  font-weight: 600;
+  background-color: transparent;
+}
+.nav-tabs>li.active>a:hover{
+  color: #3b5383;
+  border: none;
+  font-weight: 600;
+  background-color: transparent;
+}
+.nav-tabs>li.active>a:focus{
+  color: #3b5383;
+  border: none;
+  font-weight: 600;
+  background-color: transparent;
+}
+.active{
+  background-image: url("images/topic.png");
+  background-repeat: no-repeat;
+  background-position: 1% 50%;
+}
+.col-xs-2{
+  margin: 0px 15px 0px 35px;
+  padding-right: 0px;
+  padding-left: 0px;
+  width: auto;
+}
+.col-md-12{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.badge {
+  height: 20px;
+  min-width: 20px;
+  border-radius: 0px;
+  font-weight: 100;
+  padding: 3px 0px;
+  position: relative;
+  top: -60px;
+  left: 44px;
+}
+.thumbnail .caption{
+  padding: 0px;
+  width: 140px;
+}
+.thumbnail .caption a{
+  color: #000000;
+  font-size: 12px;
+}
+.thumbnail div:first-child{
+  width: 90px;
+  height: 90px;
+}
+.thumbnail .thumbnail_bgcolor .process_icon{
+  height: 50px;
+  width: 50px;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+.thumbnail{
+  border-radius: 0px;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.thumbnail:hover{
+  text-decoration: underline;
+}
+.thumbnail_bgcolor{
+  background-color: #668ac8;
+}
+.thumbnail_bgcolor:hover{
+  background-color: #324b74;
+}
+.glyphicon {
+  position: relative;
+  top: 28px;
+}
+.cal_img img{
+  position: relative;
+  top: 10px;
+  left: 60px;
+  cursor: pointer;
+}
+.kpi_img img{
+  position: relative;
+  top: 2px;
+  left: 25px;
+  cursor: pointer;
+}
+/*流程中心图标*/
+.thumbnail #id_1{
+  background-image: url("icon/app_icon1.png");
+}
+.thumbnail #id_2{
+  background-image: url("icon/app_icon2.png");
+}
+.thumbnail #id_3{
+  background-image: url("icon/app_icon3.png");
+}
+.thumbnail #id_4{
+  background-image: url("icon/app_icon4.png");
+}
+.thumbnail #id_5{
+  background-image: url("icon/app_icon5.png");
+}
+.thumbnail #id_6{
+  background-image: url("icon/app_icon6.png");
+}
+.thumbnail #id_7{
+  background-image: url("icon/app_icon7.png");
+}
+.thumbnail #id_8{
+  background-image: url("icon/app_icon8.png");
+}
+.thumbnail #id_9{
+  background-image: url("icon/app_icon9.png");
+}
+.thumbnail #id_10{
+  background-image: url("icon/app_icon10.png");
+}
+.thumbnail #id_11{
+  background-image: url("icon/app_icon11.png");
+}
+/*流程中心图标end*/
+.cal_img{
+  margin: 0 auto;
+  height: 207px;
+  width: 216px;
+  background-image: url("images/calendar.png");
+  background-repeat: no-repeat;
+}
+.kpi_img{
+  margin: 0 auto;
+  height: 280px;
+  width: 280px;
+  background-image: url("images/kpi.png");
+  background-repeat: no-repeat;
+}

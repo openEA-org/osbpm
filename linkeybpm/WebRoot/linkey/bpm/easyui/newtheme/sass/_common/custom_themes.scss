@@ -1,0 +1,443 @@
+@charset "UTF-8";
+.panel {
+  overflow: hidden;
+  text-align: left;
+  margin: 0;
+  border: 0;
+  -moz-border-radius: 0 0 0 0;
+  -webkit-border-radius: 0 0 0 0;
+  border-radius: 0 0 0 0;
+  .panel-body {
+    width: 10px;
+  }
+}
+.panel-tool {
+  width: auto;
+  right: -1px;
+  height: 44px;
+  background-image: url($tree_btn-img);
+  background-repeat: no-repeat;
+  border-radius: 4px 0px 0px 4px;
+  position: absolute;
+  top: 270px;
+  cursor: pointer;
+  a {
+    display: inline-block;
+    width: 16px;
+    height: 42px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    margin: 0 0 0 0px;
+    vertical-align: middle;
+    border-radius: 4px 0px 0px 4px;
+    position: relative;
+    top: 1px;
+    left: 1px;
+    background-position-y: 50%;
+    &:hover {
+      opacity: 1;
+      filter: alpha(opacity=100);
+      -moz-border-radius: 4px 0px 0px 4px;
+      -webkit-border-radius: 4px 0px 0px 4px;
+      border-radius: 4px 0px 0px 4px;
+    }
+  }
+}
+.panel-header {
+  //border-color: #d3d3d3;
+  display: table-row;
+  background: $dev-main-first-background-color;  //detail 左侧导航栏第一行背景颜色
+//background-color: rgba(0,0,0,0.7);
+//background: -webkit-linear-gradient(top,#f8f8f8 0,#eeeeee 100%);
+//background: -moz-linear-gradient(top,#f8f8f8 0,#eeeeee 100%);
+//background: -o-linear-gradient(top,#f8f8f8 0,#eeeeee 100%);
+//background: linear-gradient(to bottom,#f8f8f8 0,#eeeeee 100%);
+//background-repeat: repeat-x;
+  //filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8,endColorstr=#eeeeee,GradientType=0);
+}
+.panel-body {
+  
+  //border-color: $left-tree-li-treenode;   //detail 用户端边框颜色
+}
+.panel-title {
+  display: none;
+  font-size: 12px;
+  font-weight: bold;
+  //color: #575765;
+}
+.window {
+  height: 1000px !important;
+  width: 1000px !important;
+  background-color: #f3f3f3;
+  background: -webkit-linear-gradient(top,#f8f8f8 0,#eeeeee 20%);
+  background: -moz-linear-gradient(top,#f8f8f8 0,#eeeeee 20%);
+  background: -o-linear-gradient(top,#f8f8f8 0,#eeeeee 20%);
+  background: linear-gradient(to bottom,#f8f8f8 0,#eeeeee 20%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f8f8f8,endColorstr=#eeeeee,GradientType=0);
+}
+//.layout-panel-west {
+//background-color: #3c3c3c;
+//}
+.layout-button-left {
+  background: url($icon-left-white-img) no-repeat 0 0;
+}
+.layout-button-right {
+  background: url($icon-right-white-img) no-repeat 0 0px;
+}
+.layout-split-west {
+  border-right: 1px solid $custom-layout-split-west;  //detail 用户端左侧导航树分割线
+}
+.layout-expand .panel-header, .layout-expand .panel-body {
+  background: $left-tree-li-treenode;  //detail 用户端左侧导航树收缩是颜色
+}
+.panel.layout-expand.layout-expand-west {
+    border-right: 1px solid $left-tree-li-treenode-border;  //detail 左侧导航栏收缩是边框颜色
+}
+
+.tabs {
+  list-style-type: none;
+  height: 26px;
+  margin: 0px;
+  padding: 0px;
+  padding-left: 4px;
+  width: 5000px;
+  border-style: solid;
+  border-width: 0 0 0px 0;
+  background-color:$main-tab-background;
+  color:$main-tab-color;
+  li {
+    font-size: 12px;
+    font-family: $common-font-family;
+    float: left;
+    display: inline-block;
+    margin: 0 4px -1px 0;
+    padding: 0;
+    position: relative;
+    left: 1px;
+    border: 0;
+    background: transparent;
+    &.tabs-selected {
+      a {
+        &.tabs-inner {
+          border: 0px solid #ffffff;
+          background: $main-tab-background;
+          color:$main-tab-color;
+        }
+      }
+    }
+  }
+}
+.tabs-title {
+  font-size: 12px;
+  border-bottom: 1px $main-tab-color solid;
+  position: relative;
+  top: 0px;
+  left: -4px;
+}
+div#tabs{
+  border:0;
+}
+.l-btn {
+  span {
+    .l-btn-icon-left {
+      padding: 0 0 0 20px;
+      background-position: left center;
+      color: $custom_l-btn-icon-left;  //detail 表单按钮字体颜色
+    }
+  }
+}
+.datagrid-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  display: none;
+}
+.datagrid-header-inner {
+  float: left;
+  width: 10000px;
+  background-color: #0077d1;
+  color: #ffffff;
+}
+.datagrid-header-row,
+.datagrid-row {
+  height: 25px;
+}
+.pic {
+  border: none;
+}
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+  border-width: 0 1px 1px 0;
+  border-style: dotted;
+  margin: 0;
+  padding: 0;
+}
+.datagrid-sort-desc {
+  .datagrid-sort-icon {
+    padding: 0 13px 0 0;
+    background: url($datagrid_icons_img) no-repeat -16px center;
+  }
+}
+.datagrid-sort-asc {
+  .datagrid-sort-icon {
+    padding: 0 13px 0 0;
+    background: url($datagrid_icons_img) no-repeat 0px center;
+  }
+}
+.datagrid-header {
+  background-color: #fafafa;
+  td {
+    background-color: #0077d1;
+    color: #ffffff;
+  }
+}
+
+.searchbox {
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+.searchbox-button {
+  background: url('images/search.png') no-repeat center center;
+}
+.tree-node {
+  height: 40px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: #000000;
+  &:hover {
+    height: 40px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #000000;
+    span {
+    }
+  }
+  span {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .tree-title {
+    font-family: $common-font-family;
+  }
+}
+#page_logo {  //页面头部颜色
+  background:$page_logo-background; //detail 背景颜色  37527F
+  height:60px; 
+  overflow:hidden;
+  //color:$page_logo-color;//detail 字体颜色
+  color:#fff;
+  //background-color:#385380;
+//background: -moz-linear-gradient(left, #405c8b 0%, #223a60 100%);
+//background: -webkit-linear-gradient(left, #405c8b 0%,#223a60 100%);
+//background: -o-linear-gradient(left, #405c8b 0%,#223a60 100%);
+//background: -ms-linear-gradient(left, #405c8b 0%,#223a60 100%);
+//background: linear-gradient(to right, #405c8b 0%,#223a60 100%);
+  #logo_left {
+    img {
+      margin-left: 30px;
+    }
+    span {
+      display: inline-block;
+      border-left: 1px #cecece solid;
+      height: 30px;
+      line-height: 30px;
+      margin-left: 10px;
+      padding-left: 10px;
+      font-family: $common-font-family;
+      position: relative;
+      top: 5px;
+      //color:$page_logo-color;//detail 字体颜色
+      color:#fff;
+    }
+  }
+  #logo_right {
+    a {
+      margin-right: 5px;
+      margin-left: 5px;
+      img {
+        margin-right: 5px;
+        position: relative;
+        top: -1px;
+      }
+    }
+    #UserName {
+      margin-right: 20px;
+    }
+  }
+}
+#logo_left {
+  padding-top: 5px;
+}
+#tree {
+  & > li {
+    & > .tree-node {
+      //border-bottom: 1px #d4d4d4 solid;
+      //background-color:$left-tree-li-treenode; //左侧导航栏背景颜色
+      & > .tree-file {
+      }
+      & > .tree-folder {
+      }
+    }
+    & > .tree-node-selected{
+          background-color:$left-tree-li-treenode-select; //detail 左侧导航栏背景颜色(选择时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(选择时)
+          }
+      }
+     & > .tree-node-hover{
+          background-color:$left-tree-li-treenode-select; //detail左侧导航栏背景颜色(鼠标停放时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(鼠标停放时)
+          }
+      }
+    & > ul {
+      & > li {
+        & > .tree-node {
+//        border-bottom: 1px #d4d4d4 solid;
+//        background-color: #e0e0e8;
+          & > .tree-icon {
+            background: url($tree_icon_null-img) no-repeat;
+          }
+        }
+        & > .tree-node-selected{
+          background-color:$left-tree-li-treenode-select; //detail 左侧导航栏背景颜色(选择时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(选择时)
+          }
+      }
+     & > .tree-node-hover{
+          background-color:$left-tree-li-treenode-select; //detail 左侧导航栏背景颜色(鼠标停放时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(鼠标停放时)
+          }
+      }
+        & > ul {
+          & > li {
+            & > .tree-node {
+//            background-color: #f6f6f6;
+//            border-bottom: 1px #d4d4d4 solid;
+              & > .tree-icon {
+                background: url($tree_icon_null-img) no-repeat;
+              }
+            }
+            & > .tree-node-selected{
+          background-color:$left-tree-li-treenode-select; //detail 左侧导航栏背景颜色(鼠标停放时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(鼠标停放时)
+          }
+          }
+          & > .tree-node-hover{
+          background-color:$left-tree-li-treenode-select; //detail 左侧导航栏背景颜色(鼠标停放时)
+          & > .tree-title{
+              color:$left-tree-text-color-select;  //detail 左侧导航栏文字颜色(鼠标停放时)
+          }
+      }
+          }
+        }
+      }
+    }
+  }
+}
+.tree-line {
+  background: url($tree_icons_img) no-repeat -176px 0;
+}
+.tree-icon {
+  margin-top: 12px;
+  margin-left: 20px;
+  margin-right: 8px;
+}
+.tree-hit {
+  margin-top: 15px;
+  cursor: pointer;
+  float: right;
+  margin-right: 15px;
+}
+.tree-lines .tree-expanded,
+.tree-lines .tree-root-first .tree-expanded {
+  background: url($icon-down-img) no-repeat;
+}
+.tree-lines .tree-node-last .tree-expanded,
+.tree-lines .tree-root-one .tree-expanded {
+  background: url($icon-down-img) no-repeat;
+}
+.tree-folder {
+  background: url($tree_icon12-img) no-repeat;
+}
+.tree-folder-open {
+  background: url($tree_icon17-img) no-repeat;
+}
+.tree-file {
+  background: url($tree_icon13-img) no-repeat;
+}
+.tree-title {
+  margin-top: 12px;
+  font-size: 12px;
+  display: inline-block;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 0 2px;
+  height: 18px;
+  line-height: 18px;
+  color:$left-tree-text-color;  //detail 左侧导航栏文字颜色
+}
+.tree-node-selected {
+  background: #dae3fe;
+  color: #000;
+  background-image: url($icon-right-img);
+  position:relative;
+  background-repeat: no-repeat;
+  background-position: 93% 60%;
+  .tree-title {
+    text-decoration: underline;
+    color: #3e5a89;
+  }
+}
+.validatebox-invalid {
+  background-image: url($icon-attention-img);
+  background-repeat: no-repeat;
+  background-position: right center;
+  border-color: #ffa8a8;
+  background-color: #fff;
+  color: #000;
+}
+#photo {
+  background-image: $photo-background-image;
+}
+iframe[id="centerFrame"] {
+  margin-left: 0px;
+  width: 100%;
+  min-width: 800px;
+}
+#centerFrame {
+  .panel-header {
+    background-color: #ffffff;
+  background: none !important;
+  }
+}
+iframe {
+  div {
+    background-color: #0077d1;
+  }
+}
+#tree_style {
+  background-color: $tree_style-background-color;
+}
+
+.tree-indent {
+    display: none;
+}

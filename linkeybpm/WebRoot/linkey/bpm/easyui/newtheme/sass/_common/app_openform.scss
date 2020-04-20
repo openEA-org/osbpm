@@ -1,0 +1,165 @@
+@charset "UTF-8";
+/*app_openform*/
+/*==============================================*/
+/*
+ * 与app_grid定义重复，此处注释。
+ a {
+    font-size:$common-font-size;
+    font-family:$common-font-family;
+    color: $app-of-a-color;
+    text-decoration: none;
+    }
+a:hover {
+    color: $app-of-a-hover-color;
+    text-decoration: none;
+    font-family:$common-font-family;
+    }
+legend,body,form,td{
+    font-size:$common-font-size;}*/
+//.toptoolbar{
+  //padding:$toptoolbar-padding;
+  //border:1px solid #ccc;
+  //background: $common-background;
+//}
+/*.toptoolbarhr{
+    height: $toptoolbarhr-height;}*/
+form{
+    margin: $form-margin;}
+.p{height:0px;}
+.fieldShow{
+    color: $linkeytable-font;}
+textarea{
+    overflow:auto;
+    border: $linkeytable-control-border;
+    color: $linkeytable-font;}
+select {
+    border: $linkeytable-control-border;
+    color: $linkeytable-font;}
+input[size]{
+    height: $input-height;
+    width:250px;
+    border: $linkeytable-control-border;
+    color: $linkeytable-font;}
+
+fieldset{border:$linkeytable-control-border;}
+
+/*自定义的样式表*/
+
+.linkeytable{
+    border-collapse:collapse;
+    border: $linkeytable-border;
+    width:100%;
+    font-size:$common-font-size;}
+.linkeytable td{
+  border-collapse:collapse;
+  border: $linkeytable-border;
+  padding:$linkeytable-td-padding;
+  font-size:$common-font-size;
+  background:$linkeytable-background; //detail 表单标题项的背景颜色
+  color:$linkeytable-font; //detail 表单标题项的字体颜色
+}
+.linkeytable td.texttd{
+  text-align:$linkeytable-td-texttd-text-align;
+  background:$linkeytable-title-background; //detail 表单标题项的背景颜色
+  font-size:$common-font-size;
+  min-width:$linkeytable-td-texttd-min-width;
+  color:$linkeytable-title-font; //表单标题项的字体颜色
+}
+.linkeytable td.texttdl{
+    text-align: $linkeytable-td-texttdl-text-align;
+    background:$common-background-f9f9f9;
+    font-size:$common-font-size;
+    min-width:$linkeytable-td-texttdl-min-width}
+
+/*chrome 样式定义 */
+ input,button,select,textarea,div,span,td{outline:none}
+
+ /*ui*/
+//.datagrid-pager {
+//background: $datagrid-pager-backgroundc; //视图分页条背景
+//}
+.datagrid-header{
+  background-color: $common-background;
+  background: none;
+}
+
+#linkeyform {
+    //width:80%;
+    margin:0 auto;
+    background-color:$linkeyform-background1; //detail 表单背景
+}
+
+#linkeyform .panel-header {
+  background-color: $common-background;
+  background: none;
+  border: none;
+}
+
+#linkeyform p {
+   display: block;
+   -webkit-margin-before: 1em;
+   -webkit-margin-after: 1em;
+   -webkit-margin-start: 0px;
+   -webkit-margin-end: 0px;
+}
+
+#linkeyform .panel-header .panel-title{
+  padding-left: $linkeyform_panel-header_panel-title-padding-left;
+  color: $linkeytable-font;
+  font-weight:$linkeyform_panel-header_panel-title-font-weight;
+}
+.datebox .combo-arrow {
+  background-image: $datebox_combo-arrow_background-image;
+  background-position: center center;
+  padding: 0 2px;
+  position: relative;
+  left: $datebox_combo-arrow-left;
+}
+.icon-flow {
+  background: $icon-flow-background;
+}
+.calendar-selected {
+  background-color: $calendar-selected-background-color;
+  color: $common-background;
+  border: $calendar-selected-border;
+  border-radius: $calendar-selected-border-radius;
+}
+.calendar-header {
+  background: $common-background;
+}
+.calendar-sunday, .calendar-saturday{
+  color: $common-background-black;
+}
+.calendar-other-month {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.calendar-today {
+  background-color: $common-background2;
+  color: $common-background-black;
+  border: $calendar-today-border;
+  border-radius: $calendar-today-border-radius;
+}
+.calendar-body th:first-child, .calendar-body th:last-child{
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+.calendar-hover {
+  border: $calendar-hover-border;
+  padding: 0;
+  border-radius: 50%;
+  background-color: $calendar-hover-background-color;
+  color: $common-background;
+}
+input[type="checkbox"]{
+  position: relative;
+  top: 2px;
+}
+.validatebox-invalid {
+  background-image: $validatebox-invalid-background-image;
+}
+
+input,textarea,select {//detail 
+    color:$app_openform-input-color; //输入框，文本域字体颜色
+    background-color: $app_openform-input-background; //输入框，文本域背景颜色
+}

@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<style>
+td{border:#808080 1 solid}
+</style>
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/characters.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script language="JavaScript">
+function insertHTML(data)
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	dialogArguments.oUtil.obj.insertHTML(data);
+	}
+function previewChar(previewCharCode) 
+	{
+	document.all.previewCode.value = '&' + previewCharCode + ';'; 
+	}
+</script>
+</head>
+<body onload="loadTxt()" style="overflow:hidden;"> 
+
+<table width=100% height=100% align="center" border=0 cellspacing=0 cellpadding=2 style="cursor:hand;border-collapse:collapse"> 
+<tr bgcolor="white"> 
+      <td align="center" width=16 onMouseOver=previewChar('nbsp') onClick=insertHTML('&nbsp;')>&nbsp;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('quot') onClick=insertHTML('&quot;')>&quot;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('iexcl') onClick=insertHTML('&iexcl;')>&iexcl;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('cent') onClick=insertHTML('&cent;')>&cent;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('pound') onClick=insertHTML('&pound;')>&pound;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('curren') onClick=insertHTML('&curren;')>&curren;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('yen') onClick=insertHTML('&yen;')>&yen;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('brvbar') onClick=insertHTML('&brvbar;')>&brvbar;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('sect') onClick=insertHTML('&sect;')>&sect;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('uml') onClick=insertHTML('&uml;')>&uml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('copy') onClick=insertHTML('&copy;')>&copy;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ordf') onClick=insertHTML('&ordf;')>&ordf;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('laquo') onClick=insertHTML('&laquo;')>&laquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('not') onClick=insertHTML('&not;')>&not</td> 
+      <td align="center" width=16 onMouseOver=previewChar('shy') onClick=insertHTML('&shy;')>&shy;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('reg') onClick=insertHTML('&reg;')>&reg;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('macr') onClick=insertHTML('&macr;')>&macr;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('deg') onClick=insertHTML('&deg;')>&deg;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('plusmn') onClick=insertHTML('&plusmn;')>&plusmn;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('sup2') onClick=insertHTML('&sup2;')>&sup2;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('sup3') onClick=insertHTML('&sup3;')>&sup3;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('acute') onClick=insertHTML('&acute;')>&acute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('micro') onClick=insertHTML('&micro;')>&micro;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('para') onClick=insertHTML('&para;')>&para;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('middot') onClick=insertHTML('&middot;')>&middot;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('cedil') onClick=insertHTML('&cedil;')>&cedil;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('sup1') onClick=insertHTML('&sup1;')>&sup1;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ordm') onClick=insertHTML('&ordm;')>&ordm;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('raquo') onClick=insertHTML('&raquo;')>&raquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('frac14') onClick=insertHTML('&frac14;')>&frac14;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('frac12') onClick=insertHTML('&frac12;')>&frac12;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('frac34') onClick=insertHTML('&frac34;')>&frac34;</td> 
+</tr> 
+<tr> 
+      <td align="center" width=16 onMouseOver=previewChar('iquest') onClick=insertHTML('&iquest;')>&iquest;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('times') onClick=insertHTML('&times;')>&times;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Oslash') onClick=insertHTML('&Oslash;')>&Oslash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('divide') onClick=insertHTML('&divide;')>&divide;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('oslash') onClick=insertHTML('&oslash;')>&oslash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('fnof') onClick=insertHTML('&fnof;')>&fnof;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('circ') onClick=insertHTML('&circ;')>&circ;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('tilde') onClick=insertHTML('&tilde;')>&tilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ndash') onClick=insertHTML('&ndash;')>&ndash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('mdash') onClick=insertHTML('&mdash;')>&mdash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('lsquo') onClick=insertHTML('&lsquo;')>&lsquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('rsquo') onClick=insertHTML('&rsquo;')>&rsquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('sbquo') onClick=insertHTML('&sbquo;')>&sbquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ldquo') onClick=insertHTML('&ldquo;')>&ldquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('rdquo') onClick=insertHTML('&rdquo;')>&rdquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('bdquo') onClick=insertHTML('&bdquo;')>&bdquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('dagger') onClick=insertHTML('&dagger;')>&dagger;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Dagger') onClick=insertHTML('&Dagger;')>&Dagger;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('bull') onClick=insertHTML('&bull;')>&bull;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('hellip') onClick=insertHTML('&hellip;')>&hellip;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('permil') onClick=insertHTML('&permil;')>&permil;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('lsaquo') onClick=insertHTML('&lsaquo;')>&lsaquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('rsaquo') onClick=insertHTML('&rsaquo;')>&rsaquo;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('euro') onClick=insertHTML('&euro;')>&euro;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('trade') onClick=insertHTML('&trade;')>&trade;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Agrave') onClick=insertHTML('&Agrave;')>&Agrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Aacute') onClick=insertHTML('&Aacute;')>&Aacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Acirc') onClick=insertHTML('&Acirc;')>&Acirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Atilde') onClick=insertHTML('&Atilde;')>&Atilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Auml') onClick=insertHTML('&Auml;')>&Auml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Aring') onClick=insertHTML('&Aring;')>&Aring;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('AElig') onClick=insertHTML('&AElig;')>&AElig;</td> 
+</tr> 
+<tr bgcolor="white"> 
+      <td align="center" width=16 onMouseOver=previewChar('Ccedil') onClick=insertHTML('&Ccedil;')>&Ccedil;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Egrave') onClick=insertHTML('&Egrave;')>&Egrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Eacute') onClick=insertHTML('&Eacute;')>&Eacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ecirc') onClick=insertHTML('&Ecirc;')>&Ecirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Euml') onClick=insertHTML('&Euml;')>&Euml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Igrave') onClick=insertHTML('&Igrave;')>&Igrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Iacute') onClick=insertHTML('&Iacute;')>&Iacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Icirc') onClick=insertHTML('&Icirc;')>&Icirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Iuml') onClick=insertHTML('&Iuml;')>&Iuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ETH') onClick=insertHTML('&ETH;')>&ETH;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ntilde') onClick=insertHTML('&Ntilde;')>&Ntilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ograve') onClick=insertHTML('&Ograve;')>&Ograve;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Oacute') onClick=insertHTML('&Oacute;')>&Oacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ocirc') onClick=insertHTML('&Ocirc;')>&Ocirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Otilde') onClick=insertHTML('&Otilde;')>&Otilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ouml') onClick=insertHTML('&Ouml;')>&Ouml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('times') onClick=insertHTML('&times;')>&times;</td> 
+      <td align="center" width=16 onMouseOver="previewChar('Oslash')" onClick=insertHTML('&Oslash;')>&Oslash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ugrave') onClick=insertHTML('&Ugrave;')>&Ugrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Uacute') onClick=insertHTML('&Uacute;')>&Uacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Ucirc') onClick=insertHTML('&Ucirc;')>&Ucirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Uuml') onClick=insertHTML('&Uuml;')>&Uuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Yacute') onClick=insertHTML('&Yacute;')>&Yacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('THORN') onClick=insertHTML('&THORN;')>&THORN;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('szlig') onClick=insertHTML('&szlig;')>&szlig;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('agrave') onClick=insertHTML('&agrave;')>&agrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('aacute') onClick=insertHTML('&aacute;')>&aacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('acirc') onClick=insertHTML('&acirc;')>&acirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('atilde') onClick=insertHTML('&atilde;')>&atilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('auml') onClick=insertHTML('&auml;')>&auml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('aring') onClick=insertHTML('&aring;')>&aring;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('aelig') onClick=insertHTML('&aelig;')>&aelig;</td> 
+</tr> 
+<tr> 
+      <td align="center" width=16 onMouseOver=previewChar('ccedil') onClick=insertHTML('&ccedil;')>&ccedil;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('egrave') onClick=insertHTML('&egrave;')>&egrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('eacute') onClick=insertHTML('&eacute;')>&eacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ecirc') onClick=insertHTML('&ecirc;')>&ecirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('euml') onClick=insertHTML('&euml;')>&euml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('igrave') onClick=insertHTML('&igrave;')>&igrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('iacute') onClick=insertHTML('&iacute;')>&iacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('icirc') onClick=insertHTML('&icirc;')>&icirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('iuml') onClick=insertHTML('&iuml;')>&iuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('eth') onClick=insertHTML('&eth;')>&eth;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ntilde') onClick=insertHTML('&ntilde;')>&ntilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ograve') onClick=insertHTML('&ograve;')>&ograve;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('oacute') onClick=insertHTML('&oacute;')>&oacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ocirc') onClick=insertHTML('&ocirc;')>&ocirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('otilde') onClick=insertHTML('&otilde;')>&otilde;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ouml') onClick=insertHTML('&ouml;')>&ouml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('divide') onClick=insertHTML('&divide;')>&divide;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('oslash') onClick=insertHTML('&oslash;')>&oslash;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ugrave') onClick=insertHTML('&ugrave;')>&ugrave;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('uacute') onClick=insertHTML('&uacute;')>&uacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('ucirc') onClick=insertHTML('&ucirc;')>&ucirc;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('uuml') onClick=insertHTML('&uuml;')>&uuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('yacute') onClick=insertHTML('&yacute;')>&yacute;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('thorn') onClick=insertHTML('&thorn;')>&thorn;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('yuml') onClick=insertHTML('&yuml;')>&yuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('OELIG') onClick=insertHTML('&OElig;')>&OElig;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('oelig') onClick=insertHTML('&oelig;')>&oelig;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Scaron') onClick=insertHTML('&Scaron;')>&Scaron;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('scaron') onClick=insertHTML('&scaron;')>&scaron;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('Yuml') onClick=insertHTML('&Yuml;')>&Yuml;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('cent') onClick=insertHTML('&cent;')>&cent;</td> 
+      <td align="center" width=16 onMouseOver=previewChar('#064') onClick=insertHTML('&#064;')>@</td> 
+</tr> 
+<tr>
+<td colspan=32 style="padding:6;padding-right:12;padding-left:5;cursor:default" align=right valign=bottom>
+    <table width=100% align="right" cellpadding=0 cellspacing=0> 
+    <tr> 
+        <td style="border:none"><span id=txtLang name=txtLang>HTML Code</span>:&nbsp; 
+          <input type="text" name="previewCode" size=8 class="inpTxt"></td> 
+        <td style="border:none" align="right" valign=center> <input type="button" name=btnClose id=btnClose value="close" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'"></td> 
+    </tr> 
+    </table> 
+</td>
+</tr>    
+</table> 
+  
+</body>
+</html>

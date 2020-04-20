@@ -1,0 +1,17 @@
+﻿<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">             
+<script language=JavaScript src="scripts/editor.js"></script>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" scroll=no style='border:none' leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 >
+<script>
+var oEdit1 = new InnovaEditor("oEdit1");
+var BodyStr=parent.document.all.Body.value;
+if(BodyStr=="" && top.location.href.indexOf("NewTemp?")!=-1)
+{
+	BodyStr="<table class=\"linkeytable\" border=\"1\" width=\"99%\"><tr><td width=\"15%\" align=right >标题</td><td width=35% ><input  name=\"Subject\" size=\"60\" /></td><td width=15%  align=right  >单号</td><td width=35% >[X]WF_DocNumber[/X]</td></tr><tr><td  align=right >申请人</td><td>[X]WF_AddName_CN[/X]</td><td  align=right >申请部门</td><td><input name=\"DeptName\" /></td></tr><tr><td align=right >联系电话</td><td ><input name=\"Tel\" /></td><td align=right >申请日期</td><td><input name=\"StartDate\" /></td></tr><tr><td></td><td ></td><td></td><td></td></tr></table>";
+}
+oEdit1.RENDER(BodyStr);
+</script>
+</body>
+</html>

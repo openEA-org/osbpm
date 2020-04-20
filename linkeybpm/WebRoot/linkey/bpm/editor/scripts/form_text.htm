@@ -1,0 +1,272 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/form_text.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	realTime()
+	}	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	//TEXT or PASSWORD
+	if (oSel.parentElement)	oEl=GetElement(oSel.parentElement(),"INPUT");
+	else oEl=GetElement(oSel.item(0),"INPUT");	
+	if (oEl)
+		{
+		if(oEl.type=="text" || oEl.type=="password")
+			{
+			btnInsert.style.display="none";
+			btnApply.style.display="block";
+			btnOk.style.display="block";
+			
+			inpType.disabled=true;
+			idNumLine.style.display="none";
+			idMaxLength.style.display="block";
+			
+			inpType.value=oEl.type;
+			if(oEl.NAME)inpName.value=oEl.NAME;	
+			if(oEl.name)inpName.value=oEl.name;	
+			inpValue.value=oEl.value;
+			if(oEl.size) inpSize.value=oEl.size;
+			if(oEl.maxlength) inpMaxLength.value=oEl.maxlength
+
+			inpNumLine.value="";
+			
+			return;
+			}
+		}
+	
+	//TEXTAREA
+	if (oSel.parentElement)	oEl=GetElement(oSel.parentElement(),"TEXTAREA");
+	else oEl=GetElement(oSel.item(0),"TEXTAREA");	
+	if (oEl)
+		{
+		btnInsert.style.display="none";
+		btnApply.style.display="block";
+		btnOk.style.display="block";
+
+		inpType.disabled=true;
+		idNumLine.style.display="block";
+		idMaxLength.style.display="none";
+		
+		inpType.value=oEl.type;
+		if(oEl.NAME)inpName.value=oEl.NAME;	
+		if(oEl.name)inpName.value=oEl.name;		
+		inpValue.value=oEl.value;
+		if(oEl.cols) inpSize.value=oEl.cols;		
+		if(oEl.rows) inpNumLine.value=oEl.rows;
+		
+		inpMaxLength.value="";
+		
+		return;
+		}
+
+	if (!oEl)
+		{
+		btnInsert.style.display="block";
+		btnApply.style.display="none";
+		btnOk.style.display="none";
+		
+		inpType.disabled=false;
+		
+		inpType.value="text";	
+		inpName.value="text1";		
+		inpValue.value="";
+		inpSize.value="20";
+		idMaxLength.style.display="block";
+		inpMaxLength.value="";
+		inpNumLine.value="";
+		}			
+	}
+
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(inpType.value=="text")
+		{		
+		oSel.execCommand("INSERTINPUTTEXT");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"INPUT");	
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}
+		else oEl.NAME=inpName.value; 
+	
+		oEl.value=inpValue.value;
+		if(inpSize.value!="") oEl.size=inpSize.value;
+		if(inpMaxLength.value!="") oEl.maxlength=inpMaxLength.value;
+		}
+	if(inpType.value=="password")
+		{
+		oSel.execCommand("INSERTINPUTPASSWORD");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"INPUT");
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}			
+		else oEl.NAME=inpName.value; 
+			
+		oEl.value=inpValue.value;
+		if(inpSize.value!="") oEl.size=inpSize.value;
+		if(inpMaxLength.value!="") oEl.maxlength=inpMaxLength.value;
+		}
+	if(inpType.value=="textarea")
+		{
+		oSel.execCommand("INSERTTEXTAREA");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"TEXTAREA");
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) oEl.name=inpName.value;	
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}		
+		else oEl.NAME=inpName.value; 
+		
+		oEl.value=inpValue.value;
+		if(inpSize.value!="") oEl.cols=inpSize.value;
+		if(inpNumLine.value!="") oEl.rows=inpNumLine.value;;
+		}	
+
+	realTime()	;
+	
+	dialogArguments.realTime(dialogArguments.oUtil.oName);
+	dialogArguments.oUtil.obj.selectElement(0);		
+	}
+	
+function doChangeType()
+	{
+	if(inpType.value=="text" || inpType.value=="password")
+		{
+		idNumLine.style.display="none";
+		idMaxLength.style.display="block"
+		}
+	else
+		{
+		idNumLine.style.display="block";
+		idMaxLength.style.display="none"
+		}
+		
+	if(inpType.value=="text")
+		{
+		inpName.value="text1"
+		}
+	if(inpType.value=="textarea")
+		{
+		inpName.value="textarea1"
+		}
+	if(inpType.value=="password")
+		{
+		inpName.value="password1"
+		}		
+	}			
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+		<td nowrap width=70><span id=txtLang name=txtLang>Type</span>:&nbsp;&nbsp;</td>
+		<td width=100%>
+			<select name=inpType onchange="doChangeType()" style="width:100%" class="inpSel">
+				<option value="text" id="optLang" name="optLang">Text</option>
+				<option value="textarea" id="optLang" name="optLang">Textarea</option>
+				<option value="password" id="optLang" name="optLang">Password</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Name</span>:&nbsp;&nbsp;</td>
+		<td><INPUT type="text" NAME="inpName" style="width:100%;padding-left:2" value="text1" class="inpTxt"></td>
+	</tr>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Size</span>:&nbsp;&nbsp;</td>
+		<td><INPUT type="text" NAME="inpSize" size=1 value=20 class="inpTxt"></td>
+	</tr>
+	<tr id=idMaxLength style="display:none">
+		<td nowrap><span id=txtLang name=txtLang>Max Length</span>:&nbsp;&nbsp;</td>
+		<td><INPUT type="text" NAME="inpMaxLength" size=1 class="inpTxt"></td>
+	</tr>
+	<tr id=idNumLine style="display:none">
+		<td nowrap><span id=txtLang name=txtLang>Num Line</span>:&nbsp;&nbsp;</td>
+		<td><INPUT type="text" NAME="inpNumLine" size=1 class="inpTxt"></td>
+	</tr>
+	<tr>
+		<td nowrap valign=top><span id=txtLang name=txtLang>Value</span>:&nbsp;&nbsp;</td>
+		<td><TEXTAREA NAME="inpValue" rows=5 style="width:100%" class="inpTxt"></TEXTAREA></td>
+	</tr>
+		<tr style="display:none">
+		<td nowrap valign=top>权限:&nbsp;&nbsp;</td>
+		<td><select name='FdAcl'><option value=1>默认</option><option value=readonly>ReadOnly</option><option value=disabled>Disabled</option><option value=displaynone >Display none</option></select></td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:6;" align="right">
+	<table cellpadding=1 cellspacing=0>
+	<td>
+	<input type=button name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnInsert id=btnInsert value="insert" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>		
+	<input type=button name=btnApply id=btnApply value="apply" style="display:none" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>		
+	<input type=button name=btnOk id=btnOk value=" ok " style="display:none;" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

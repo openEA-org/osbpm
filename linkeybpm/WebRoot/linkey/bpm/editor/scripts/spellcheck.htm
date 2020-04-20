@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+
+<script>
+	var sLangDir=window.opener.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/spellcheck.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+var sBodyCssText;
+function bodyOnLoad()
+	{
+	var oEditor=window.opener.oUtil.oEditor;
+
+	var sHTML="";
+	sHTML=oEditor.document.documentElement.outerHTML;
+
+	var oDoc = idTemp.document.open("text/html", "replace");
+	oDoc.write(sHTML);
+	oDoc.close();
+
+	sBodyCssText = idTemp.document.body.style.cssText;
+	idTemp.document.body.style.border="none";
+
+	idTemp.document.body.contentEditable=true;
+	idTemp.document.execCommand("2D-Position", true, true);
+	idTemp.document.execCommand("MultipleSelection", true, true);
+	idTemp.document.execCommand("LiveResize", true, true);
+
+	try
+		{
+		idTemp.focus();
+		var oSpell = new ActiveXObject("ieSpell.ieSpellExtension");
+		oSpell.CheckDocumentNode(idTemp.document.body);
+		}
+	catch(e)
+		{
+		alert(getTxt("Required"));
+		}
+	}
+
+function doUpdate()
+	{
+	window.opener.oUtil.obj.saveForUndo();
+	
+	var obj = window.opener.oUtil.obj;
+
+	idTemp.document.body.style.cssText = sBodyCssText;
+
+	obj.putHTML(idTemp.document.documentElement.outerHTML);
+
+	//*** RUNTIME STYLES ***
+	obj.runtimeBorder(false);
+	obj.runtimeStyles();
+	//**********************
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width="100%" height="100%" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td style="height:100%">
+	<iframe style="width:100%;height:100%;overflow:auto;" src="blank.gif" name="idTemp" id="idTemp" contentEditable="true"></iframe>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right" valign="right">
+	<input type="button" name="btnCheckAgain" id="btnCheckAgain" value=" Check Again " onclick="" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'" style="display:none"> 
+	
+	<input type="button" name="btnCancel" id="btnCancel" value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name="btnOk" id="btnOk" value=" ok " onclick="doUpdate();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

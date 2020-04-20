@@ -1,0 +1,35 @@
+jquery.min.js 由v2.0降为v1.9 支持ie6/7/8 jquery.2.0不支持ie6/7/8
+
+jquery.easyui.min.js 53行修改增加：}catch(e){alert("data-options格式错误"+s);}
+
+当data-options出错时进行提示
+
+gray/easy-ui.css修改：
+.datagrid-header td.datagrid-header-over {
+  background: #f4f4f4;
+  color: #000000;
+  cursor: default;
+}
+.datagrid-row-selected {
+  background: #DAE3FE;
+  color: #000;
+}
+主要修改grid的over和selected的色彩.
+
+修改树选中后的底色和文这色彩
+.tree-node-selected {
+  background: #DAE3FE;;
+  color: #000;
+}
+
+修改树每个节点的高度由18x-20px
+.tree-node {
+  height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tabs-container {
+  overflow: hidden;
+  background:#f8f8f8; edit the tabs background-color  修改tabs的背景为灰色
+}

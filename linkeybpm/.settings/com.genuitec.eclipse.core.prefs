@@ -1,0 +1,5 @@
+#Sat May 10 17:30:45 CST 2014
+eclipse.preferences.version=1
+validator.Checked=WebRoot/designer,WebRoot/linkey,.myeclipse/wsgeneration
+validator.Revalidate=false
+validator.Unchecked=

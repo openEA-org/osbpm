@@ -1,0 +1,17 @@
+﻿a {font-size:9pt;font-family:"微软雅黑","宋体";color: #00457D; text-decoration: none}
+a:hover {color: #FF0000; text-decoration: none;font-family:"微软雅黑","宋体"}
+img{
+  border: none;
+}
+form{margin:0px}
+legend,body,form,td{font-size:9pt}
+textarea {overflow:auto;border:"1px solid #7eadd9";resize:none}
+.toptoolbar{padding:2px;border:1px solid #ddd;background:#F8F8F8;}
+.toptoolbarhr{height:2px;}
+.p{height:0px;}
+.fieldShow{color:blue}
+
+/*自定义的样式表*/
+.linkeytable{border-collapse:collapse;border: 1px solid #e8e8e8;width:100%;font-size:9pt;}
+.linkeytable td{border-collapse:collapse;border: 1px solid #e8e8e8;padding:4px;font-size:9pt;}
+.linkeytable td.texttd{text-align:right;background:#f9f9f9;font-size:9pt;}

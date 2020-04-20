@@ -1,0 +1,238 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/styles.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{
+	window.onfocus=doWindowFocus;
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	var obj=dialogArguments.oUtil.obj;
+	
+	obj.focus();//supaya di awal langsung me-load style selection
+	
+	arrStyle = obj.arrStyle;
+	var sStyle=""
+	for(var i=0;i<arrStyle.length;i++)
+		{
+		sStyle+=arrStyle[i][0]+"{"+	arrStyle[i][3]+"}"+ "\n"
+		}
+
+	var sHTML="<HTML><HEAD><STYLE>"+sStyle+"</STYLE></HEAD><BODY margin-left=0 margin-top=0 margin-right=0 margin-bottom=0 style='border:#808080 1 solid'><table width=100% height=100%><tr><td id=idPreviewTarget valign=middle align=center>&nbsp;</td></tr></table></BODY></HTML>";
+	var oDoc=idPreview.document.open("text/html", "replace");
+	oDoc.write(sHTML);
+	oDoc.close();
+			
+	realTime()
+	}
+
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var obj=dialogArguments.oUtil.obj;
+	
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement
+		}
+	else
+		{
+		if (oSel.parentElement)	oElement=oSel.parentElement();
+		else oElement=oSel.item(0);
+		}
+	
+	var tagName=oElement.tagName;
+		
+	while(inpClassName.options.length!=0) 
+		{
+		inpClassName.options.remove(inpClassName.options(0))
+		}
+		
+	var op = document.createElement("OPTION");
+	op.text="Clear Formatting..";
+	op.value="";
+	inpClassName.options.add(op);		
+		
+	arrStyle = obj.arrStyle;
+	for(var i=0;i<arrStyle.length;i++)
+		{
+		sSelector=arrStyle[i][0];
+		isOnSelection=arrStyle[i][1];
+		if(isOnSelection)
+			{
+			sCaption=arrStyle[i][2];
+				
+			if(sSelector.split(".").length>1)
+				{
+				if(sSelector.split(".")[0]==tagName || sSelector.split(".")[0]=="")//show
+					{
+					var op = document.createElement("OPTION");
+					op.text=sCaption;
+					op.value=sSelector.split(".")[1];
+					inpClassName.options.add(op);
+					}
+				}
+			else
+				{
+				var op = document.createElement("OPTION");
+				op.text=sCaption;
+				op.value=sSelector;
+				inpClassName.options.add(op);					
+				}
+			}
+		}
+
+	inpClassName.value=oElement.className;
+	if(inpClassName.selectedIndex!=-1)
+		{
+		idPreview.document.all.idPreviewTarget.innerHTML=inpClassName.childNodes(inpClassName.selectedIndex).text;
+		idPreview.document.all.idPreviewTarget.className=inpClassName.value;
+		}
+	}
+
+var sClassName;
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var sType=oEditor.document.selection.type;
+	var obj=dialogArguments.oUtil.obj;
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(inpClassName.value=="")//Selalu berarti me-remove class di CURRENT TAG!
+		{
+		if(dialogArguments.oUtil.activeElement)
+			{
+			oElement=dialogArguments.oUtil.activeElement
+			}
+		else
+			{		
+			if (oSel.parentElement)	oElement=oSel.parentElement();
+			else oElement=oSel.item(0);
+			}
+
+		if(oElement)
+			{
+			if(oElement.tagName!="BODY") 
+				{				
+				oElement.removeAttribute("className",0);
+
+				//cek juga style attr (oElement.style.cssText)
+				if(oElement.tagName=="FONT" && oElement.color=="" && oElement.face=="" && oElement.size=="" && oElement.id=="" && oElement.style.cssText=="")
+					obj.doCmd('RemoveFormat');
+				}
+			else
+				{
+				alert(getTxt("You're selecting BODY element."));
+				return;
+				}
+			}
+		}	
+	else if(selApply_to.value=="Selected Text")
+		{
+		if(sType=="Control")
+			{
+			alert(getTxt("Please select a text."));
+			return;
+			}
+
+		var idNewSpan=obj.applySpan();
+		if(idNewSpan)//if there is selected text
+			{
+			if(inpClassName.value=="") idNewSpan.removeAttribute("className",0);
+			else idNewSpan.className=inpClassName.value;
+			}		
+		}
+	else if(selApply_to.value=="Current Tag")
+		{
+		if(dialogArguments.oUtil.activeElement)
+			{
+			oElement=dialogArguments.oUtil.activeElement
+			}
+		else
+			{		
+			if (oSel.parentElement)	oElement=oSel.parentElement();
+			else oElement=oSel.item(0);
+			}
+				
+		if(oElement)
+			{
+			if(oElement.tagName!="BODY") 
+				{
+				oElement.className=inpClassName.value;	
+				}
+			else
+				{
+				alert(getTxt("You're selecting BODY element."));
+				return;
+				}
+			}
+		}
+
+	//realTime()
+	sClassName=inpClassName.value;
+	}
+
+function doStyleChange()
+	{
+	idPreview.document.all.idPreviewTarget.innerHTML=inpClassName.childNodes(inpClassName.selectedIndex).text
+	idPreview.document.all.idPreviewTarget.className=inpClassName.value
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+	<td nowrap>
+		<div style='font-family:Verdana;font-size:10px;color:black;padding-bottom:3'><b><span id="txtLang" name="txtLang">Styles</span>:</b></div>
+		<select size=10 style="height:100" id="inpClassName" name="inpClassName" onchange="doStyleChange()" class="inpSel">
+		<option></option>
+		</select>
+	</td>
+	</tr>
+	<tr>
+	<td nowrap style="padding-top:5;padding-bottom:5">
+		<div style='font-family:Verdana;font-size:10px;color:black;padding-bottom:4'align=left><b><span id="txtLang" name="txtLang">Preview</span>:</b></div>
+		<iframe style="width:100%;height:75;" src="blank.gif" name=idPreview id=idPreview></iframe>	
+	</td>
+	</tr>
+	<tr>
+	<td nowrap align=right><b><span style='font-size:10px;' id="txtLang" name="txtLang">Apply to</span>:&nbsp;</b>
+		<select name="selApply_to" ID="Select1" class="inpSel">
+			<option value="Selected Text" id="optLang" name="optLang">Selected Text</option>
+			<option value="Current Tag" id="optLang" name="optLang" selected>Current Tag</option>
+		</select>	
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply();realTime();inpClassName.value=sClassName;" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

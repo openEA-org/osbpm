@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.validatebox-invalid {
+    background-image: url($validatebox-invalid-background-image);
+    background-repeat: no-repeat;
+    background-position: right center;
+    border-color: $validatebox-invalid-border-color;
+    background-color: $validatebox-invalid-background-color;
+    color: $validatebox-invalid-color;
+}

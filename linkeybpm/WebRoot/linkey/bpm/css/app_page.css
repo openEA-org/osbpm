@@ -1,0 +1,41 @@
+﻿a {font-size:9pt;font-family:"微软雅黑","宋体";color: #00457D; text-decoration: none}
+a:hover {color: #FF0000; text-decoration: none;font-family:"微软雅黑","宋体"}
+
+form{margin:0px}
+legend,body,form,td{font-size:9pt}
+textarea {overflow:auto;border:"1px solid #7eadd9";resize:none}
+.toptoolbar{padding:2px;border:1px solid #ddd;background:#F8F8F8;}
+.toptoolbarhr{height:2px;}
+.p{height:0px;}
+.fieldShow{color:blue}
+
+/*自定义的样式表*/
+.linkeytable{border-collapse:collapse;border: 1px solid #e8e8e8;width:100%;font-size:9pt;}
+.linkeytable td{border-collapse:collapse;border: 1px solid #e8e8e8;padding:4px;font-size:9pt;}
+.linkeytable td.texttd{text-align:right;background:#f9f9f9;font-size:9pt;}
+#centerFrame .panel-header{
+  background-color: #FFFFFF !important;
+}
+#photo{
+	background-image: url(images/photo1.jpg);
+}
+.btn_theme1{
+	border: none;
+    border-radius: 0px;
+    background: #658ac7;
+    margin: 5px 0px;
+	border:0 !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#658ac7,endColorstr=#658ac7,GradientType=0) !important;
+}
+.btn_theme1:hover{
+	background: #969696;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#969696,endColorstr=#969696,GradientType=0) !important;
+}
+.btn_theme1 span{
+  color: #FFFFFF;
+  background: none;
+  padding-right: 0px;
+  padding-left: 0px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

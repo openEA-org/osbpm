@@ -1,0 +1,601 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<style>
+.box{cursor:default;border:#9B95A6 1 solid;width:60;background:white;}
+</style>
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/list.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function tabClick(n)
+	{
+	switch(n)
+		{
+		case 1:			
+			tab1.style.border="#D6D6E2 2 solid";
+			tab1.style.borderBottom="none";	
+			tab1.style.background="#F2F1F8";
+			tab1.style.cursor="";
+			
+			tab2.style.border="#D6D6E2 2 solid";
+			tab2.style.borderLeft="none";
+			tab2.style.background="#E9E8F2";
+			tab2.style.cursor="hand";
+			
+			divNumbered.style.display="block"
+			divBulleted.style.display="none"
+						
+			break;
+		case 2:
+			tab1.style.border="#D6D6E2 2 solid";
+			tab1.style.borderRight="none";
+			tab1.style.background="#E9E8F2";
+			tab1.style.cursor="hand";
+			
+			tab2.style.border="#D6D6E2 2 solid";
+			tab2.style.borderBottom="none";	
+			tab2.style.background="#F2F1F8";
+			tab2.style.cursor="";	
+			
+			divNumbered.style.display="none"
+			divBulleted.style.display="block"		
+					
+			break;		
+		}
+	}	
+
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+	
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	tabClick(1);
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	if(dialogArguments.oUtil.obj.cmdAssetManager!="")btnAsset.style.display="block";
+	
+	realTime()
+	}
+function openAsset()
+	{
+	inpImgURL.value=eval(dialogArguments.oUtil.obj.cmdAssetManager);	
+	}
+function modalDialogShow(url,width,height)
+	{
+	if(url.indexOf("?")==-1) url=url+"?ffilter=image";//no querystring
+	else url=url+"&ffilter=image";
+	
+	return window.showModalDialog(url,window,
+		"dialogWidth:"+width+"px;dialogHeight:"+height+"px;edge:Raised;center:Yes;help:No;Resizable:Yes;Maximize:Yes");
+	}	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if(oSel.parentElement)
+		{
+		var oElement=oSel.parentElement()
+		while (oElement!=null&&
+			oElement.tagName!="OL"&&
+			oElement.tagName!="UL")
+			{
+			if(oElement.tagName=="BODY")
+				{
+				//alert(getTxt("Please select a list."));
+				return;
+				}
+			oElement=oElement.parentElement;
+			}
+		var oSelRange = oEditor.document.body.createControlRange()
+		try
+			{
+			oSelRange.add(oElement);
+			//oSelRange.select();
+			}
+		catch(e)
+			{
+			var oSelRange = oEditor.document.body.createTextRange();
+			try{oSelRange.moveToElementText(oElement);
+				//oSelRange.select()
+				}catch(e){;}
+			}
+			
+		if(oElement.tagName=="OL")
+			{
+			tabClick(1);
+			if(oElement.type==""||oElement.type=="1")doClick1(box1);
+			if(oElement.type=="A")doClick1(box2);
+			if(oElement.type=="a")doClick1(box3);
+			if(oElement.type=="I")doClick1(box4);
+			if(oElement.type=="i")doClick1(box5);
+			}
+		if(oElement.tagName=="UL")
+			{
+			tabClick(2);
+			if(oElement.type==""||oElement.type=="disc")doClick1(box6);
+			if(oElement.type=="circle")doClick1(box7);
+			if(oElement.type=="square")doClick1(box8);			
+			}
+		if(oElement.start)
+			inpStarting.value=oElement.start;
+		else
+			inpStarting.value="";
+		
+		if(oElement.style.marginLeft=="")
+			{
+			inpLeftMargin1.value="";
+			inpLeftMargin2.value="";
+			}
+		else
+			{
+			inpLeftMargin1.value=oElement.style.marginLeft;
+			inpLeftMargin2.value=oElement.style.marginLeft;
+			}
+		
+		//list-style-image
+		if(oElement.style.listStyleImage=="")
+			{			
+			inpImgURL.value=""
+			}
+		else
+			{
+			s=oElement.style.listStyleImage;
+			s=s.substring(4,s.length-1);
+			inpImgURL.value=s;
+			}
+		}
+	}
+function setLeftMargin1(oEl)
+	{	
+	if(inpLeftMargin1.value!="")
+		oEl.style.marginLeft=inpLeftMargin1.value;
+	else
+		oEl.style.marginLeft="";	
+	}
+function setLeftMargin2(oEl)
+	{	
+	if(inpLeftMargin2.value!="")
+		oEl.style.marginLeft=inpLeftMargin2.value;
+	else
+		oEl.style.marginLeft="";	
+	}
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var obj=dialogArguments.oUtil.obj;
+	obj.saveForUndo();
+	
+	var bBox1=false;var bBox2=false;var bBox3=false;var bBox4=false;
+	var bBox5=false;var bBox6=false;var bBox7=false;var bBox8=false;
+	if(box1.selThis=="selThis")bBox1=true;
+	if(box2.selThis=="selThis")bBox2=true;
+	if(box3.selThis=="selThis")bBox3=true;
+	if(box4.selThis=="selThis")bBox4=true;
+	if(box5.selThis=="selThis")bBox5=true;
+	if(box6.selThis=="selThis")bBox6=true;
+	if(box7.selThis=="selThis")bBox7=true;
+	if(box8.selThis=="selThis")bBox8=true;
+
+	if(oSel.parentElement)
+		{
+		var oElement=oSel.parentElement()
+		while (oElement!=null&&oElement.tagName!="OL"&&oElement.tagName!="UL")
+			{
+			if(oElement.tagName=="BODY")obj.doCmd("InsertUnOrderedList");						
+			oElement=oElement.parentElement;
+			}
+
+		oSel=oEditor.document.selection.createRange();
+		oElement=oSel.parentElement()		
+		while (oElement!=null&&oElement.tagName!="OL"&&oElement.tagName!="UL")
+			{
+			if(oElement.tagName=="BODY")return;		
+			oElement=oElement.parentElement;
+			}
+
+		oElement.removeAttribute("type",0);
+		oElement.removeAttribute("start",0);
+
+		//list-style-image
+		if(inpImgURL.value!="")
+			{
+			oElement.style.listStyleImage="url('"+inpImgURL.value+"')";
+			setLeftMargin2(oElement);
+
+			if(bBox6)oElement.type="disc";
+			if(bBox7)oElement.type="circle";
+			if(bBox8)oElement.type="square";
+			
+			if(oElement.tagName=="OL")
+				obj.doCmd("InsertUnOrderedList");
+							
+			//realTime();//tdk perlu krn otomatis onselectionchange
+			return;
+			}
+		else
+			{
+			oElement.style.listStyleImage="";
+			}		
+		
+		if(inpStarting.value=="")
+			nStart=1;
+		else
+			nStart=inpStarting.value;
+
+		if(bBox1)
+			{
+			oElement.type="1";
+			oElement.start=nStart;
+			setLeftMargin1(oElement);
+			if(oElement.tagName=="UL")
+				obj.doCmd("InsertOrderedList");
+			}
+		if(bBox2)
+			{
+			oElement.type="A";
+			oElement.start=nStart;
+			setLeftMargin1(oElement);
+			if(oElement.tagName=="UL")
+				obj.doCmd("InsertOrderedList");
+			}
+		if(bBox3)
+			{
+			oElement.type="a";
+			oElement.start=nStart;
+			setLeftMargin1(oElement);
+			if(oElement.tagName=="UL")
+				obj.doCmd("InsertOrderedList");
+			}
+		if(bBox4)
+			{
+			oElement.type="I";
+			oElement.start=nStart;
+			setLeftMargin1(oElement);
+			if(oElement.tagName=="UL")
+				obj.doCmd("InsertOrderedList");
+			}
+		if(bBox5)
+			{
+			oElement.type="i";
+			oElement.start=nStart;
+			setLeftMargin1(oElement);
+			if(oElement.tagName=="UL")
+				obj.doCmd("InsertOrderedList");
+			}		
+		
+		if(bBox6)
+			{
+			oElement.type="disc";
+			setLeftMargin2(oElement);
+			if(oElement.tagName=="OL")
+				obj.doCmd("InsertUnOrderedList");
+			}
+		if(bBox7)
+			{
+			oElement.type="circle";
+			setLeftMargin2(oElement);
+			if(oElement.tagName=="OL")
+				obj.doCmd("InsertUnOrderedList");
+			}
+		if(bBox8)
+			{
+			oElement.type="square";
+			setLeftMargin2(oElement);
+			if(oElement.tagName=="OL")
+				obj.doCmd("InsertUnOrderedList");
+			}
+		//realTime();
+		}
+	}		
+function doClick1(oEl)
+	{
+	box1.style.border='white 2 solid';
+	box1.selThis="";
+	box2.style.border='white 2 solid';
+	box2.selThis="";
+	box3.style.border='white 2 solid';
+	box3.selThis="";
+	box4.style.border='white 2 solid';
+	box4.selThis="";
+	box5.style.border='white 2 solid';
+	box5.selThis="";	
+	box6.style.border='white 2 solid';
+	box6.selThis="";
+	box7.style.border='white 2 solid';
+	box7.selThis="";
+	box8.style.border='white 2 solid';
+	box8.selThis="";
+	
+	oEl.style.border='#708090 2 solid';
+	oEl.selThis="selThis";
+	
+	inpImgURL.value="";
+	}
+function doMouseOut(oEl)	
+	{
+	if(oEl.selThis=="selThis")
+		{
+		oEl.style.border='#708090 2 solid';
+		}
+	else
+		{
+		oEl.style.border='white 2 solid';
+		}
+	}
+function doMouseOver(oEl)	
+	{
+	if(oEl.style.border!='#708090 2px solid')
+	oEl.style.border='#e0e0e0 2 solid';
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad();this.focus()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding-top:12;padding-left:10;padding-right:10;padding-bottom:0;height:100%">
+
+	<table cellpadding=0 cellspacing=0 style="border-collapse:collapse;width:100%;">
+	<tr>
+	<td nowrap id=tab1 style="cursor:hand;padding:8;" onclick="tabClick(1)"><b><span id=txtLang name=txtLang>Numbered</span></b></td>
+	<td nowrap id=tab2 style="cursor:hand;padding:8;" onclick="tabClick(2)"><b><span id=txtLang name=txtLang>Bulleted</span></b></td>
+	<td style="border-bottom:#D6D6E2 2 solid;" width=100%></td>
+	</tr>
+	</table>	
+	
+
+	<table cellpadding=0 cellspacing=0 style="border:#D6D6E2 2 solid;border-top:none;border-collapse:collapse;width:100%;height:195;background:#F2F1F8;">
+	<tr>
+	<td style="padding:7;" valign=top height=100%>
+
+	<!-- NUMBERED -->
+	<div id=divNumbered style="display:block;">
+	
+	<table>
+	<tr>
+	<td class="box" style="padding:1">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box1" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ol style="margin-left:27;margin-right:6;margin-top:2;margin-bottom:2" type="1">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ol>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box2" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ol style="margin-left:27;margin-right:6;margin-top:2;margin-bottom:2" type="A">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ol>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box3" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ol style="margin-left:27;margin-right:6;margin-top:2;margin-bottom:2" type="a">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ol>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	<tr>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box4" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ol style="margin-left:27;margin-right:6;margin-top:2;margin-bottom:2" type="I">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ol>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box5" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ol style="margin-left:27;margin-right:6;margin-top:2;margin-bottom:2" type="i">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ol>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	</tr>
+	<tr>
+	<td nowrap colspan="5" style="padding-top:5">
+		<span id="txtLang" name="txtLang" style="width:90">Starting Number</span>: <input class="inpTxt" type="text" name="inpStarting" value="1" size="3">
+	</td>
+	</tr>
+	<tr>
+	<td nowrap colspan="5" style="padding-top:5">
+		<span id="txtLang" name="txtLang" style="width:90">Left Margin</span>: 
+		<select name="inpLeftMargin1" class="inpSel">
+			<option value=""></option>
+			<option value="1em" selected>1em</option>
+			<option value="2em">2em</option>
+			<option value="3em">3em</option>
+			<option value="4em">4em</option>
+			<option value="5em">5em</option>
+			<option value="6em">6em</option>
+			<option value="7em">7em</option>			
+		</select>
+	</td>
+	</tr>
+	</table>
+	
+	</div>
+
+	<!-- BULLETED -->
+	<div id="divBulleted" style="display:none;">
+
+	<table>
+	<tr>
+	<td class="box" style="padding:1">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box6" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ul style="margin-left:21;margin-right:12;margin-top:2;margin-bottom:2" type="disc">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ul>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box7" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ul style="margin-left:21;margin-right:12;margin-top:2;margin-bottom:2" type="circle">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ul>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	<td>&nbsp;</td>
+	<td class="box">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+		<td id="box8" style="color:#555555;border:white 2 solid;padding:3;padding-right:0"
+			onclick="doClick1(this)" 
+			onmouseover="doMouseOver(this)" 
+			onmouseout="doMouseOut(this)">
+		<ul style="margin-left:21;margin-right:12;margin-top:2;margin-bottom:2" type="square">
+		<li>-----</li>
+		<li>-----</li>
+		<li>-----</li>
+		</ul>	
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	<!--
+	<tr>
+	<td colspan="5" style="padding-top:5;height:86">&nbsp;
+	</td>
+	</tr>
+	-->
+	<tr>
+	<td colspan="5" style="padding-top:5;height:57">&nbsp;
+	</td>
+	</tr>
+	<tr>
+	<td colspan="5" style="padding-top:5">
+		<table cellpadding="0" cellspacing="0" style="width:100%" id="Table1">
+		<tr>
+		<td nowrap><span id="txtLang" name="txtLang" style="width:90">Using Image - url</span>:</td>
+		<td style="width:100%;padding-left:3"><input type="text" id="inpImgURL" name=inpImgURL style="width:90px" class="inpTxt"></td>
+		<td><input type="button" value="" onclick="openAsset()" id="btnAsset" name="btnAsset" style="display:none;background:url('openAsset.gif');width:23px;height:18px;border:#a5acb2 1px solid;margin-left:1px;"></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	
+	<tr>
+	<td nowrap colspan="5" style="padding-top:5">
+		<span id="txtLang" name="txtLang" style="width:90">Left Margin</span>: 
+		<select name="inpLeftMargin2" class="inpSel">
+			<option value=""></option>
+			<option value="1em" selected>1em</option>
+			<option value="2em">2em</option>
+			<option value="3em">3em</option>
+			<option value="4em">4em</option>
+			<option value="5em">5em</option>
+			<option value="6em">6em</option>
+			<option value="7em">7em</option>			
+		</select>
+	</td>
+	</tr>
+	</table>
+	
+	</div>
+
+	</td>
+	</tr>
+	</table>
+	
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

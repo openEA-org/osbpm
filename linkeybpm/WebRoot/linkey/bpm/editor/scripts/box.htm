@@ -1,0 +1,722 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/box.js'></scr"+"ipt>");
+</script>
+<script language="JavaScript" src="color_picker.js"></script>
+<script>writeTitle()</script>
+<script>
+function doWindowFocus()
+	{	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{
+	window.onfocus=doWindowFocus;
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+
+	realTime();
+	}
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	var oElement;
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement
+		}
+	else
+		{
+		if (oSel.parentElement)	oElement=oSel.parentElement();
+		else oElement=oSel.item(0);
+		}
+	
+	inpMarginLeft.value=oElement.style.marginLeft;
+	inpMarginRight.value=oElement.style.marginRight;
+	inpMarginTop.value=oElement.style.marginTop;
+	inpMarginBottom.value=oElement.style.marginBottom;
+	inpPaddingLeft.value=oElement.style.paddingLeft;
+	inpPaddingRight.value=oElement.style.paddingRight;
+	inpPaddingTop.value=oElement.style.paddingTop;
+	inpPaddingBottom.value=oElement.style.paddingBottom;
+	
+	if(oElement.style.width == "")inpWidth.value="";
+	if(oElement.style.width.substr(oElement.style.width.length-2,2)=="px")
+		{		
+		inpAutoFitMeasure1.value = "px";
+		inpWidth.value = oElement.style.width.substr(0,oElement.style.width.length-2);
+		}		
+	if(oElement.style.width.substr(oElement.style.width.length-1,1)=="%")
+		{
+		inpAutoFitMeasure1.value = "%";
+		inpWidth.value = oElement.style.width.substr(0,oElement.style.width.length-1)
+		}
+	if(oElement.style.height == "")inpHeight.value="";
+	if(oElement.style.height.substr(oElement.style.height.length-2,2)=="px")
+		{		
+		inpAutoFitMeasure2.value = "px";
+		inpHeight.value = oElement.style.height.substr(0,oElement.style.height.length-2);
+		}		
+	if(oElement.style.height.substr(oElement.style.height.length-1,1)=="%")
+		{
+		inpAutoFitMeasure2.value = "%";
+		inpHeight.value = oElement.style.height.substr(0,oElement.style.height.length-1)
+		}		
+		
+	//Select Border Width
+	if(oElement.style.borderLeftWidth==oElement.style.borderTopWidth &&
+		oElement.style.borderLeftWidth==oElement.style.borderRightWidth &&
+		oElement.style.borderLeftWidth==oElement.style.borderBottomWidth)
+		{
+		sBorderWidth = oElement.style.borderLeftWidth;
+		
+		var oNodes=tblBorderWidth.childNodes(0).childNodes
+		for(var i=0;i<oNodes.length;i++)
+			{
+			oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+			oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+			}
+		if(document.getElementById("idWidth_"+sBorderWidth))
+			{
+			eval("idWidth_"+sBorderWidth).style.backgroundColor='#f1f1f1';
+			eval("idWidth_"+sBorderWidth).style.border='#718191 1px solid';
+			}
+		else
+			{
+			//alert("INFO: The border width size or unit is not available in the Width selection list.")
+			}
+		idSelBorderWidth.value=sBorderWidth;
+		}
+	
+	//Select Border Style
+	if(oElement.style.borderLeftStyle==oElement.style.borderTopStyle &&
+		oElement.style.borderLeftStyle==oElement.style.borderRightStyle &&
+		oElement.style.borderLeftStyle==oElement.style.borderBottomStyle)
+		{
+		var sBorderStyle = oElement.style.borderLeftStyle;
+		
+
+		var oNodes=tblBorderStyle.childNodes(0).childNodes
+		for(var i=0;i<oNodes.length;i++)
+			{
+			oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+			oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+			}
+		if(sBorderStyle!="")
+			{
+			eval("idStyle_"+sBorderStyle).parentElement.style.backgroundColor='#f1f1f1';
+			eval("idStyle_"+sBorderStyle).parentElement.style.border='#708090 1px solid';
+			idSelBorderStyle.value=sBorderStyle;
+			}
+		else
+			{
+			//alert("INFO: ")
+			}
+		}
+	
+	//Select ApplyTo
+	var oNodes=tblBorderApplyTo.childNodes(0).childNodes
+	for(var i=0;i<oNodes.length;i++)
+		{
+		oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+		oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)!="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)=="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)=="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)=="0"))
+		{
+		//Left
+		eval("idApplyTo_Left").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Left").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Left";	
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)=="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)!="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)=="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)=="0"))
+		{
+		//Top
+		eval("idApplyTo_Top").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Top").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Top";	
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)=="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)=="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)!="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)=="0"))
+		{
+		//Right
+		eval("idApplyTo_Right").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Right").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Right";	
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)=="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)=="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)=="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)!="0"))
+		{
+		//Bottom
+		eval("idApplyTo_Bottom").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Bottom").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Bottom";	
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)!="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)!="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)!="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)!="0"))
+		{
+		//Outside
+		eval("idApplyTo_Outside").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Outside").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Outside";
+		}
+	if((oElement.style.borderLeftWidth=="medium") &&
+		(oElement.style.borderTopWidth=="medium") &&
+		(oElement.style.borderRightWidth=="medium") &&
+		(oElement.style.borderBottomWidth=="medium"))
+		{
+		//Width is not specified
+		eval("idApplyTo_Outside").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_Outside").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_Outside";
+		}
+	if((oElement.style.borderLeftWidth.substring(0,1)=="0") &&
+		(oElement.style.borderTopWidth.substring(0,1)=="0") &&
+		(oElement.style.borderRightWidth.substring(0,1)=="0") &&
+		(oElement.style.borderBottomWidth.substring(0,1)=="0"))
+		{
+		//None
+		eval("idApplyTo_None").style.backgroundColor='#f1f1f1';
+		eval("idApplyTo_None").style.border='#718191 1px solid';	
+		idSelBorderApplyTo.value="idApplyTo_None";
+		}
+	
+	//Select Border & Shading Color
+	oColor1.color=oElement.style.borderLeftColor;
+	idSelBorderColor.style.backgroundColor=oElement.style.borderLeftColor;
+	oColor2.color=oElement.style.backgroundColor;
+	idSelShadingColor.style.backgroundColor=oElement.style.backgroundColor;
+	}	
+
+document.onclick=hideAll;
+function hideAll()
+	{
+	oColor1.hide();oColor2.hide();
+	}
+
+/*****************************
+	APPLY
+*****************************/
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	var sType=oEditor.document.selection.type;
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(oSel.parentElement&&oSel.text!="")
+		{
+		var obj=dialogArguments.oUtil.obj;
+		oElement=obj.applySpan();
+		}
+	else
+		{
+		if(dialogArguments.oUtil.activeElement)
+			{
+			oElement=dialogArguments.oUtil.activeElement
+			}
+		else
+			{
+			if (oSel.parentElement)	oElement=oSel.parentElement();
+			else oElement=oSel.item(0);
+			}
+		
+		if(oElement.tagName=="BODY")return;
+		}
+
+	doApplyBorder(oElement);
+
+	oElement.style.paddingLeft = inpPaddingLeft.value;
+	oElement.style.paddingRight = inpPaddingRight.value;
+	oElement.style.paddingTop = inpPaddingTop.value;
+	oElement.style.paddingBottom = inpPaddingBottom.value;
+
+	oElement.style.marginLeft = inpMarginLeft.value;
+	oElement.style.marginRight = inpMarginRight.value;
+	oElement.style.marginTop = inpMarginTop.value;
+	oElement.style.marginBottom = inpMarginBottom.value;
+
+	if(inpWidth.value=="")oElement.style.width="";
+	else oElement.style.width=inpWidth.value+inpAutoFitMeasure1.value;
+	if(inpHeight.value=="")oElement.style.height="";
+	else oElement.style.height=inpHeight.value+inpAutoFitMeasure2.value;
+	oElement.removeAttribute("width",0);
+	oElement.removeAttribute("height",0);
+	
+	//*** RUNTIME BORDERS ***
+	dialogArguments.oUtil.obj.runtimeBorder(false);
+	//***********************		
+	}
+
+function doApplyBorder(oElement)
+	{
+	sStyle=idSelBorderStyle.value
+	sWidth=idSelBorderWidth.value
+	sApplyTo=idSelBorderApplyTo.value
+	sColor=idSelBorderColor.style.backgroundColor
+	sShadingColor=idSelShadingColor.style.backgroundColor
+
+	switch(sApplyTo)
+		{
+		case "idApplyTo_None":
+			oElement.style.border="none";
+			break;
+		case "idApplyTo_Outside":
+			if(sStyle=="none")oElement.style.border="none";
+			else oElement.style.border=sColor + " " + sWidth + " " + sStyle;
+			break;
+		case "idApplyTo_Left":
+			if(sStyle=="none") oElement.style.borderLeft="none";
+			else oElement.style.borderLeft=sColor + " " + sWidth + " " + sStyle;
+			break;
+		case "idApplyTo_Top":
+			if(sStyle=="none")oElement.style.borderTop="none";
+			else oElement.style.borderTop=sColor + " " + sWidth + " " + sStyle;
+			break;
+		case "idApplyTo_Right":
+			if(sStyle=="none")oElement.style.borderRight="none";
+			else oElement.style.borderRight=sColor + " " + sWidth + " " + sStyle;
+			break;
+		case "idApplyTo_Bottom":
+			if(sStyle=="none")oElement.style.borderBottom="none";
+			else oElement.style.borderBottom=sColor + " " + sWidth + " " + sStyle;
+			break;
+		}
+	
+	oElement.style.backgroundColor=sShadingColor;
+	}
+
+/*****************************
+	Mouse Over/Out
+*****************************/
+function doOver(me)
+	{
+	if(me.style.backgroundColor!='#f1f1f1')	
+		{
+		me.style.backgroundColor='#f0f0f0';
+		me.style.border='#708090 1px solid';
+		}
+	}
+function doOut(me)
+	{
+	if(me.style.backgroundColor!='#f1f1f1')	
+		{
+		me.style.backgroundColor='#ffffff';
+		me.style.border='#ffffff 1 solid';
+		}
+	}
+
+/*****************************
+	Border Style
+*****************************/
+/*
+function drawBorderStyleSelection()
+	{
+	arrStyleOptions=[   ["idStyle_Solid","border-bottom:black 1 solid;height:10;"],
+						["idStyle_Dotted","border-bottom:black dotted;height:10"],
+						["idStyle_Dashed","border-bottom:black dashed;height:10"],
+						["idStyle_Double","border-bottom:black double;height:10"],
+						["idStyle_Groove","border-style:groove;height:18"],
+						["idStyle_Ridge","border-style:ridge;height:18"],
+						["idStyle_Inset","border-style:inset;height:18"],
+						["idStyle_Outset","border-style:outset;height:18"]];
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:125;height:127;'>"
+	sHTML+="<table id=tblBorderStyle cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	sHTML+="<tr>"
+	sHTML+="<td valign=middle onclick=\"doSelectBorderStyle(this)\" style=\"cursor:default;height:25;padding:4;\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+	sHTML+="	<table id=idStyle_None name=idStyle_None style='border:none' cellpadding=0 cellspacing=0 width=100%><tr><td valign=top>" + getTxt("No Border") + "</td></tr></table>"
+	sHTML+="</td>"
+	sHTML+="</tr>"	
+	for(var i=0;i<arrStyleOptions.length;i++)
+		{
+		if(i==0) sDefaultSelected="border:#708090 1 solid;background-color:#f1f1f1;";
+		else sDefaultSelected="";
+		sHTML+="<tr>"
+		sHTML+="<td valign=top onclick=\"doSelectBorderStyle(this)\" style=\"height:25;padding:4;border:white 1 solid;"+sDefaultSelected+"\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+		sHTML+="	<table id="+arrStyleOptions[i][0]+" name="+arrStyleOptions[i][0]+" style='"+arrStyleOptions[i][1]+"' width=100%><tr><td></td></tr></table>"
+		sHTML+="</td>"
+		sHTML+="</tr>"
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderStyle value='solid'>"
+	sHTML+="</div>"
+	document.write(sHTML)
+	}*/
+	
+function drawBorderStyleSelection(idSelected)
+	{
+	arrStyleOptions=[   ["idStyle_none","border:none;height:10;",getTxt("No Border")],
+						["idStyle_solid","border-bottom:black 1 solid;height:10;",""],
+						["idStyle_dotted","border-bottom:black dotted;height:10",""],
+						["idStyle_dashed","border-bottom:black dashed;height:10",""],
+						["idStyle_double","border-bottom:black double;height:10",""],
+						["idStyle_groove","border-style:groove;height:18",""],
+						["idStyle_ridge","border-style:ridge;height:18",""],
+						["idStyle_inset","border-style:inset;height:18",""],
+						["idStyle_outset","border-style:outset;height:18",""]];//[ID,CssText,Caption)
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:125;height:127;'>"
+	sHTML+="<table id=tblBorderStyle cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	for(var i=0;i<arrStyleOptions.length;i++)
+		{
+		sHTML+="<tr>"
+		sHTML+="<td valign=top onclick=\"doSelectBorderStyle(this)\" style=\"cursor:default;height:25;padding:4;border:white 1 solid;\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+		sHTML+="	<table id="+arrStyleOptions[i][0]+" name="+arrStyleOptions[i][0]+" style='"+arrStyleOptions[i][1]+"' width=100%><tr><td>"+arrStyleOptions[i][2]+"</td></tr></table>"
+		sHTML+="</td>"
+		sHTML+="</tr>"
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderStyle>"
+	sHTML+="</div>"
+	document.write(sHTML)
+	}
+	
+function doSelectBorderStyle(me)
+	{
+	oNodes=tblBorderStyle.childNodes(0).childNodes
+	for(var i=0;i<oNodes.length;i++)
+		{
+		oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+		oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+		}
+	me.style.backgroundColor='#f1f1f1';
+	me.style.border='#708090 1px solid';
+	idSelBorderStyle.value=me.childNodes(0).style.borderBottomStyle;
+	}
+	
+/*****************************
+	Border Width
+*****************************/
+/*
+function drawBorderWidthSelection()
+	{
+	arrWidthOptions=[["idWidth_1","1px","border-bottom:black 1px solid;height:16;"],
+					["idWidth_2","2px","border-bottom:black 2px solid;height:16;"],
+					["idWidth_3","3px","border-bottom:black 3px solid;height:16;"],
+					["idWidth_4","4px","border-bottom:black 4px solid;height:16;"],
+					["idWidth_5","5px","border-bottom:black 5px solid;height:16;"],
+					["idWidth_6","6px","border-bottom:black 6px solid;height:16;"],
+					["idWidth_7","7px","border-bottom:black 7px solid;height:16;"]];
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:125;height:127'>"
+	sHTML+="<table id=tblBorderWidth cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	for(var i=0;i<arrWidthOptions.length;i++)
+		{
+		if(i==0)
+			{//DEFAULT
+			sHTML+="<tr>"
+			sHTML+="<td id="+arrWidthOptions[i][0]+" name="+arrWidthOptions[i][0]+" style=\"height:25;padding:1;border:white 1 solid;border:#708090 1 solid;background-color:#f1f1f1\" onclick=\"doSelectBorderWidth(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+			sHTML+="	<table width=100%><tr><td style=\"height:25\" >"+arrWidthOptions[i][1]+"</td><td valign=top width=100%> <table style='"+arrWidthOptions[i][2]+"' width=100%><tr><td></td></tr></table> </td></tr></table>"
+			sHTML+="</td>"
+			sHTML+="</tr>"
+			}
+		else
+			{
+			sHTML+="<tr>"
+			sHTML+="<td id="+arrWidthOptions[i][0]+" name="+arrWidthOptions[i][0]+" style=\"height:25;padding:1;border:white 1 solid;\" onclick=\"doSelectBorderWidth(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+			sHTML+="	<table width=100%><tr><td style=\"height:25\" >"+arrWidthOptions[i][1]+"</td><td valign=top width=100%> <table style='"+arrWidthOptions[i][2]+"' width=100%><tr><td></td></tr></table> </td></tr></table>"
+			sHTML+="</td>"
+			sHTML+="</tr>"
+			}
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderWidth value='1pt'>"
+	sHTML+="</div>"
+	document.write(sHTML)
+	}*/
+	
+function drawBorderWidthSelection()
+	{
+	arrWidthOptions=[["idWidth_1px","border-bottom:black 1px solid;height:16;","1px"],
+					 ["idWidth_2px","border-bottom:black 2px solid;height:16;","2px"],
+					 ["idWidth_3px","border-bottom:black 3px solid;height:16;","3px"],
+					 ["idWidth_4px","border-bottom:black 4px solid;height:16;","4px"],
+					 ["idWidth_5px","border-bottom:black 5px solid;height:16;","5px"],
+					 ["idWidth_6px","border-bottom:black 6px solid;height:16;","6px"],
+					 ["idWidth_7px","border-bottom:black 7px solid;height:16;","7px"]];
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:125;height:127'>"
+	sHTML+="<table id=tblBorderWidth cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	for(var i=0;i<arrWidthOptions.length;i++)
+		{
+		sHTML+="<tr>"
+		sHTML+="<td id="+arrWidthOptions[i][0]+" name="+arrWidthOptions[i][0]+" style=\"height:25;padding:1;border:white 1 solid;\" onclick=\"doSelectBorderWidth(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+		sHTML+="	<table width=100%><tr><td style=\"height:25\" >"+arrWidthOptions[i][2]+"</td><td valign=top width=100%> <table style='"+arrWidthOptions[i][1]+"' width=100%><tr><td></td></tr></table> </td></tr></table>"
+		sHTML+="</td>"
+		sHTML+="</tr>"
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderWidth>"
+	sHTML+="</div>"
+	document.write(sHTML)
+	}
+	
+function doSelectBorderWidth(me)
+	{
+	oNodes=tblBorderWidth.childNodes(0).childNodes
+	for(var i=0;i<oNodes.length;i++)
+		{
+		oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+		oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+		}
+	me.style.backgroundColor='#f1f1f1';
+	me.style.border='#718191 1px solid';
+	
+	idSelBorderWidth.value=me.childNodes(0).childNodes(0).childNodes(0).childNodes(1).childNodes(0).style.borderBottomWidth;
+	}
+
+/*****************************
+	Border Apply To
+*****************************/
+/*
+function drawBorderApplyToSelection()
+	{
+	arrApplyToOptions=[["idApplyTo_None",getTxt("No Border"),"border/border_none.gif"],
+					["idApplyTo_Outside",getTxt("Outside Border"),"border/border_outside.gif"],
+					["idApplyTo_Left",getTxt("Left Border"),"border/border_left.gif"],
+					["idApplyTo_Top",getTxt("Top Border"),"border/border_top.gif"],
+					["idApplyTo_Right",getTxt("Right Border"),"border/border_right.gif"],
+					["idApplyTo_Bottom",getTxt("Bottom Border"),"border/border_bottom.gif"]];
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:60;height:127'>"
+	sHTML+="<table id=tblBorderApplyTo cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	for(var i=0;i<arrApplyToOptions.length;i++)
+		{
+		if(i==1)
+			{//DEFAULT
+			sHTML+="<tr>"
+			sHTML+="<td id="+arrApplyToOptions[i][0]+" name="+arrApplyToOptions[i][0]+" valign=top style=\"height:30;padding:4;border:white 1 solid;border:#708090 1 solid;background-color:#f1f1f1\" onclick=\"doSelectBorderApplyTo(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+			sHTML+="	<img src='"+arrApplyToOptions[i][2]+"' alt='"+arrApplyToOptions[i][1]+"'>"
+			sHTML+="</td>"
+			sHTML+="</tr>"
+			}
+		else
+			{
+			sHTML+="<tr>"
+			sHTML+="<td id="+arrApplyToOptions[i][0]+" name="+arrApplyToOptions[i][0]+" valign=top style=\"height:30;padding:4;border:white 1 solid;\" onclick=\"doSelectBorderApplyTo(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+			sHTML+="	<img src='"+arrApplyToOptions[i][2]+"' alt='"+arrApplyToOptions[i][1]+"'>"
+			sHTML+="</td>"
+			sHTML+="</tr>"
+			}
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderApplyTo value='idApplyTo_Outside'>"
+	sHTML+="</div>"
+
+	document.write(sHTML)
+	}*/
+function drawBorderApplyToSelection()
+	{
+	arrApplyToOptions=[ ["idApplyTo_None","border/border_none.gif",getTxt("No Border")],
+						["idApplyTo_Outside","border/border_outside.gif",getTxt("Outside Border")],
+						["idApplyTo_Left","border/border_left.gif",getTxt("Left Border")],
+						["idApplyTo_Top","border/border_top.gif",getTxt("Top Border")],
+						["idApplyTo_Right","border/border_right.gif",getTxt("Right Border")],
+						["idApplyTo_Bottom","border/border_bottom.gif",getTxt("Bottom Border")]];
+	sHTML="<div style='overflow:auto;border:gray 1 solid;width:60;height:127'>"
+	sHTML+="<table id=tblBorderApplyTo cellpadding=0 cellspacing=0 width=100% style='table-layout:fixed;background:white'>"
+	for(var i=0;i<arrApplyToOptions.length;i++)
+		{
+		sHTML+="<tr>"
+		sHTML+="<td id="+arrApplyToOptions[i][0]+" name="+arrApplyToOptions[i][0]+" valign=top style=\"height:30;padding:4;border:white 1 solid;\" onclick=\"doSelectBorderApplyTo(this)\" onmouseover=\"doOver(this);\" onmouseout=\"doOut(this);\">"
+		sHTML+="	<img src='"+arrApplyToOptions[i][1]+"' alt='"+arrApplyToOptions[i][2]+"'>"
+		sHTML+="</td>"
+		sHTML+="</tr>"
+		}
+	sHTML+="</table><input type=hidden name=idSelBorderApplyTo>"
+	sHTML+="</div>"
+
+	document.write(sHTML)
+	}
+function doSelectBorderApplyTo(me)
+	{
+	oNodes=tblBorderApplyTo.childNodes(0).childNodes
+	for(var i=0;i<oNodes.length;i++)
+		{
+		oNodes(i).childNodes(0).style.backgroundColor='#ffffff';
+		oNodes(i).childNodes(0).style.border='#ffffff 1 solid';
+		}
+	me.style.backgroundColor='#f1f1f1';
+	me.style.border='#718191 1px solid';
+	
+	idSelBorderApplyTo.value=me.id;
+	}	
+</script>
+</head>
+
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;padding-bottom:0;height:100%">
+
+	<table>
+	<tr>
+	<td valign=top style="padding:3">
+		<script>
+		drawBorderStyleSelection()
+		</script>
+	</td>
+	<td valign=top style="padding:3">
+		<script>
+		drawBorderWidthSelection()
+		</script>
+	</td>
+	<td valign=top style="padding:3" nowrap>
+		<script>
+		drawBorderApplyToSelection()
+		</script>
+	</td>
+	<td valign=top style="padding:3" nowrap>
+		<div><span id=txtLang name=txtLang>Color</span>:</div>
+		
+		<script>
+		document.write("<span style='background:white'>");
+		document.write("	<span id='idSelBorderColor' style='border:gray 1 solid;width:20;margin-right:3;background-color:#000000'></span>");
+		document.write("</span>");
+		document.write("<input type=button value='" + getTxt("Pick") + "' onclick=\"oColor1.show(this);event.cancelBubble=true;\" class=\"inpBtn\" onmouseover=\"this.className='inpBtnOver';\" onmouseout=\"this.className='inpBtnOut'\">");
+		
+		var oColor1 = new ColorPicker("oColor1");
+		oColor1.onPickColor = new Function("idSelBorderColor.style.backgroundColor=oColor1.color;");
+		oColor1.onRemoveColor = new Function("idSelBorderColor.style.backgroundColor='';");
+		oColor1.align="right";
+		//oColor1.color="#000000";
+		oColor1.txtCustomColors=getTxt("Custom Colors");
+		oColor1.txtMoreColors=getTxt("More Colors...");
+		oColor1.RENDER();
+		</script>	
+
+		<div style='margin-top:7'><span id=txtLang name=txtLang>Shading</span>:</div>
+	
+		<script>
+		document.write("<span style='background:white'>");
+		document.write("	<span id='idSelShadingColor' style='border:gray 1 solid;width:20;margin-right:3;'></span>");
+		document.write("</span>");
+		document.write("<input type=button value='" + getTxt("Pick") + "' onclick=\"oColor2.show(this);event.cancelBubble=true;\" class=\"inpBtn\" onmouseover=\"this.className='inpBtnOver';\" onmouseout=\"this.className='inpBtnOut'\">");
+		
+		var oColor2 = new ColorPicker("oColor2");
+		oColor2.onPickColor = new Function("idSelShadingColor.style.backgroundColor=oColor2.color;");
+		oColor2.onRemoveColor = new Function("idSelShadingColor.style.backgroundColor='';");
+		oColor2.align="right";
+		//oColor2.color="";
+		oColor2.txtCustomColors=getTxt("Custom Colors");
+		oColor2.txtMoreColors=getTxt("More Colors...");
+		oColor2.RENDER();
+		</script>	
+	</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td nowrap style="padding-left:8">
+
+	<table cellpadding=0 cellspacing=0>
+	<tr>
+	<td>
+		<table cellpadding=2 cellspacing=0>
+		<tr><td colspan=7 id=txtLang name=txtLang>Margin:</td></tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Left</span>:</td>
+		<td><input type="text" name="inpMarginLeft" size=1 class="inpTxt"></td>
+		<td> px</td>
+		<td>&nbsp;&nbsp;</td>
+		<td align=right><span id=txtLang name=txtLang>Right</span>:</td>
+		<td><input type="text" name="inpMarginRight" size=1 class="inpTxt"></td>
+		<td> px</td>
+		</tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Top</span>:</td>
+		<td><input type="text" name="inpMarginTop" size=1 class="inpTxt"></td>
+		<td> px</td>
+		<td>&nbsp;&nbsp;</td>
+		<td align=right><span id=txtLang name=txtLang>Bottom</span>:</td>
+		<td><input type="text" name="inpMarginBottom" size=1 class="inpTxt"></td>
+		<td> px</td>
+		</tr>
+		</table>
+	
+	</td>
+	<td>
+	<div style="margin:5;height:55;border-left:lightgrey 1 solid"></div>
+	</td>
+	<td style="padding-bottom:5">
+	
+		<table cellpadding=2 cellspacing=0>
+		<tr><td colspan=7 id=txtLang name=txtLang>Padding:</td></tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Left</span>:</td>
+		<td><input type="text" name="inpPaddingLeft" size=1 class="inpTxt"></td>
+		<td> px</td>
+		<td>&nbsp;&nbsp;</td>
+		<td align=right><span id=txtLang name=txtLang>Right</span>:</td>
+		<td><input type="text" name="inpPaddingRight" size=1 class="inpTxt"></td>
+		<td> px</td>
+		</tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Top</span>:</td>
+		<td><input type="text" name="inpPaddingTop" size=1 class="inpTxt"></td>
+		<td> px</td>
+		<td>&nbsp;&nbsp;</td>
+		<td align=right><span id=txtLang name=txtLang>Bottom</span>:</td>
+		<td><input type="text" name="inpPaddingBottom" size=1 class="inpTxt"></td>
+		<td> px</td>
+		</tr>
+		</table>
+		
+	</td>
+	</tr>
+	<tr>
+	<td colspan=3 style="padding-top:3;padding-bottom:5;border-top:lightgrey 1 solid">
+	
+		<table cellpadding=2 cellspacing=0>
+		<tr><td colspan=2 id=txtLang name=txtLang>Dimension</td></tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Width</span>:</td>
+		<td>
+		<input type="text" name="inpWidth" size=1 class="inpTxt">
+		<select name="inpAutoFitMeasure1" class="inpSel">
+			<option value="px" id="optLang" name="optLang">pixels</option>
+			<option value="%" id="optLang" name="optLang">percent</option>
+		</select>
+		</td>
+		</tr>
+		<tr>
+		<td><span id=txtLang name=txtLang>Height</span>:</td>
+		<td>
+		<input type="text" name="inpHeight" size=1 class="inpTxt">
+		<select name="inpAutoFitMeasure2" class="inpSel">
+			<option value="px" id="optLang" name="optLang">pixels</option>
+			<option value="%" id="optLang" name="optLang">percent</option>
+		</select>
+		</td>
+		</tr>
+		</table>
+		
+	</td>
+	</tr>		
+	</table>
+
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Editor</title>
+  <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/ext-statusbar.js"></script>
+  <style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    
+    #editor { 
+        margin: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+		font-size:14px;    }
+		
+	#statusBar {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 20px;
+        width:90%;
+        padding-left:50px;
+        padding-right:30px;
+        background-color: rgb(245, 245, 245);
+        color: gray;
+    }
+    .ace_status-indicator {
+        color: gray;
+        position: absolute;
+        right: 0;
+        border-left: 1px solid;
+    }
+    
+  </style>
+<script>
+
+	function GetUrlArg(name){var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");       if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return ""; };
+
+	var editor;
+	function initCode(){
+		var height=screen.availHeight-187;
+		parent.document.all(GetUrlArg("frmname")).style.height=height+"px"; 
+		var defaultValue=parent.document.getElementById(GetUrlArg("fdname")).value;
+    	editor = ace.edit("editor");
+    	editor.getSession().setMode("ace/mode/"+GetUrlArg("mode"));
+		if(GetUrlArg("theme")!=""){
+			editor.setTheme("ace/theme/"+GetUrlArg("theme"));
+		}
+    	editor.setShowPrintMargin(false);
+		editor.setFontSize("14px");
+		editor.renderer.setShowPrintMargin(false);
+		editor.insert(defaultValue);
+		//var StatusBar = ace.require('ace/ext/statusbar').StatusBar;
+		//var statusBar = new StatusBar(editor,  document.getElementById('statusBar'));
+		editor.commands.addCommands([{
+			name: "savedoc",
+			bindKey: {win: "Ctrl-s", mac: "Command-s"},
+			exec: function(editor) {parent.SaveDocument();},
+			readOnly: true
+		}]);
+	}
+	
+	function getContent(){
+		return editor.getValue();
+	}
+	
+</script>
+
+</head>
+<body onload="initCode()" >
+
+<pre id="editor"></pre>
+
+</body>
+</html>

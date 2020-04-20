@@ -1,0 +1,91 @@
+@charset "UTF-8";
+.tooltip {
+    position: absolute;
+    display: none;
+    z-index: 9900000;
+    outline: none;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: $tooltip-background-color;
+    border-color: $tooltip-border-color;
+    color: $tooltip-color;
+}
+.tooltip-content {
+    font-size: 12px;
+}
+.tooltip-arrow-outer,
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    border-style: solid;
+    border-width: 6px;
+    border-color: transparent;
+    _border-color: tomato;
+    _filter: chroma(color=tomato);
+}
+.tooltip-right {
+    .tooltip-arrow-outer {
+        left: 0;
+        top: 50%;
+        margin: -6px 0 0 -13px;
+        border-right-color: $tooltip-right_tooltip-arrow-outer-border-right-color;
+    }
+    .tooltip-arrow {
+        left: 0;
+        top: 50%;
+        margin: -6px 0 0 -12px;
+        border-right-color: $tooltip-right_tooltip-arrow-border-right-color;
+    }
+}
+.tooltip-left {
+    .tooltip-arrow-outer {
+        right: 0;
+        top: 50%;
+        margin: -6px -13px 0 0;
+        border-left-color: $tooltip-left_tooltip-arrow-outer-border-right-color;
+    }
+    .tooltip-arrow {
+        right: 0;
+        top: 50%;
+        margin: -6px -12px 0 0;
+        border-left-color: $tooltip-left_tooltip-arrow-border-right-color;
+    }
+}
+.tooltip-top {
+    .tooltip-arrow-outer {
+        bottom: 0;
+        left: 50%;
+        margin: 0 0 -13px -6px;
+        border-top-color: $tooltip-top_tooltip-arrow-outer-border-right-color;
+    }
+    .tooltip-arrow {
+        bottom: 0;
+        left: 50%;
+        margin: 0 0 -12px -6px;
+        border-top-color: $tooltip-top_tooltip-arrow-border-right-color;
+    }
+}
+.tooltip-bottom {
+    .tooltip-arrow-outer {
+        top: 0;
+        left: 50%;
+        margin: -13px 0 0 -6px;
+        border-bottom-color: $tooltip-bottom_tooltip-arrow-outer-border-right-color;
+    }
+    .tooltip-arrow {
+        top: 0;
+        left: 50%;
+        margin: -12px 0 0 -6px;
+        border-bottom-color: $tooltip-bottom_tooltip-arrow-border-right-color;
+    }
+}

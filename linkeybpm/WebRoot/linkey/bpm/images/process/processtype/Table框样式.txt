@@ -1,0 +1,15 @@
+1)财务流程table样式（Bule框）：
+border:1px solid #98D0E0；background:#F7FAFD url("../BlueBackground.jpg") repeat-x top;
+
+2)综合管理流程table样式（Yellow框）：
+border:1px solid #D1BD94；background:#FEFDF9 url("../YellowBackground.jpg") repeat-x top;
+
+3)物业流程table样式（Red框）：
+border:1px solid #DCAEAB；background:#FEFBFB url("../RedBackground.jpg") repeat-x top;
+
+4)网络支撑流程table样式（green框）：
+border:1px solid #A8CC9B；background:#FBFEFB url("../GreenBackground.jpg") repeat-x top;
+
+
+5)财务流程table样式（Purple框）：
+border:1px solid #BDB0DB；background:#F7FAFC url("../PurpleBackground.jpg") repeat-x top;

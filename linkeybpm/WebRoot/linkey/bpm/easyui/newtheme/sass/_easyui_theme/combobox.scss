@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.combobox-item,
+.combobox-group {
+    font-size: $combobox-item-combobox-group-font-size;
+    padding: 3px;
+    padding-right: 0px;
+}
+.combobox-item-disabled {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.combobox-gitem {
+    padding-left: 10px;
+}
+.combobox-group {
+    font-weight: bold;
+}
+.combobox-item-hover {
+    background-color: $combobox-item-hover-background-color;
+    color:$combobox-item-hover-color;
+}
+.combobox-item-selected {
+    background-color: $combobox-item-selected-background-color;
+    color: $combobox-item-selected-color;
+}

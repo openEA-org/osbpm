@@ -1,0 +1,23 @@
+﻿<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">             
+<script language=JavaScript src="scripts/editor.js"></script>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" scroll=no style='border:none' leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 >
+<script>
+try{
+	var height=screen.availHeight-170;
+	parent.document.all("HTMLFRAEM_FormBody").style.height=height+"px";
+}catch(e){}
+
+var oEdit1 = new InnovaEditor("oEdit1");
+try{
+	var BodyStr=parent.document.all.FormBody.value;
+}catch(e){var BodyStr="";}
+oEdit1.RENDER(BodyStr);
+function getContent(){
+	return oEdit1.getHTMLBody();
+}
+</script>
+</body>
+</html>

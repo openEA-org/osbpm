@@ -1,0 +1,35 @@
+@charset "UTF-8";
+.propertygrid {
+    .datagrid-view1 {
+        .datagrid-body {
+            td {
+                padding-bottom: 1px;
+                border-width: 0 1px 0 0;
+                border-color: $datagrid-body-border-color;
+            }
+        }
+        .datagrid-group {
+            border-color: $datagrid-group-border-color;
+        }
+    }
+    .datagrid-group {
+        height: 21px;
+        overflow: hidden;
+        border-width: 0 0 1px 0;
+        border-style: solid;
+        span {
+            font-weight: bold;
+        }
+    }
+    .datagrid-view2 {
+        .datagrid-group {
+            border-color: $datagrid-view2_datagrid-group-border-color;
+        }
+    }
+}
+.propertygrid .datagrid-group,
+.propertygrid .datagrid-view1 .datagrid-body,
+.propertygrid .datagrid-view1 .datagrid-row-over,
+.propertygrid .datagrid-view1 .datagrid-row-selected {
+    background: $datagrid-view1_d-r-s-background;
+}

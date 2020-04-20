@@ -1,0 +1,475 @@
+@charset "UTF-8";
+@import "theme_pink.scss";
+//@import "theme_blue.scss";
+@import "detail_varables.scss";
+@import "page_varables.scss"; 
+//page  
+/*======================================================*/ 
+* { 
+margin: 0px;
+padding: 0px;     
+border: 0px;
+outline: 0px;    
+font-family: "Microsoft YaHei";     
+}    
+body {
+background-color: $page-body-background; //detail
+} 
+.left {  
+  width: 69.9%;  
+  float: left;
+  border-right: 1px #dddddd solid; 
+  margin-left: 0px;
+  .title {
+    background-image: none;
+  }
+  .panel {
+    height: 180px;
+    border-bottom: 1px #dddddd solid;
+  }
+  table {
+    margin-top: 20px;
+    margin-left: 0px;
+    border-spacing: 30px 0px;
+    tr {
+      td {
+        text-align: center;
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+          span {
+            text-decoration: underline;
+          }
+        }
+        span {
+          font-size: 12px;
+          position: relative;
+          top: 35px;
+          left: 0px;
+          display: inline-block;
+        }
+        .item {
+          width: 90px;
+          height: 90px;
+          background-color: $table-tr-td-item-background-color;
+          margin: 0 auto;
+          cursor: pointer;
+          img {
+            position: relative;
+            top: 21px;
+            left: 10px;
+          }
+          .cue {
+            height: 20px;
+            width: 20px;
+            background-color: #f74d4d;
+            float: right;
+            position: relative;
+            left: 10px;
+            top: -10px;
+            color: $table-tr-td-cue-color;
+            font-size: $table-tr-td-cue-font-size;
+          }
+          &:hover {
+            background-color: $table-tr-td-hover-color;
+          }
+        }
+      }
+    }
+  }
+  .fast {
+    height: 180px;
+    border-bottom: 1px #dddddd solid;
+    table {
+      tr {
+        td {
+          .item {
+            .cue {
+              visibility: hidden;
+            }
+          }
+        }
+      }
+    }
+  }
+  .news {
+    height: 170px;
+    .notice {
+      float: left;
+      width: 51%;
+      border-right: 1px #dddddd solid;
+      height: 170px;
+      overflow: hidden;
+      ul {
+        li {
+          .office {
+            float: left;
+            color: $news-notice-office-color;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .flow {
+      float: left;
+      width: 48%;
+      height: 170px;
+    }
+    ul {
+      margin: 5px 5px 0px 10px;
+      li {
+        list-style: none;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 3px;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .content {
+          float: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -o-text-overflow: ellipsis;
+          white-space: nowrap;
+          color: $ui-li-content-color;
+          width: 100px;
+          cursor: pointer;
+        }
+        .date {
+          float: right;
+          margin-left: 5px;
+          color: $ui-li-date-color;
+        }
+        .editor {
+          float: right;
+          margin-left: 5px;
+          color: $ui-li-editor-color;
+        }
+      }
+    }
+  }
+}
+.right {
+  width: 30%;
+  float: left;
+  .title {
+    background-image: none;
+  }
+  .calendar {
+    height: 270px;
+    border-bottom: 1px #dddddd solid;
+  }
+  .kpi {
+    height: 150px;
+  }
+}
+.title {
+  padding: 5px 0px 0px 15px;
+  border-top: 1px $page-boder-border-color solid;  //detail 分割线
+  span {
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    font-weight: 600;
+    color: $title-span-color;
+    position: relative; 
+    top: -5px;
+    left: 6px;
+    display: inline-block;
+  }
+}
+.office:hover,
+.content:hover {
+  text-decoration: underline;
+}
+.fdate {
+  float: right;
+  color: $fdate-color;
+}
+.container {
+  margin: 30px 0px 0px 0px;
+  margin: 20px 0px 0px 20px;
+  .item {
+    display: inline-block;
+    height: 90px;
+    width: 90px;
+    background-color: $container-item-background-color;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    cursor: pointer;
+//  display: inline-block;
+//  height: 90px;
+//  width: 90px;
+//  background-color: #668ac8;
+//  margin-bottom: 50px;
+//  text-align: center;
+//  margin-right: 30px;
+//  cursor: pointer;
+    &:hover {
+     // background-color: #358c01;
+      //cursor: pointer;
+      cursor: pointer;
+      background-color: $container-item-hover-color;
+      span {
+        //text-decoration: underline;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+    img {
+      position: relative;
+      top: 20px;
+//    position: relative;
+//    top: 20px;
+    }
+    span {
+//    display: inline-block;
+//    position: relative;
+//    top: 38px;
+//    font-size: 12px;
+      font-size: 12px;
+      display: inline-block;
+      position: relative;
+      top: 35px;
+    }
+  }
+}
+.topic_icon {
+  display: inline-block;
+  height: 22px;
+  width: 6px;
+  background-image: $topic_icon-background-image;
+  background-repeat: no-repeat;
+}
+.head {
+  height: 65px;
+  width: 100%;
+  background-color: #f8f8f8;
+  font-size: 20px;
+  font-weight: 600;
+  .logo {
+    padding: 28px 0px 0px 256px;
+    #img2 {
+      position: relative;
+      top: 0px;
+      left: 6px;
+    }
+    span {
+      position: relative;
+      top: -4px;
+      left: 10px;
+    }
+  }
+}
+.error {
+  text-align: center;
+  margin-top: 17vh;
+  font-size: 12px;
+  color: $error-color;
+  .tip1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: $error-tip1-color;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .img_tip {
+    margin: 0px 0px 15px 0px;
+  }
+  .reason {
+    margin: 0px 0px 5px 0px;
+  }
+  .btn {
+    margin: 8px 0px 0px 0px;
+    position: relative;
+    left: -2px;
+    img {
+      position: relative;
+      top: 3px;
+      margin-right: 5px;
+    }
+  }
+  .btn1 {
+    margin: 0px 10px 0px 0px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline; 
+    }
+  }
+  .btn2 {
+    margin: 0px 0px 0px 10px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.error .btn1,.btn2 {
+  display: inline-block;
+}
+/*流程中心*/
+.container-fluid {
+  padding-left: $container-fluid-padding-left;
+}
+.nav-tabs {
+  border-bottom: none;
+  & > li {
+    &.active {
+      & > a {
+        color: $nav-tabs-active-color;   //流程中心分类文字颜色
+        border: none;
+        font-weight: 600;
+        background-color: transparent;
+        &:hover {
+          color: $nav-tabs-active-hover-color;  //流程中心分类文字颜色（鼠标移动时）
+          border: none;
+          font-weight: 600;
+          background-color: transparent;
+        }
+//      &:focus {
+//        color: $nav-tabs-active-focus-color;
+//        border: none;
+//        font-weight: 600;
+//        background-color: transparent;
+//      }
+      }
+    } 
+  }
+}
+.active {
+  //background-image: $active-background-image;
+  background-repeat: no-repeat;
+  background-position: 1% 50%;
+}
+.col-xs-2 {
+  margin: 0px 15px 0px 35px;
+  padding-right: 0px;
+  padding-left: 0px;
+  width: auto;
+}
+.col-md-12 {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.badge {
+  height: 20px;
+  min-width: 20px;
+  border-radius: 0px;
+  font-weight: 100;
+  padding: 3px 0px;
+  position: relative;
+  top: -60px;
+  left: 44px;
+}
+.thumbnail {
+  border-radius: 0px;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+  background-color:$page-flow-text-background; // detail 流程中心文字背景颜色
+  .caption {
+    padding: 0px;
+    width: 140px;
+    a {
+      color: $thumbnail-caption-color;
+      font-size: 12px;
+    }
+  }
+  div {
+    &:first-child {
+      width: 90px;
+      height: 90px;
+    }
+  }
+  .thumbnail_bgcolor {
+    .process_icon {
+      height: 50px;
+      width: 50px;
+      background-repeat: no-repeat;
+      position: relative;
+      top: 20px;
+      left: 20px;
+    }
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+  #id_1 {
+    background-image: $id_1-background-image;
+  }
+  #id_2 {
+    background-image: $id_2-background-image;
+  }
+  #id_3 {
+    background-image: $id_3-background-image;
+  }
+  #id_4 {
+    background-image: $id_4-background-image;
+  }
+  #id_5 {
+    background-image: $id_5-background-image;
+  }
+  #id_6 {
+    background-image: $id_6-background-image;
+  }
+  #id_7 {
+    background-image: $id_7-background-image;
+  }
+  #id_8 {
+    background-image: $id_8-background-image;
+  }
+  #id_9 {
+    background-image: $id_9-background-image;
+  }
+  #id_10 {
+    background-image: $id_10-background-image;
+  }
+  #id_11 {
+    background-image: $id_11-background-image;
+  }
+}
+.thumbnail_bgcolor {
+  background-color: $thumbnail_bgcolor-color;
+  &:hover {
+    background-color: $thumbnail_bgcolor-colorhover;
+  }
+}
+.glyphicon {
+  position: relative;
+  top: 28px;
+}
+.cal_img {
+  margin: 0 auto;
+  height: 207px;
+  width: 216px;
+  background-image: $cal_img-background-image;
+  background-repeat: no-repeat;
+  img {
+    position: relative;
+    top: 10px;
+    left: 60px;
+    cursor: pointer;
+  }
+}  
+.kpi_img {
+  margin: 0 auto;
+  height: 280px;
+  width: 280px;
+  background-image: $kpi_img-background-image;
+  background-repeat: no-repeat;
+  img {
+    position: relative;
+    top: 2px;
+    left: 25px; 
+    cursor: pointer;
+  }
+}
+/*流程中心图标*/
+/*流程中心图标end*/

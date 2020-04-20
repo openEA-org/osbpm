@@ -1,0 +1,500 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/image.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+
+	if(dialogArguments.oUtil.obj.cmdAssetManager!="")btnAsset.style.display="block";
+	
+	realTime()
+	}	
+function openAsset()
+	{
+	inpImgURL.value=eval(dialogArguments.oUtil.obj.cmdAssetManager);	
+	}
+function modalDialogShow(url,width,height)
+	{
+	if(url.indexOf("?")==-1) url=url+"?ffilter=image";//no querystring
+	else url=url+"&ffilter=image";
+	
+	return window.showModalDialog(url,window,
+		"dialogWidth:"+width+"px;dialogHeight:"+height+"px;edge:Raised;center:Yes;help:No;Resizable:Yes;Maximize:Yes");
+	}
+	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	if (oSel.parentElement)	oElement=oSel.parentElement();
+	else oElement=oSel.item(0);
+	
+	clearAllProperties()
+	
+	if(oElement.tagName=="IMG")
+		{
+		//~~~~~~~~~~~~~~~~~~~~~~~~
+		sTmp=oElement.outerHTML;
+		sTmp=sTmp.substring(sTmp.indexOf("src")+5);
+		sTmp=sTmp.substring(0,sTmp.indexOf('"'));
+		var arrTmp = sTmp.split("&amp;");
+		if (arrTmp.length > 1) sTmp = arrTmp.join("&");		
+		inpImgURL.value=sTmp
+		
+		//inpImgAlt.value = oElement.title;
+		inpImgAlt.value = oElement.alt;
+
+		inpImgAlign.value = oElement.align;
+
+		idImg.style.borderTop=oElement.style.borderTop;
+		idImg.style.borderBottom=oElement.style.borderBottom;
+		idImg.style.borderLeft=oElement.style.borderLeft;
+		idImg.style.borderRight=oElement.style.borderRight;
+		
+		inpImgWidth.value = oElement.width;
+		inpImgHeight.value = oElement.height;
+
+		if(oElement.style.marginTop.substr(oElement.style.marginTop.length-2,2)=="px")
+			inpImgTop.value=oElement.style.marginTop.substr(0,oElement.style.marginTop.length-2);			
+		else inpImgTop.value="";
+		
+		if(oElement.style.marginBottom.substr(oElement.style.marginBottom.length-2,2)=="px")
+			inpImgBottom.value=oElement.style.marginBottom.substr(0,oElement.style.marginBottom.length-2);			
+		else inpImgBottom.value="";
+		
+		if(oElement.style.marginLeft.substr(oElement.style.marginLeft.length-2,2)=="px")
+			inpImgLeft.value=oElement.style.marginLeft.substr(0,oElement.style.marginLeft.length-2);			
+		else inpImgLeft.value="";
+		
+		if(oElement.style.marginRight.substr(oElement.style.marginRight.length-2,2)=="px")
+			inpImgRight.value=oElement.style.marginRight.substr(0,oElement.style.marginRight.length-2);			
+		else inpImgRight.value="";
+
+		btnApply.style.display="block";
+		btnOk.style.display="block";
+		btnInsert.style.display="none";
+		
+		doPreview();
+		}
+	else
+		{
+		btnApply.style.display="none";
+		btnOk.style.display="none";
+		btnInsert.style.display="block";
+		}	
+	}
+	
+function clearAllProperties()
+	{
+	inpImgURL.value="";//always updated
+	inpImgAlt.value="";//not set, krn tdk harus
+	inpImgAlign.value="";
+	inpImgWidth.value="";
+	inpImgHeight.value="";
+	inpImgTop.value="";
+	inpImgBottom.value="";
+	inpImgLeft.value="";
+	inpImgRight.value="";
+	}
+function doPreview()
+	{
+	idImg.style.width="";
+	idImg.style.height="";
+		
+	//idImg.title=inpImgAlt.value;
+	idImg.alt=inpImgAlt.value;
+	
+	idImg.align=inpImgAlign.value;
+				
+	if(inpImgTop.value!="")idImg.style.marginTop=inpImgTop.value;
+	else idImg.style.marginTop="";				
+	if(inpImgBottom.value!="")idImg.style.marginBottom=inpImgBottom.value;
+	else idImg.style.marginBottom="";		
+	if(inpImgLeft.value!="")idImg.style.marginLeft=inpImgLeft.value;
+	else idImg.style.marginLeft="";		
+	if(inpImgRight.value!="")idImg.style.marginRight=inpImgRight.value;
+	else idImg.style.marginRight="";
+	}
+
+function doInsert()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	dialogArguments.oUtil.obj.saveForUndo();
+
+	if (oSel.parentElement)	oElement=oSel.parentElement();
+	else oElement=oSel.item(0);
+	
+	sImgAlt=inpImgAlt.value;
+	sImgAlign=inpImgAlign.value;
+	
+	sImgBorderTop=idImg.style.borderTop;
+	sImgBorderBottom=idImg.style.borderBottom;
+	sImgBorderLeft=idImg.style.borderLeft;
+	sImgBorderRight=idImg.style.borderRight;
+
+	var bNoBorder=false;
+	if((idImg.style.borderTopStyle=="none"||idImg.style.borderTop=="")&&
+		(idImg.style.borderBottomStyle=="none"||idImg.style.borderBottom=="")&&
+		(idImg.style.borderLeftStyle=="none"||idImg.style.borderLeft=="")&&
+		(idImg.style.borderRightStyle=="none"||idImg.style.borderRight==""))
+		bNoBorder=true;
+
+	sImgWidth=inpImgWidth.value;
+	sImgHeight=inpImgHeight.value;		
+	sImgTop=inpImgTop.value;
+	sImgBottom=inpImgBottom.value;
+	sImgLeft=inpImgLeft.value;
+	sImgRight=inpImgRight.value;
+	
+	dialogArguments.oUtil.obj.doCmd("InsertImage",inpImgURL.value);
+
+	var oSel=oEditor.document.selection.createRange();
+	var sType=oEditor.document.selection.type;
+		
+	if (oSel.parentElement)oElement=oSel.parentElement();
+	else oElement=oSel.item(0);
+			
+	if (oElement.tagName=="IMG")
+		{
+		//oElement.title=sImgAlt;
+		oElement.alt=sImgAlt;
+		
+		oElement.align=sImgAlign;
+
+		if(bNoBorder)
+			oElement.border=0;
+		else
+			{	
+			oElement.style.borderTop=sImgBorderTop;
+			oElement.style.borderBottom=sImgBorderBottom;
+			oElement.style.borderLeft=sImgBorderLeft;
+			oElement.style.borderRight=sImgBorderRight;
+			}
+				
+		if(sImgWidth!="")oElement.width=sImgWidth;
+		if(sImgHeight!="")oElement.height=sImgHeight;
+				
+		if(sImgTop!="")oElement.style.marginTop=sImgTop;
+		if(sImgBottom!="")oElement.style.marginBottom=sImgBottom;
+		if(sImgLeft!="")oElement.style.marginLeft=sImgLeft;
+		if(sImgRight!="")oElement.style.marginRight=sImgRight;
+		}	
+	self.close()
+	}
+	
+function doUpdate()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if (oSel.parentElement)	oElement=oSel.parentElement();
+	else oElement=oSel.item(0);
+	
+	if (oElement.tagName=="IMG")
+		{
+		dialogArguments.oUtil.obj.saveForUndo();
+		
+		oElement.src=inpImgURL.value;
+		
+		//oElement.title=inpImgAlt.value;
+		oElement.alt=inpImgAlt.value;
+		
+		oElement.align=inpImgAlign.value;
+		
+		oElement.style.borderTop=idImg.style.borderTop;
+		oElement.style.borderBottom=idImg.style.borderBottom;
+		oElement.style.borderLeft=idImg.style.borderLeft;
+		oElement.style.borderRight=idImg.style.borderRight;
+
+		if(idImg.style.borderTopStyle!="none"||
+			idImg.style.borderBottomStyle!="none"||
+			idImg.style.borderLeftStyle!="none"||
+			idImg.style.borderRightStyle!="none")
+			oElement.removeAttribute("border",0);
+		if((idImg.style.borderTopStyle=="none"||idImg.style.borderTop=="")&&
+			(idImg.style.borderBottomStyle=="none"||idImg.style.borderBottom=="")&&
+			(idImg.style.borderLeftStyle=="none"||idImg.style.borderLeft=="")&&
+			(idImg.style.borderRightStyle=="none"||idImg.style.borderRight==""))
+			oElement.border=0;			
+
+		//clean
+		if(idImg.style.borderTop=="medium none"||idImg.style.borderTopStyle=="none")
+			{
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: medium none; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: medium none","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopColor+" "+idImg.style.borderTopWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopColor+" "+idImg.style.borderTopWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopColor+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-TOP: "+idImg.style.borderTopColor,"");
+			}
+		if(idImg.style.borderBottom=="medium none"||idImg.style.borderBottomStyle=="none")
+			{			
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: medium none; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: medium none","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomColor+" "+idImg.style.borderBottomWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomColor+" "+idImg.style.borderBottomWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomColor+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-BOTTOM: "+idImg.style.borderBottomColor,"");
+			}
+		if(idImg.style.borderLeft=="medium none"||idImg.style.borderLeftStyle=="none")
+			{			
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: medium none; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: medium none","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftColor+" "+idImg.style.borderLeftWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftColor+" "+idImg.style.borderLeftWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftColor+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-LEFT: "+idImg.style.borderLeftColor,"");
+			}
+		if(idImg.style.borderRight=="medium none"||idImg.style.borderRightStyle=="none")
+			{			
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: medium none; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: medium none","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightColor+" "+idImg.style.borderRightWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightColor+" "+idImg.style.borderRightWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightWidth+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightWidth,"");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightColor+"; ","");
+			oElement.style.cssText=oElement.style.cssText.replace("BORDER-RIGHT: "+idImg.style.borderRightColor,"");
+			}
+
+		oElement.style.width="";
+		oElement.style.height="";
+		if(inpImgWidth.value!="")oElement.width=inpImgWidth.value;
+		else oElement.removeAttribute("width",0);				
+		if(inpImgHeight.value!="")oElement.height=inpImgHeight.value;
+		else oElement.removeAttribute("height",0);	
+				
+		if(inpImgTop.value!="")oElement.style.marginTop=inpImgTop.value;
+		else oElement.style.marginTop="";				
+		if(inpImgBottom.value!="")oElement.style.marginBottom=inpImgBottom.value;
+		else oElement.style.marginBottom="";		
+		if(inpImgLeft.value!="")oElement.style.marginLeft=inpImgLeft.value;
+		else oElement.style.marginLeft="";		
+		if(inpImgRight.value!="")oElement.style.marginRight=inpImgRight.value;
+		else oElement.style.marginRight="";
+		}
+	}
+function resetImageSize()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if (oSel.parentElement)	oElement=oSel.parentElement();
+	else oElement=oSel.item(0);
+
+	if (oElement.tagName=="IMG")
+		{
+		dialogArguments.oUtil.obj.saveForUndo();
+		
+		oElement.style.width="";
+		oElement.style.height="";
+		oElement.removeAttribute("width",0);
+		oElement.removeAttribute("height",0);
+		oElement.width=oElement.width;
+		oElement.height=oElement.height;
+		realTime();
+		}
+	}
+		
+
+function linkeyimage()
+{
+ var url="/"+dialogArguments.parent.folder+"/linkey_imagefile.nsf/frmNewfile?openform";
+ var swidth=screen.availWidth;
+ var sheight=screen.availHeight;
+ var swidth=screen.availWidth;
+ var sheight=screen.availHeight;
+ var wwidth=600;
+ var wheight=30;	
+ var wleft=(swidth/2-0)-wwidth/2;
+ var wtop=(sheight/2-0)-wheight/2;
+ window.open(url,'','Width='+wwidth+'px,Height='+wheight+'px,Left='+wleft+'px,Top='+wtop+'px,status=no,resizable=yes,scrollbars=no,resezie=no');
+}
+	
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+
+	<table width=100%>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">图片路径</span>: 
+		</td>
+		<td colspan=4 style="width:100%">
+				<table cellpadding="0" cellspacing="0" style="width:100%">
+				<tr>
+				<td style="width:100%"><input type="text" id="inpImgURL" name=inpImgURL style="width:85%" class="inpTxt"><input type=button value=上传 onclick="linkeyimage()" ></td>
+				<td><input type="button" value="" onclick="openAsset()" id="btnAsset" name="btnAsset" style="display:none;background:url('openAsset.gif');width:23px;height:18px;border:#a5acb2 1px solid;margin-left:1px;"></td>
+				</tr>
+				</table>	
+		</td>
+	</tr>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Title</span>:&nbsp;
+		</td>
+		<td width="100%">	
+				<input type="text" id="inpImgAlt" name=inpImgAlt style="width:150px" class="inpTxt" onkeyup="doPreview()">
+		</td>
+		<td rowspan="5" style="padding-top:4;padding-right:7">
+			<div style="height:112px;border-left:#c7c7c7 1 solid;width:1px"></div>	
+		</td>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Spacing</span>:&nbsp;
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Alignment</span>:
+		</td>
+		<td nowrap>	
+				<select id="inpImgAlign" name="inpImgAlign" style="width:150px" class="inpSel" onchange="doPreview()">
+				<option value="" selected></option><!-- &lt;Not Set&gt; -->
+				<option value="absBottom" id="optLang" name="optLang">absBottom</option>
+				<option value="absMiddle" id="optLang" name="optLang">absMiddle</option>
+				<option value="baseline" id="optLang" name="optLang">baseline</option>
+				<option value="bottom" id="optLang" name="optLang">bottom</option>
+				<option value="left" id="optLang" name="optLang">left</option>
+				<option value="middle" id="optLang" name="optLang">middle</option>
+				<option value="right" id="optLang" name="optLang">right</option>
+				<option value="textTop" id="optLang" name="optLang">textTop</option>
+				<option value="top" id="optLang" name="optLang">top</option>						
+				</select>&nbsp;
+		</td>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Top</span>:&nbsp;
+		</td>
+		<td nowrap>	
+				<input type="text" name="inpImgTop" size=2 class="inpTxt" onkeyup="doPreview()"> &nbsp;px
+		</td>
+	</tr>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Border</span>: 
+		</td>
+		<td nowrap>
+			<input type="button" name=btnBorder id=btnBorder value=" Border Style " style="width:150px" 
+			onclick="window.showModelessDialog('border.htm',[dialogArguments,idImg],'dialogWidth:460px;dialogHeight:250px;edge:Raised;center:Yes;help:No;resizable:No;')" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Bottom</span>: 
+		</td>
+		<td nowrap>	
+				<input type="text" name="inpImgBottom" size=2 class="inpTxt" onkeyup="doPreview()"> &nbsp;px
+		</td>
+	</tr>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Width</span>: 
+		</td>
+		<td nowrap rowspan="2">
+				<table cellpadding="0" cellspacing="0">
+				<tr>
+				<td>
+				<input type="text" name="inpImgWidth" size=2 class="inpTxt"> &nbsp;px
+				</td>
+				<td rowspan="2" height="50" style="padding-left:3;padding-top:6">
+					<img src="img_reset.gif" align=left width="13" height="28">
+				</td>
+				<td rowspan="2" height="50" style="padding-top:7">
+					<input type="button" name="btnReset" id="btnReset" value="reset" onclick="resetImageSize()">
+				</td>
+				</tr>
+				<tr>
+				<td>
+				<input type="text" name="inpImgHeight" size=2 class="inpTxt"> &nbsp;px
+				</td>
+				</tr>
+				</table>				
+		</td>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Left</span>: 
+		</td>
+		<td nowrap>	
+				<input type="text" name="inpImgLeft" size=2 class="inpTxt" onkeyup="doPreview()" id="Text2"> &nbsp;px
+		</td>
+	</tr>
+	<tr>
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Height</span>: 
+		</td>
+
+		<td nowrap>
+				<span id="txtLang" name="txtLang">Right</span>: 
+		</td>
+		<td nowrap>	
+				<input type="text" name="inpImgRight" size=2 class="inpTxt" onkeyup="doPreview()" id="Text1"> &nbsp;px
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="5">
+			<div style="padding:3;"></div>
+			<div id="divPreview" style="padding:5;padding-left:5;overflow:auto;border:1 dimgray solid;width:100%;height:85;background:#ffffff">
+<img src="img.gif" id="idImg" align=left width="53" height="51">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  
+sed diam nonumy eirmod tempor invidunt ut labore et 
+dolore magna aliquyam erat, 
+sed diam voluptua. At vero eos et accusam et justo 
+duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+
+			</div>
+		</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:6;" align="right">
+	<table cellpadding=1 cellspacing=0>
+	<tr>
+	<td>
+	<input type="button" name=btnCancel id=btnCancel value="取消" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type="button" name=btnInsert id=btnInsert value="插入" onclick="doInsert()" style="display:block" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>	
+	<input type="button" name=btnApply id=btnApply value="应用" onclick="doUpdate()" style="display:none" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>	
+	<input type="button" name=btnOk id=btnOk value=" 确定 " onclick="doUpdate();self.close()" style="display:none;" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">	
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

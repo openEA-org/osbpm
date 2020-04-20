@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/*变量值在varables.scss文件中*/
+//不编译注释用 //  编译注释用/**/ 
+//多个选项时用下划线隔开，如$combobox-item_combobox-group-font-size
+//第一阶段先抽取字体和背景颜色
+
+//主题控制文件引入
+//===========================================
+//@import "theme_black.scss";
+//@import "theme_blue.scss";
+//@import "theme_green.scss";
+
+//===========================================
+
+//commmon  公用样式
+//-------------------------------------------
+@import "_common/_common_varables.scss";
+//easyui_theme  修改easyui主题样式
+//-------------------------------------------
+@import "_easyui_theme/_easyui_varables.scss";
+
+//@import "theme_demo.scss";
+@import "theme_pink.scss";
+//@import "theme_blue.scss";
+@import "detail_varables.scss";
+ 

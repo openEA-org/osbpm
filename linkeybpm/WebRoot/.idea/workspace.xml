@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="a22bb3e0-613e-4f38-af17-61cc87fe7d76" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="WebRoot" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="ITest0.0.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/itest/SVGMove/ITest0.0.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="84" column="34" lean-forward="false" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SVG.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/itest/SVG.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="22" column="29" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+              <folding>
+                <marker date="1505811192572" expanded="true" signature="2714:2720" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="newSVG.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/itest/newSVG.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="48" lean-forward="false" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>thisobj.NodeType</find>
+      <find>onDblClick</find>
+      <find>onmouse</find>
+      <find>moveobj.NodeType</find>
+      <find>mousem</find>
+      <find>g</find>
+      <find>LinkeyStartObj</find>
+      <find>addn</find>
+      <find>style.left</find>
+      <find>a.NodeType</find>
+      <find>a.LinkeyStartObj</find>
+      <find>a.LinkeyEndObj</find>
+      <find>e</find>
+      <find>tempx</find>
+      <find>Blue_Circle</find>
+      <find>backDrop</find>
+      <find>moveo</find>
+      <find>MoveNodeObj</find>
+      <find>addno</find>
+      <find>goalShowGrid</find>
+      <find>xx</find>
+      <find>offsetX</find>
+      <find>onmousem</find>
+      <find>Px</find>
+      <find>onmoused</find>
+      <find>PolyLineX</find>
+      <find>cons</find>
+      <find>unionN</find>
+      <find>union</find>
+      <find>addnode</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>event.srcElement.parentNode.parentNode.parentNode.id</replace>
+      <replace>event.srcElement.parentNode.parentNode.id</replace>
+      <replace>thisobj.getAttribute(&quot;NodeType&quot;)</replace>
+      <replace>a.getAttribute(&quot;NodeType&quot;)</replace>
+      <replace>a.getAttribute(&quot;LinkeyStartObj&quot;)</replace>
+      <replace>a.getAttribute(&quot;LinkeyEndObj&quot;)</replace>
+    </replaceStrings>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/itest/judge_bower.html" />
+        <option value="$PROJECT_DIR$/itest/test.html" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/ecflow_simulate.js" />
+        <option value="$PROJECT_DIR$/itest/from.xml" />
+        <option value="$PROJECT_DIR$/itest/extjs/inf.js" />
+        <option value="$PROJECT_DIR$/itest/test_extjs.html" />
+        <option value="$PROJECT_DIR$/itest/node_add_change.html" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/ecflow.js" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/svg.css" />
+        <option value="$PROJECT_DIR$/itest/index.html" />
+        <option value="$PROJECT_DIR$/itest/itemp.html" />
+        <option value="$PROJECT_DIR$/itest/VML.html" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/ecflowall_div2svg.js" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/bpg/ecflowall.js" />
+        <option value="$PROJECT_DIR$/itest/SVGMove/move.js" />
+        <option value="$PROJECT_DIR$/itest/SVGMove/test2.html" />
+        <option value="$PROJECT_DIR$/itest/SVG.html" />
+        <option value="$PROJECT_DIR$/itest/newSVG.html" />
+        <option value="$PROJECT_DIR$/itest/SVGMove/testMove.html" />
+        <option value="$PROJECT_DIR$/itest/SVGMove/ITest0.0.html" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/ecflowall_me.js" />
+        <option value="$PROJECT_DIR$/linkey/bpm/ext/wf/ecflowall.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1370" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="itest" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="itest" type="462c0819:PsiDirectoryNode" />
+              <item name="SVGMove" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+              <item name="bpm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+              <item name="bpm" type="462c0819:PsiDirectoryNode" />
+              <item name="easyui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+              <item name="bpm" type="462c0819:PsiDirectoryNode" />
+              <item name="ext" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+              <item name="bpm" type="462c0819:PsiDirectoryNode" />
+              <item name="ext" type="462c0819:PsiDirectoryNode" />
+              <item name="wf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WebRoot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WebRoot" type="462c0819:PsiDirectoryNode" />
+              <item name="linkey" type="462c0819:PsiDirectoryNode" />
+              <item name="bpm" type="462c0819:PsiDirectoryNode" />
+              <item name="ext" type="462c0819:PsiDirectoryNode" />
+              <item name="wf" type="462c0819:PsiDirectoryNode" />
+              <item name="bpg" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="nodejs_interpreter_path" value="J:/Program Files/nodejs/node" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="js-jscs-nodeInterpreter" value="J:\Program Files\nodejs\node.exe" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\project\linkey\linkeybpm\WebRoot\linkey\bpm\ext\wf" />
+      <recent name="J:\project\linkey\linkeybpm\WebRoot\itest\extjs" />
+      <recent name="J:\project\linkey\linkeybpm\WebRoot\itest" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration" maxAnnotateRevisions="-1" myUseAcceleration="nothing" cleanupOnStartRun="true">
+    <configuration useDefault="false">C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+    <option name="sshConnectionType" value="PASSWORD" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a22bb3e0-613e-4f38-af17-61cc87fe7d76" name="Default" comment="" />
+      <created>1504581272935</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1504581272935</updated>
+      <workItem from="1504581291599" duration="10824000" />
+      <workItem from="1504599195041" duration="5359000" />
+      <workItem from="1504623474712" duration="6275000" />
+      <workItem from="1504660376178" duration="5440000" />
+      <workItem from="1504666840406" duration="9557000" />
+      <workItem from="1504690576437" duration="603000" />
+      <workItem from="1504746205390" duration="14061000" />
+      <workItem from="1504832301953" duration="16966000" />
+      <workItem from="1504876013758" duration="1710000" />
+      <workItem from="1505091638137" duration="16602000" />
+      <workItem from="1505179010468" duration="6926000" />
+      <workItem from="1505187865321" duration="291000" />
+      <workItem from="1505322159532" duration="60000" />
+      <workItem from="1505322848837" duration="173000" />
+      <workItem from="1505323071892" duration="263000" />
+      <workItem from="1505323850530" duration="635000" />
+      <workItem from="1505350744579" duration="8401000" />
+      <workItem from="1505396449069" duration="7086000" />
+      <workItem from="1505437191449" duration="27268000" />
+      <workItem from="1505477262111" duration="1973000" />
+      <workItem from="1505569002214" duration="681000" />
+      <workItem from="1505628500613" duration="9855000" />
+      <workItem from="1505695896523" duration="1342000" />
+      <workItem from="1505697355520" duration="23694000" />
+      <workItem from="1505735260952" duration="1207000" />
+      <workItem from="1505782548067" duration="4635000" />
+      <workItem from="1505869356393" duration="3901000" />
+      <workItem from="1505887881699" duration="4000" />
+      <workItem from="1505955688539" duration="3333000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="189125000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21669106" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/itest/SVGMove/ITest0.0.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="84" column="34" lean-forward="false" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itest/SVG.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="29" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+          <folding>
+            <marker date="1505811192572" expanded="true" signature="2714:2720" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itest/newSVG.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="48" lean-forward="false" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkey/bpm/ext/wf/ecflowall.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37328">
+          <caret line="2333" column="27" lean-forward="false" selection-start-line="2333" selection-start-column="27" selection-end-line="2333" selection-end-column="27" />
+          <folding>
+            <marker date="1505959133755" expanded="true" signature="9698:9801" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="10223:10237" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="10783:10886" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="11149:11163" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="11951:12048" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="12417:12448" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="13615:13713" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="13928:14024" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="14456:14525" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="14949:15046" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="15261:15357" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="15736:15784" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="16773:16877" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="17967:18051" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="55379:55445" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="94559:94720" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="95143:95174" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="97764:97911" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="98338:98369" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="103953:104044" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="104405:104509" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="115794:115860" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="156841:156906" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itest/SVG.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="29" lean-forward="false" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+          <folding>
+            <marker date="1505811192572" expanded="true" signature="2714:2720" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itest/newSVG.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="48" lean-forward="false" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/linkey/bpm/ext/wf/ecflowall.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="2637" column="41" lean-forward="true" selection-start-line="2637" selection-start-column="41" selection-end-line="2637" selection-end-column="41" />
+          <folding>
+            <marker date="1505959133755" expanded="true" signature="9698:9801" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="10223:10237" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="10783:10886" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="11149:11163" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="11951:12048" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="12417:12448" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="13615:13713" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="13928:14024" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="14456:14525" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="14949:15046" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="15261:15357" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="15736:15784" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="16773:16877" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="17967:18051" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="55379:55445" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="94559:94720" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="95143:95174" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="97764:97911" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="98338:98369" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="103953:104044" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="104405:104509" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="115794:115860" ph="..." />
+            <marker date="1505959133755" expanded="true" signature="156841:156906" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/itest/SVGMove/ITest0.0.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="84" column="34" lean-forward="false" selection-start-line="84" selection-start-column="34" selection-end-line="84" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

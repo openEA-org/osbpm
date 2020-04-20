@@ -1,0 +1,271 @@
+@charset "UTF-8";
+//$datagrid-cell-rownumber-color : #97a7b2; //表格编号栏的编号颜色
+//$datagrid-body-background1 : $common-mian-background; //表单视图背景颜色
+.datagrid {
+    .panel-body {
+        overflow: hidden;
+        position: relative;
+    }
+    .datagrid-pager {
+        display: block;
+        margin: 0;
+        border-width: $datagrid-border-size; //表格边框的线的粗细
+        border-style: solid;
+    }
+    .datagrid-pager-top {
+        border-width: 0 0 1px 0;
+    }
+}
+.datagrid-view {
+    position: relative;
+    overflow: hidden;
+}
+.datagrid-view1,
+.datagrid-view2 {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+}
+.datagrid-view1 {
+    left: 0;
+    .datagrid-body-inner {
+        padding-bottom: 20px;
+    }
+    .datagrid-body {
+        overflow: hidden;
+    }
+}
+.datagrid-view2 {
+    right: 0;
+}
+.datagrid-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    display: none;
+    background: $datagrid-mask-background;
+}
+.datagrid-mask-msg {
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    padding: 12px 5px 10px 30px;
+    width: auto;
+    height: 16px;
+    border-width: 2px;
+    border-style: solid;
+    display: none;
+    background: $datagrid-mask-msg-background url($datagrid-mask-msg-url) no-repeat scroll 5px center;
+    border-color: #d3d3d3;
+}
+.datagrid-sort-icon {
+    padding: 0;
+}
+.datagrid-toolbar {
+    height: auto;
+    padding: 1px 2px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+}
+.datagrid-btn-separator {
+    float: left;
+    height: 24px;
+    border-left: 1px solid $datagrid-btn-separator-border-left;
+    border-right: 1px solid $datagrid-btn-separator-border-right;
+    margin: 2px 1px;
+}
+.datagrid-header {
+    //overflow: hidden;
+    cursor: default;
+    border-width: 0px; //20171225
+    border-style: solid;
+    .datagrid-cell {
+        height: auto;
+        span {
+            color:$datagrid-first-row-color;  //detail 第一行字体白色
+            font-size: $datagrid-header-datagrid-cell-span-font-size;
+        }
+    }
+}
+.datagrid-header-inner {
+    float: left;
+    width: 10000px;
+}
+.datagrid-header-row,
+.datagrid-row {
+    height: 25px;
+}
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+    border-width: $datagrid-border-size;
+    //border-style: dotted;  20171207
+    border-style: solid;
+    margin: 0;
+    padding: 0;
+    border-color: $datagrid-border-color;  //detail 表格边框的线的颜色 ======
+}
+.datagrid-cell,
+.datagrid-cell-group,
+.datagrid-header-rownumber,
+.datagrid-cell-rownumber {
+    margin: 0;
+    padding: 0 4px;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    height: 18px;
+    line-height: 18px;
+    font-size: $datagrid-cell-rownumber-font-size;
+}
+.datagrid-cell-group {
+    text-align: center;
+}
+.datagrid-header-rownumber,
+.datagrid-cell-rownumber {
+    width: 25px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.datagrid-body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    zoom: 1;
+    background: $datagrid-body-background1;  //detail 表单视图背景颜色
+    .datagrid-editable {
+        margin: 0;
+        padding: 0;
+        table {
+            width: 100%;
+            height: 100%;
+        }
+        td {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+        .datagrid-editable-input {
+            margin: 0;
+            padding: 2px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $datagrid-editable-input-border-color;     //detail 视图输入框边框颜色
+            color:$datagrid-editable-input-text-color;               //detail 可编辑视图字体颜色
+        }
+    }
+}
+.datagrid-footer {
+    overflow: hidden;
+}
+.datagrid-footer-inner {
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    width: 10000px;
+    float: left;
+}
+.datagrid-row-editing {
+    .datagrid-cell {
+        height: auto;
+    }
+}
+.datagrid-header-check,
+.datagrid-cell-check {
+    padding: 0;
+    width: 27px;
+    height: 18px;
+    font-size: 1px;
+    text-align: center;
+    overflow: hidden;
+}
+.datagrid-header-check input,
+.datagrid-cell-check input {
+    margin: 0;
+    padding: 0;
+    width: 15px;
+    height: 18px;
+}
+.datagrid-resize-proxy {
+    position: absolute;
+    width: 1px;
+    height: 10000px;
+    top: 0;
+    cursor: e-resize;
+    display: none;
+    background: $datagrid-resize-proxy-background;
+}
+.datagrid-sort-desc {
+    .datagrid-sort-icon {
+        padding: 0 13px 0 0;
+        background: url($datagrid-sort-desc-datagrid-sort-icon-background) no-repeat -16px center;
+    }
+}
+.datagrid-sort-asc {
+    .datagrid-sort-icon {
+        padding: 0 13px 0 0;
+        background: url($datagrid-sort-asc-datagrid-sort-icon-background) no-repeat 0px center;
+    }
+}
+.datagrid-row-collapse {
+    background: url($datagrid-row-collapse-background) no-repeat -48px center;
+}
+.datagrid-row-expand {
+    background: url($datagrid-row-expand-background) no-repeat -32px center;
+}
+.datagrid-header,
+.datagrid-td-rownumber {
+    background-color: $datagrid-header-d-td-row-background-color;
+    background: -webkit-linear-gradient(top,$datagrid-header-d-td-row-bg-w-l-g1 0,$datagrid-header-d-td-row-bg-w-l-g2 100%);
+    background: -moz-linear-gradient(top,$datagrid-header-d-td-row-bg-m-l-g1 0,$datagrid-header-d-td-row-bg-m-l-g2 100%);
+    background: -o-linear-gradient(top,$datagrid-header-d-td-row-bg-o-l-g1 0,$datagrid-header-d-td-row-bg-o-l-g2 100%);
+    background: linear-gradient(to bottom,$datagrid-header-d-td-row-bg-l-g1 0,$datagrid-header-d-td-row-bg-l-g2 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#fdfdfd,endColorstr=#f5f5f5,GradientType=0);
+}
+.datagrid-cell-rownumber {
+    color: $datagrid-cell-rownumber-color;  //detail 表格编号栏的编号颜色
+}
+.datagrid-toolbar,
+.datagrid-pager {
+    background: $datagrid-pager-backgroundc; //detail 视图分页条背景
+}
+.datagrid-header,
+.datagrid-toolbar,
+.datagrid-pager,
+.datagrid-footer-inner {
+    border-color: $datagrid-border-color;  //detail 视图边框的线的颜色
+}
+//.datagrid-htable,  20171225
+.datagrid-btable,
+.datagrid-ftable {
+    color: $datagrid-body-font-color; //detail 表格内容行的字体默认颜色
+    border-collapse: separate;
+}
+.datagrid-htable {
+    //color: $datagrid-head-font-color;  // 表格第一行标题行字颜色
+    border-collapse: separate;
+}
+
+.datagrid-row-alt {
+    background: $datagrid-row-alt-background;
+}
+.datagrid-row-over,
+.datagrid-header td.datagrid-header-over {
+    color: $datagrid-over-font-color;  //detail 鼠标飘过时的字体颜色
+      cursor: default;
+    a {
+      color: $datagrid-row-selected-font-color;  //detail 表格行被选中时的字体颜色
+    }
+}
+.datagrid-row-selected {
+    //background:$datagrid-row-selected-background;
+    color: $datagrid-row-selected-font-color;
+    a {
+      color: $datagrid-row-selected-font-color;  //detail 表格行被选中时的字体颜色
+    }
+}

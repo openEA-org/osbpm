@@ -1,0 +1,4 @@
+/*可以在这里添加你自己的css*/
+.linkeytable{border-collapse:collapse;border: 1px solid #e8e8e8;width:100%;font-size:9pt;}
+.linkeytable td{border-collapse:collapse;border: 1px solid #e8e8e8;padding:4px;font-size:9pt;height:22px}
+.linkeytable td.texttd{text-align:right;background:#f9f9f9;font-size:9pt;}

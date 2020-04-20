@@ -1,0 +1,103 @@
+@charset "utf-8";
+/* CSS Document Download */
+/**{
+	margin:0;
+	padding:0;
+}*/
+
+body{
+	zoom:0.44;
+    margin: 0;
+}
+ul{
+	list-style:none;
+}
+.clear{
+	clear:both;
+}
+.month-container{
+	/*background:#fffbdf;*/
+	width:604px;
+	height:auto;
+	margin:100px ��20px ��0 ��20px;
+	/*box-shadow:2px 2px 8px 1px rgba(0,0,0,0.6);*/
+}
+.month-head{
+	/*background:#fffbdf;*/
+	width:604px;
+	height:auto;
+    font:30px "microsoft yahei";
+	text-shadow:2px 2px 3px #FFF;
+	text-align:center;
+}
+.month-head span {
+    color: #399edc;
+    border-color: #fffbdf;
+	line-height:50px;
+}
+.month-cell {
+    float: left;
+	width:70px;
+	height:70px;
+	background:#f7f7f7;
+	border:1px solid #FEFEFE;
+}
+.month-cell:active{
+	box-shadow:inset 2px 2px 5px rgba(0,0,0,0.6);
+}
+.month-cell span {
+    display: block;
+    color: #cccccc;
+    font:30px "microsoft yahei";
+    text-align: center;
+	line-height:70px;
+    cursor:pointer;
+}
+.month-cell.active span {
+    border-color: #cccccc;
+}
+.month-cell.pink {
+    background: #eaeaea;
+}
+.month-cell.pink span {
+    color: #000000;
+    border-color: #fffbdf;
+}
+.month-cell.pink.active span {
+    border-color: #ffe295;
+}
+.month-cell.orange {
+    background: #0790e4;
+}
+.month-cell.orange span {
+    color: #ffffff;
+    border-color: #fff5b4;
+}
+.month-cell.orange.active span {
+    border-color: #ffcf71;
+}
+.month-cell.red {
+    background: #5ba7ea;
+}
+.month-cell.red span {
+    color: #ffffff;
+    border-color: #ff6840;
+}
+.month-cell.blue {
+    background: #5bb5ec;
+}
+.month-cell.blue span {
+    color: #ffffff;
+    border-color: #5bb5ec;
+}
+.flipContainer{
+	width:300px;
+	height:100px;
+	background:#FFF;
+	padding:10px;
+}
+.flip{
+	float:left;
+	width:53px;
+	height:103px;
+}

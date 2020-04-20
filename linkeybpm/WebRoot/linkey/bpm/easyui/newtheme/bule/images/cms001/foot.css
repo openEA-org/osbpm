@@ -1,0 +1,100 @@
+﻿.foot {
+width: 100%;
+background: url(footbg.png) repeat-x;
+float: left;
+}
+.foot_bg {
+width: 990px;
+height: 254px;
+background: url(line.png) no-repeat;
+margin: 0px auto;
+}
+.foot_nav {
+padding-left: 25px;
+padding-top: 20px;
+width: 965px;
+background: url(line.png) left bottom repeat-x;
+padding-bottom: 4px;
+}
+.foot_nav li {
+float: left;
+width: 140px;
+height: 30px;
+line-height: auto;
+}
+.foot_nav li a {
+font-size: 14px;
+font-family:"微软雅黑","宋体",Arial, "\5B8B\4F53", sans-serif;
+color: #46A5C9;
+}
+.clear {
+clear: both;
+height: 0;
+overflow: hidden;
+}
+.nav_juli {
+margin-top: 10px;
+}
+.nav_list {
+padding-left: 25px;
+width: 965px;
+font-size:12px;
+}
+ul, ol {
+list-style-type: none;
+}
+.nav_list li {
+float: left;
+width: 140px;
+}
+.copy {
+text-align: center;
+font-family:"微软雅黑","宋体",Arial, "\5B8B\4F53", sans-serif;
+color: #4f4f4f;
+height: 25px;
+line-height: 25px;
+font-size:12px;
+}
+.line {
+background: url("../images/xian.png") repeat-x scroll 0 0 transparent;
+font-size: 0;
+height: 2px;
+margin-top: 5px;
+width: 100%;
+}
+.nav_list li a:hover {
+text-decoration: underline;
+}
+.nav_list li a {
+font-family:"微软雅黑","宋体",Arial, "\5B8B\4F53", sans-serif;
+color: #727272;
+cursor: pointer;
+display: block;
+line-height: 20px;
+width: 100px;
+}
+.foot_nav li a:hover {
+text-decoration: none;
+}
+.footer_top{
+	margin:80px 0 0 0;
+	height: 253px;
+overflow: hidden;
+	}
+.f_cang a{
+	display:none !important;
+	}
+
+
+.appcan_ewm {
+    position: absolute;
+    right: 12px;
+    top: 70px;
+}
+
+.fb_m {
+    margin: 26px 0 0 18px;
+}
+.upr {
+    position: relative;
+}

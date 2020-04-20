@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_CacheFlag">0</WFItem>
+    <WFItem name="CompileDate">2016-04-11 14:00:04</WFItem>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="WF_NoUpdate"></WFItem>
+    <WFItem name="RuleType">2</WFItem>
+    <WFItem name="WF_Appid">S002</WFItem>
+    <WFItem name="WF_DocCreated">2016-04-11 11:45</WFItem>
+    <WFItem name="SortNum">1001</WFItem>
+    <WFItem name="EventType">0</WFItem>
+    <WFItem name="RuleName">应用到所有路由线</WFItem>
+    <WFItem name="Singleton">1</WFItem>
+    <WFItem name="CompileFlag">1</WFItem>
+    <WFItem name="Status">1</WFItem>
+    <WFItem name="Folderid"/>
+    <WFItem name="WF_OrTableName">BPM_RuleList</WFItem>
+    <WFItem name="WF_LastModified">2016-04-11 14:00</WFItem>
+    <WFItem name="RuleNum">R_S002_B025</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="WF_OrUnid">00b4716c02d7a04f4d0b692078b196372f5e</WFItem>
+    <WFItem name="RuleCode"><![CDATA[package cn.linkey.rulelib.S002;
+
+import java.util.*;
+import cn.linkey.dao.*;
+import cn.linkey.util.*;
+import cn.linkey.doc.*;
+import cn.linkey.factory.*;
+import cn.linkey.wf.*;
+import cn.linkey.rule.LinkeyRule;
+import cn.linkey.org.LinkeyUser;
+/**
+ * @RuleName:应用到所有路由线
+ * @author  admin
+ * @version: 8.0
+ * @Created: 2016-04-11 11:45
+ */
+final public class R_S002_B025 implements LinkeyRule {
+	@Override
+	public String run(HashMap<String, Object> params) throws Exception  {
+	    //params为运行本规则时所传入的参数
+	    String docUnid=BeanCtx.g("DocUnid",true);
+	    String Processid=BeanCtx.g("Processid",true);
+	    String sql="select * from BPM_ModSequenceFlowList where Processid='"+Processid+"'";
+	    BeanCtx.out(sql);
+	    Document[] dc=Rdb.getAllDocumentsBySql(sql);
+	    int i=0;
+	    BeanCtx.out("num="+dc.length);
+	    for(Document doc:dc){
+	    	doc.s("SendMailFlag", BeanCtx.g("SendMailFlag"));
+	    	doc.s("MailTitle", BeanCtx.g("MailTitle"));
+	    	doc.s("SendTo", BeanCtx.g("SendTo"));
+	    	doc.s("CopyTo", BeanCtx.g("CopyTo"));
+	    	doc.s("MailBody", BeanCtx.g("MailBody"));
+	    	doc.save();
+	    	i++;
+	    }
+	    BeanCtx.p(Tools.jmsg("ok", String.valueOf(i)));
+	    return "";
+	}
+}]]></WFItem>
+    <WFItem name="Roles"/>
+    <WFItem name="ClassPath">cn.linkey.rulelib.S002.R_S002_B025</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="DataSourceid">default</WFItem>
+    <WFItem name="CacheFlag">0</WFItem>
+    <WFItem name="IsProcessForm">0</WFItem>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="WF_Appid">S002</WFItem>
+    <WFItem name="WF_DocCreated">2014-05-04 22:00</WFItem>
+    <WFItem name="PrintTemplate"/>
+    <WFItem name="FormNumber">F_S002_A026</WFItem>
+    <WFItem name="ToolbarConfig">{"total":0,"rows":[]}</WFItem>
+    <WFItem name="JsHeader"><![CDATA[function formonload(){
+}
+
+
+function serializeForm(){
+	//统一的序列化表单方法
+	var formData=$("form").serialize();
+	var checkBoxData=getNoCheckedBoxValue();
+	if(checkBoxData!=""){
+		formData+="&"+checkBoxData;
+	}
+	return formData;
+}
+
+//应用到所有节点
+function saveToAllNode(){
+    var postStr=serializeForm();
+    postStr+="&Processid="+GetUrlArg("Processid")+"&DocUnid="+GetUrlArg("WF_DocUnid")+"&Nodeid="+GetUrlArg("Nodeid");
+    var url="r?wf_num=R_S002_B025";
+    $.post(url,postStr,function(data){
+        alert("成功应用到("+data.msg+")条路由线!");
+    },"json");
+    // alert(postStr);
+}]]></WFItem>
+    <WFItem name="WF_LastModified">2016-04-11 13:59</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="EventRuleNum"/>
+    <WFItem name="SqlTableName">BPM_ModSequenceFlowList</WFItem>
+    <WFItem name="BodyTag"/>
+    <WFItem name="HeaderConfigid">AppFormHtmlHeader</WFItem>
+    <WFItem name="Roles"/>
+    <WFItem name="FormBody"><![CDATA[<div style="height: 5px;"></div><fieldset style="padding: 5px;"><table class="linkeytable"><tbody><tr class="firstRow"><td width="50" align="right" valign="middle" rowspan="1" colspan="1"></td><td align="left" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1"><input name="SendMailFlag" id="SendMailFlag" type="checkbox" value="1"/>发送邮件</td></tr><tr><td align="right" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1">标题</td><td align="left" valign="middle" rowspan="1" colspan="1"><input name="MailTitle" id="MailTitle" size="65" value="待办:{Subject}请尽快处理!"/></td></tr><tr><td align="right" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1">主送</td><td align="left" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1"><input name="SendTo" class="easyui-combobox" id="SendTo" size="65" value="{WF_NextNodeUser}" exttype="combobox"/></td></tr><tr><td align="right" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1">抄送</td><td align="left" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1"><input name="CopyTo" class="easyui-combobox" id="CopyTo" size="65" value="" exttype="combobox"/></td></tr><tr><td align="right" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1">内容</td><td align="left" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1"><textarea name="MailBody" id="MailBody" style="width: 85%; height: 200px;">标题:{Subject} 
+申请人:{WF_AddName} 
+申请时间:{WF_DocCreated}
+流程:{WF_ProcessName} 
+打开链接:{DOCLINK}</textarea></td></tr><tr><td align="left" valign="middle" style="-ms-word-break: break-all;" rowspan="1" colspan="1"></td><td align="left" valign="middle" rowspan="1" colspan="1"><a name="btn0" class="easyui-linkbutton" id="btn0" href="#" exttype="linkbutton">应用到所有路由线</a></td></tr></tbody></table></fieldset>]]></WFItem>
+    <WFItem name="HtmlHeader"/>
+    <WFItem name="Designer"/>
+    <WFItem name="ShowMask"></WFItem>
+    <WFItem name="WF_NoUpdate"></WFItem>
+    <WFItem name="SaveGoUrl">0</WFItem>
+    <WFItem name="UseCodeMode"/>
+    <WFItem name="NoEnCode"></WFItem>
+    <WFItem name="FormName">sequenceFlow_发邮件</WFItem>
+    <WFItem name="Title">sequenceFlow_发邮件</WFItem>
+    <WFItem name="FormType">1</WFItem>
+    <WFItem name="FieldConfig">{"fdList":[{"name":"SendMailFlag"},{"name":"MailTitle","required":"true"},{"name":"SendTo","required":"true","multiple":"true","url":"S_S002_001","valuefield":"FieldValue","textField":"FieldText"},{"name":"CopyTo","multiple":"true","url":"S_S002_001","valuefield":"FieldValue","textField":"FieldText"},{"name":"MailBody"},{"name":"btn0","btnText":"应用到所有路由线","icons":"icon-ok","jsevent":"onclick","jsfun":"saveToAllNode()"}]}</WFItem>
+    <WFItem name="Status">1</WFItem>
+    <WFItem name="Folderid"/>
+    <WFItem name="WF_OrTableName">BPM_FormList</WFItem>
+    <WFItem name="WF_OrUnid">98809a1600e86041910828f0f3c4849203ad</WFItem>
+    <WFItem name="isRollBack">1</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_CacheFlag">0</WFItem>
+    <WFItem name="CompileDate">2016-04-11 10:13:24</WFItem>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="WF_NoUpdate"></WFItem>
+    <WFItem name="RuleType">2</WFItem>
+    <WFItem name="WF_Appid">S017</WFItem>
+    <WFItem name="WF_DocCreated">2015-12-02 20:45</WFItem>
+    <WFItem name="SortNum">1001</WFItem>
+    <WFItem name="EventType">0</WFItem>
+    <WFItem name="RuleName">Engine_输出VML流程图</WFItem>
+    <WFItem name="Singleton">1</WFItem>
+    <WFItem name="CompileFlag">1</WFItem>
+    <WFItem name="Status">1</WFItem>
+    <WFItem name="Folderid"/>
+    <WFItem name="WF_OrTableName">BPM_RuleList</WFItem>
+    <WFItem name="WF_LastModified">2016-04-11 10:13</WFItem>
+    <WFItem name="RuleNum">R_S017_B038</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="WF_OrUnid">2c09bddf0c05504ca5088350c7589a652fb7</WFItem>
+    <WFItem name="RuleCode"><![CDATA[package cn.linkey.rulelib.S017;
+
+import java.util.*;
+import cn.linkey.dao.*;
+import cn.linkey.util.*;
+import cn.linkey.doc.*;
+import cn.linkey.factory.*;
+import cn.linkey.wf.*;
+import cn.linkey.rule.LinkeyRule;
+import cn.linkey.org.LinkeyUser;
+/**
+ * @RuleName:Engine_输出VML流程图
+ * @author  admin
+ * @version: 8.0
+ * @Created: 2015-12-02 20:45
+ */
+final public class R_S017_B038 implements LinkeyRule {
+	@Override
+	public String run(HashMap<String, Object> params) throws Exception  {
+	    //params为运行本规则时所传入的参数
+	     //示例参数:{"Processid":"流程id","DocUnid":"流程实列id"}
+	    String processid=(String)params.get("Processid"); //获得流程id
+	    String sql="select GraphicBody from BPM_ModGraphicList where Processid='"+processid+"'";
+	    String xmlBody=Rdb.getValueBySql(sql);
+	    xmlBody=Rdb.deCode(xmlBody, false);
+	    return xmlBody;
+	}
+}]]></WFItem>
+    <WFItem name="Roles"/>
+    <WFItem name="ClassPath">cn.linkey.rulelib.S017.R_S017_B038</WFItem>
+  </Items>
+</documents>

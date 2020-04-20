@@ -1,0 +1,29 @@
+@charset "UTF-8";
+#back_logo {
+    table {
+//      background: -moz-linear-gradient(left, $back_logo_table-m-l-g1 0%, $back_logo_table-m-l-g2 100%);
+//      background: -webkit-linear-gradient(left, $back_logo_table-w-l-g1 0%,$back_logo_table-w-l-g2 100%);
+//      background: -o-linear-gradient(left, $back_logo_table-o-l-g1 0%,$back_logo_table-o-l-g2 100%);
+//      background: -ms-linear-gradient(left, $back_logo_table-ms-l-g1 0%,$back_logo_table-ms-l-g2 100%);
+//      background: linear-gradient(to right, $back_logo_table-l-g1 0%,$back_logo_table-l-g2 100%);
+        background-color: $back_logo_table-background-color; //detail 开发端头部背景颜色
+        span {
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+        img {
+            margin-left: 15px;
+            margin-right: 5px;
+        }
+    }
+}
+div#mm{
+    border-color:$dev-div-mm-border-color;  //detail 开发端菜单栏边框颜色
+    background: $dev-header-background;    //detail 开发端菜单栏背景颜色
+}
+#sysinfo{
+    color:$sysinfo-color;               //detail 系统信息页面字体颜色
+}
+#soapage{
+  color:$soapage-color;                 //soa页面字体颜色
+}

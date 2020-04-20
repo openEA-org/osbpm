@@ -1,0 +1,252 @@
+/*--------------------------------------------------
+    [TRANSITION]
+----------------------------------------------------*/
+/* Cubic Bezier Transition */
+/***
+Login page
+***/
+/* logo page */
+*{
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background-color: #001a47;
+  min-height: 650px;
+  min-width: 1200px;
+  overflow: hidden;
+}
+.login {
+  /*background-color: #666 !important;*/
+  /*height: 100vh;*/
+}
+
+.logo {
+  height: 65px;
+  background-color: #f8f8f8;
+  font-size: 20px;
+  font-weight: 600;
+  /*margin: 60px auto 20px auto;*/
+  /*padding: 15px;*/
+  /*text-align: center;*/
+}
+.logo img{
+
+}
+.logo .logo_content{
+  padding-top: 30px;
+}
+.logo .login_logo1{
+  margin-left: 255px;
+}
+.logo .login_logo2{
+  padding: 0px 5px 0px 5px;
+}
+.input_icon .icon_user{
+  background: url(../img/icon_user.png) no-repeat;
+}
+.input_icon .icon_lock{
+  background: url(../img/icon_lock.png) no-repeat;
+}
+.content1{
+  width: 260px;
+  margin: 30px auto;
+  margin-top: 50px;
+}
+.login .content {
+  /*background: url(../media/bg/bg-white-lock.png) no-repeat;*/
+  /*background-color: rgba(0,0,0,0.15);*/
+  background-image: url("images/login_bg.png");
+  width: 400px;
+  height: 300px;
+  margin: 8% auto;
+  margin-bottom: 0px;
+  padding: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  /*
+  filter:Alpha(opacity=85);
+  */
+}
+
+.login .content h3 {
+  color: #eee;
+}
+
+.login .content h4 {
+  color: #eee;
+}
+
+.login .content p,
+.login .content label {
+  color: #fff;
+}
+
+.login .content .login-form,
+.login .content .forget-form {
+  padding: 0vh;
+  padding: 0px;
+}
+.login .content .form-control {
+  background-color: #fff;
+  position: relative;
+  border-radius: 3px !important;
+}
+.input-icon_user{
+  background-image: url("images/icon_user.png") !important;
+  background-repeat: no-repeat;
+  background-position: 2% 50%;
+  z-index: 0;
+}
+.input-icon_lock{
+  background-image: url("images/icon_lock.png") !important;
+  background-repeat: no-repeat;
+  background-position: 2% 50%;
+  z-index: 0;
+}
+.login .content .forget-form {
+  display: none;
+}
+
+.login .content .register-form {
+  display: none;
+}
+
+.login .content .form-title {
+  font-weight: 300;
+  margin-bottom: 25px;
+}
+
+.login .content .form-actions {
+  background-color: transparent;
+  clear: both;
+  border: 0px;
+  padding: 0px 30px 0px 30px;
+  margin-left: -30px;
+  margin-right: -30px;
+  margin-top: -20px;
+}
+.login .content .form-actions button{
+  position: relative;
+  top: 30px;
+}
+.login .content .form-actions .checkbox {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.login .content .forget-form .form-actions {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
+
+.login .content .register-form .form-actions {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 0px;
+}
+
+.login .content .form-actions .checkbox {
+  margin-top: 0px;
+  display: inline-block;
+  font-family: "Microsoft YaHei";
+  position: relative;
+  left: 0px;
+}
+
+.login .content .form-actions .btn {
+  margin-top: 0px;
+  width: 260px;
+  height: 40px;
+  border-radius: 3px !important;
+  float: left;
+  background-color: #668ac8;
+  color: #fff;
+  font-family: "Microsoft YaHei";
+}
+.login .content .form-actions .btn:hover {
+  background-color: #969696;
+}
+.login .content .forget-password {
+  margin-top: 25px;
+  display: none;
+}
+
+.login .content .create-account {
+  border-top: 1px dotted #eee;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.login .content .create-account a {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+/* select2 dropdowns */
+.login .content .select2-container i {
+  display: inline-block;
+  position: relative;
+  color: #ccc;
+  z-index: 1;
+  top: 1px;
+  margin: 4px 4px 0px -1px;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.login .content .has-error .select2-container i {
+  color: #b94a48;
+}
+
+.login .content .select2-container a span {
+  font-size: 13px;
+}
+
+.login .content .select2-container a span img {
+  margin-left: 4px;
+}
+
+/* footer copyright */
+.login .copyright {
+  margin-left: 45%;
+  font-size: 11px;
+  text-align: center;
+  position: fixed; /*or前面的是absolute就可以用*/
+  bottom: 20px;
+  font-family: "Microsoft YaHei";
+  color: #efefef;
+}
+@media (max-width: 480px) {
+  /***
+  Login page
+  ***/
+  .login .logo {
+    margin-top: 10px;
+  }
+
+  .login .content {
+    padding: 30px;
+    width: 222px;
+  }
+
+  .login .content h3 {
+    font-size: 22px;
+  }
+
+  .login .checkbox {
+    font-size: 13px;
+  }
+}
+.content1 .form-group{
+	margin-top: -5px !important;
+    margin-bottom: 10px !important;
+}

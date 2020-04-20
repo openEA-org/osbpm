@@ -1,0 +1,175 @@
+@charset "UTF-8";
+$custom-title-color : #ffffff; //标题字体颜色
+//$custom-title-background : #233142; //标题背景颜色
+$custom-content-color : #94a7b2; //普通内容字体颜色
+$custom-content-background : #161921;//普通背景颜色
+
+//common
+//=========================================================
+$common-font-size: 9pt;
+$common-font-family: "微软雅黑","宋体";
+$common-background: #161921; //主要的背景颜色，包括body hml img等元素的背景颜色
+$common-background2: #e2e2e2;
+$common-background3: none;
+$common-background-black: #000000;
+$common-background-f9f9f9: #f9f9f9;
+$common-background-f8f8f8: #f8f8f8;
+$common-transparent: transparent; 
+$common-border: 1px #1c222c solid; //表单的边界
+$common-control-border:  1px #94a7b2 solid; //输入框、搜索框等控件的边界
+$common-background-control: $custom-content-background; //输入框、搜索框等控件的背景颜色
+
+//app_page 开发端页面
+//=========================================================
+$textarea: "1px solid #7eadd9";
+
+$centerFrame-panel-header-background-color: #ffffff !important;
+
+$photo-background-image: url(images/photo1.jpg);
+
+$btn_theme1-background: #658ac7;
+$btn_theme1-margin: 5px 0px;
+$btn_theme1-border: 0 !important;
+
+
+//app_page_theme 用户端页面
+//=========================================================
+$textarea: "1px solid #7eadd9";
+
+//$linkeytable-border: 1px solid #e8e8e8;
+//$linkeytable-font-size: 9pt;
+//$linkeytable-td-border: 1px solid #e8e8e8;
+//$linkeytable-td-padding: 4px;
+//$linkeytable-td-font-size: 9pt;
+//$linkeytable-td-texttd-text-align: right;
+//$linkeytable-td-texttd-background: #f9f9f9;
+//$linkeytable-td-texttd-font-size: 9pt;
+
+
+
+//app_openform  打开设计
+//===============================================================
+//$app-of-a-color: #00457D; 
+//$app-of-a-hover-color: #a3b9de;
+//
+//$toptoolbar-padding: 2px;
+//$toptoolbarhr-height: 2px;
+
+$form-margin: 0px;
+$fieldShow-color: blue;
+$input-height: 20px;
+
+$linkeytable-border: $common-border; //表单的边框
+//$linkeytable-control-border: $common-control-border; //控件的边框
+$linkeytable-td-padding: 4px;
+$linkeytable-td-texttd-text-align: right;
+$linkeytable-td-texttd-min-width: 100px;
+$linkeytable-td-texttdl-text-align: left;
+$linkeytable-td-texttdl-min-width: 100px;
+//$linkeytable-background: $custom-content-background; //表单的内容项背景颜色
+//$linkeytable-font: $custom-content-color;   //表单的内容项文字颜色
+//$linkeytable-title-background: $custom-content-background;//表单的标题项背景颜色
+//$linkeytable-title-font:$custom-title-color; //表单的标题项文字颜色
+
+
+
+$linkeyform_panel-header_panel-title-padding-left: 10px;
+$linkeyform_panel-header_panel-title-color: #628ac8;
+$linkeyform_panel-header_panel-title-font-weight:500;
+
+$datebox_combo-arrow-background-image: url('images/riqi.png'); 
+$datebox_combo-arrow-left: -4px;
+
+$icon-flow-background: url('images/icon-process.png') no-repeat center center;
+
+$calendar-selected-background-color: #a3b9de;
+$calendar-selected-border: 0px solid #0070a9;
+$calendar-selected-border-radius: 50%;
+$calendar-today-border: 0px solid #0070a9;
+$calendar-today-border-radius: 50%;
+$calendar-hover-border: 0px solid #ccc;
+$calendar-hover-background-color: #a3b9de;
+
+$validatebox-invalid-background-image: url('images/icon-attention.png') !important;
+
+//app_grid  视图、表格
+//=========================================================
+$app-gird-a-color:#00457d;
+$app-gird-a-hover-color:#ff0000;
+
+$toptoolbar-padding:2px;
+$toptoolbarhr-height: 2px;
+$toptoolbar-background: $common-background-f8f8f8;
+
+$datagrid-row-selected-nth-child-background-odd: #CDF3F3;   //表单选择颜色   绿色 CDF3F3   蓝色 dae3fe
+$datagrid-row-selected-nth-child-background-even: #CDF3F3;
+
+$searchbox-button-backgroundnew:url('images/search.png') no-repeat center center;
+$searchbox-border-radius: 3px;
+
+//$datagrid-row-alt-background: none !important;
+$datagrid-row-alt-background: #f3f8fd;
+
+//$datagrid-body-color : $common-datagrid-background; //表格内容行的背景颜色
+$datagrid-selected-line : none;//选中行的划线类型，即text-decoration属性
+//$datagrid-border-color : $div-arround-table-background; //表格边框的线的颜色
+//$datagrid-pager-backgroundc: $common-datagrid-background;  //视图分页条背景
+//$datagrid-pager-text-color:$common-datagrid-text-color;  //视图分页条文字颜色
+
+//engin_openform 表单
+//=========================================================
+$form-select-border: 1px solid #929292;
+$combo-border: $common-control-border; //时间控件的边界
+$combo-width:99.6% !important;
+$combo-combo-text-width: 97% !important;
+//$combo-background: $custom-content-background;
+
+$CollapseSubForm-color: #0099ff;
+$CollapseSubForm-background: url(images/icons/collapse.gif) no-repeat left top;
+
+$ExpandSubForm-color: #0099ff;
+$ExpandSubForm-background: url(images/icons/ns-expand.gif) no-repeat left top;
+
+$ApprovalForm-select-width: 100% !important;
+$ApprovalForm-textarea-width: 99% !important;
+$ApprovalForm-textarea-border-color: #929292;
+
+$panel-header-panel-title-color: red;
+
+/*审批处理单样式定义*/
+$ApprovalMsg-color: #0099ff;
+$ApprovalMsg-background: url(images/icons/ns-expand.gif) no-repeat left;
+
+$ApprovalBottom-background-color: #f8f8f8;
+$ApprovalBottom-a-font-family: "Myriad Pro","Myriad Web","Tahoma","Helvetica","Arial",sans-serif;
+$ApprovalBottom-a-hover-font-family: $ApprovalBottom-a-font-family;
+$ApprovalBottom-a-hover-color: $common-background-black;
+
+$Approvaltable-font-size: $common-font-size;
+$Approvaltable-font-family: $common-font-family;
+$Approvaltable-td-color: #575765;
+$Approvaltable-td-font-size: $common-font-size;
+$Approvaltable-td-font-family: $common-font-family;
+$Approvaltable-td-texttd-font-family: $common-font-family;
+
+$ApprovalToptable-td-color:#575765;
+$ApprovalToptable-a-color:#cc3300;
+
+$ApprovalCurNode-color: #0066cc;
+$ApprovalTopBtn-font-size: 12px;
+
+/*UI*/
+$top_logo-background-color: #f8f8f8;
+$top_logo-span-font-size: 20px;
+
+$top_img1-background-image: url("images/logo.jpg");
+$top_img2-background-image: url("images/line.jpg");
+
+$datebox-combo-arrow-background-image: url('images/riqi.png');
+$validatebox-invalid-background-image: url('images/icon-attention.png');
+
+
+
+
+
+

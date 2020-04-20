@@ -1,0 +1,158 @@
+@charset "UTF-8";
+.tree {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+        white-space: nowrap;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+.tree-node {
+    height: 18px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.tree-hit {
+    cursor: pointer;
+}
+.tree-expanded,
+.tree-collapsed,
+.tree-folder,
+.tree-file,
+.tree-checkbox,
+.tree-indent {
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    vertical-align: top;
+    overflow: hidden;
+}
+.tree-expanded {
+    background: url($tree-expanded-background) no-repeat -18px 0px;
+}
+.tree-expanded-hover {
+    background: url($tree-expanded-hover-background) no-repeat -50px 0px;
+}
+//.tree-collapsed { //20171215 delect
+//  background: url($tree-collapsed-background) no-repeat 0px 0px;
+//}
+.tree-collapsed-hover {
+    background: url($tree-collapsed-hover-background) no-repeat -32px 0px;
+}
+.tree-lines .tree-expanded,
+.tree-lines .tree-root-first .tree-expanded {
+    background: url($tree-root-first_tree-expanded) no-repeat -144px 0;
+}
+//.tree-lines .tree-collapsed,
+//.tree-lines .tree-root-first .tree-collapsed {
+//  background: url($tree-root-first_tree-collapsed) no-repeat -128px 0;
+//}
+.tree-lines .tree-node-last .tree-expanded,
+.tree-lines .tree-root-one .tree-expanded {
+    background: url($tree-root-one_tree-expanded) no-repeat -80px 0; 
+}
+//.tree-lines .tree-node-last .tree-collapsed,
+//.tree-lines .tree-root-one .tree-collapsed {
+//  background: url($tree-root-one_tree-collapsed-background) no-repeat -64px 0;
+//}
+.tree-line {
+    background: url($tree-line-background) no-repeat -176px 0;
+}
+.tree-join {
+    background: url($tree-join-background) no-repeat -192px 0;
+}
+.tree-joinbottom {
+    background: url($tree-joinbottom-background) no-repeat -160px 0;
+}
+.tree-folder {
+    background: url($tree-folder-background) no-repeat;
+}
+.tree-folder-open {
+    background: url($tree-folder-open-background) no-repeat;
+}
+.tree-file {
+    background: url($tree-file1-background) no-repeat;
+}
+.tree-loading {
+    background: url($tree-loading-background) no-repeat center center;
+}
+.tree-checkbox0 {
+    background: url($tree-checkbox0-background) no-repeat -208px -18px;
+}
+.tree-checkbox1 {
+    background: url($tree-checkbox1-background) no-repeat -224px -18px;
+}
+.tree-checkbox2 {
+    background: url($tree-checkbox2-background) no-repeat -240px -18px;
+}
+.tree-title {
+    font-size: $tree-title-font-size;
+    display: inline-block;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    padding: 0 2px;
+    height: 18px;
+    line-height: 18px;
+}
+.tree-node-proxy {
+    font-size: $tree-node-proxy-font-size;
+    line-height: 20px;
+    padding: 0 2px 0 20px;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 9900000;
+    background-color: $tree-node-proxy-background-color;
+    color: $tree-node-proxy-color;
+    border-color: $tree-node-proxy-border-color;
+}
+.tree-dnd-icon {
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 18px;
+    left: 2px;
+    top: 50%;
+    margin-top: -9px;
+}
+.tree-dnd-yes {
+    background: url($tree-dnd-yes-background) no-repeat -256px 0;
+}
+.tree-dnd-no {
+    background: url($tree-dnd-no-background) no-repeat -256px -18px;
+}
+.tree-node-top {
+    border-top: 1px dotted $tree-node-top-dotted;
+}
+.tree-node-bottom {
+    border-bottom: 1px dotted $tree-node-bottom-dotted;
+}
+.tree-node-append {
+    .tree-title {
+        border: 1px dotted $tree-node-append_tree-title-dotted;
+    }
+}
+.tree-editor {
+    border: 1px solid $tree-editor-solid;
+    font-size: 12px;
+    height: 14px !important;
+    height: 18px;
+    line-height: 14px;
+    padding: 1px 2px;
+    width: 80px;
+    position: absolute;
+    top: 0;
+}
+.tree-node-hover {  //detail 鼠标移动颜色
+    background: $tree-node-hover-background;
+    color: $tree-node-hover-color;
+}
+.tree-node-selected { //detail 点击选中颜色
+    background: $tree-node-selected-background;
+    color: $tree-node-selected-color;
+}

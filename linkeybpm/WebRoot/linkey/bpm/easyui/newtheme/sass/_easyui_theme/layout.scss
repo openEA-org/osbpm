@@ -1,0 +1,88 @@
+@charset "UTF-8";
+.layout {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 0;
+    background:$layount-background;  //detail layout背景颜色
+}
+.layout-panel {
+    position: absolute;
+    overflow: hidden;
+}
+.layout-panel-east,
+.layout-panel-west {
+    z-index: 2;
+}
+.layout-panel-north,
+.layout-panel-south {
+    z-index: 3;
+}
+.layout-expand {
+    position: absolute;
+    padding: 0px;
+    font-size: 1px;
+    cursor: pointer;
+    z-index: 1;
+    background-color: #f3f3f3;
+    .panel-header {
+        border-bottom-width: 0px;
+    }
+}
+.layout-expand .panel-header,
+.layout-expand .panel-body {
+    //background: $left-tree-li-treenode;  //收起时颜色
+    filter: none;
+    overflow: hidden;
+}
+.layout-split-proxy-h,
+.layout-split-proxy-v {
+    position: absolute;
+    font-size: 1px;
+    display: none;
+    z-index: 5;
+    background-color: $layout-split-proxy-h_layout-split-proxy-v-background-color;
+}
+.layout-split-proxy-h {
+    width: 5px;
+    cursor: e-resize;
+}
+.layout-split-proxy-v {
+    height: 5px;
+    cursor: n-resize;
+}
+.layout-mask {
+    position: absolute;
+    background: $layout-mask-background;
+    filter: alpha(opacity=10);
+    opacity: 0.10;
+    z-index: 4;
+}
+.layout-button-up {
+    background: url($layout-button-up-background) no-repeat -16px -16px;
+}
+.layout-button-down {
+    background: url($layout-button-down-background) no-repeat -16px 0;
+}
+.layout-button-left {
+    background: url($layout-button-left-background) no-repeat 0 0;
+}
+.layout-button-right {
+    background: url($layout-button-right-background) no-repeat 0 -16px;
+}
+.layout-split-north {
+    border-bottom: 5px solid $layout-split-north-border-bottom;
+}
+.layout-split-south {
+    border-top: 5px solid $layout-split-south-border-top;
+}
+.layout-split-east {
+    border-left: 5px solid $layout-split-east-border-left;
+}
+.layout-split-west {
+    border-right: 5px solid $layout-split-west-border-right;
+}
+.layout-expand-over {
+    background-color: $layout-expand-over-background-color;
+}

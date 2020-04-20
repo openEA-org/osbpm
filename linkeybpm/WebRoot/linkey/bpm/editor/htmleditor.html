@@ -1,0 +1,14 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GB2312">             
+<script language=JavaScript src="/linkey/bpm/editor/scripts/editor.js"></script>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" scroll=no style='border:none' leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 >
+<script>
+var url=location.href;
+var spos=url.indexOf("=");
+var FdName=url.substring(spos+1,url.length);
+eval("var oEdit_"+FdName+"= new InnovaEditor('oEdit_"+FdName+"');oEdit_"+FdName+".RENDER(parent.document.getElementById('"+FdName+"').value);");
+</script>
+</body>
+</html>

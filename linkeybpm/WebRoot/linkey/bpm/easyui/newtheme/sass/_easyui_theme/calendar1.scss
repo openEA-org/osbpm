@@ -1,0 +1,148 @@
+@charset "UTF-8";
+a {
+    font-size: 9pt;
+    font-family: $font-stack;
+    color: $calendar1_a-color;
+    text-decoration: none;
+    &:hover {
+        color: $calendar1_a_hover-color;
+        text-decoration: none;
+        font-family: $font-stack;
+    }
+}
+//legend,body,form,td {
+//  font-size: 9pt;
+//}
+//.toptoolbar {
+//  padding: 2px;
+//  border: 0px solid $calendar1_toptoolbar-solid;
+//  background: $calendar1_toptoolbar-background;
+//  //color: transparent;
+//}
+//.toptoolbarhr {
+//  height: 2px;
+//}
+form {
+    margin: 0px;
+}
+.p {
+    height: 0px;
+}
+.fieldShow {
+    color: blue;
+}
+textarea {
+    overflow: auto;
+    border: 1px solid $calendar1_textarea-solid;
+}
+select {
+    border: 1px solid $calendar1_select-solid;
+}
+input[size] {
+    height: 20px;
+    border: 1px solid $calendar1_input-solid;
+}
+fieldset {
+    border: 1px solid $calendar1_fieldset-solid;
+}
+
+.linkeytable {
+    border-collapse: collapse;
+    border: 1px solid $calendar1_linkeytable-solid;
+    width: 100%;
+    font-size: 9pt;
+    td {
+        border-collapse: collapse;
+        border: 1px solid $calendar1_linkeytable_td-solid;
+        padding: 4px;
+        font-size: 9pt;
+        &.texttd {
+            text-align: right;
+            background: $calendar1_linkeytable_texttd-background;
+            font-size: 9pt;
+            min-width: 100px;
+        }
+        &.texttdl {
+            text-align: left;
+            background: $calendar1_linkeytable_texttdl-background;
+            font-size: 9pt;
+            min-width: 100px;
+        }
+    }
+}
+
+input,button,select,textarea,div,span,td {
+    outline: none;
+}
+
+.datagrid-pager {
+    background: $calendar1_datagrid-pager-background;
+}
+.datagrid-header {
+    background-color: $calendar1_datagrid-header-background;
+    background: none;
+}
+#linkeyform {
+    .panel-header {
+        background-color: $linkeyform_panel-header-background-color;
+        background: none;
+        border: none;
+        .panel-title {
+            padding-left: 10px;
+            color: $linkeyform_panel-header_panel-title-color;
+            font-weight: 500;
+        }
+    }
+}
+.datebox {
+    .combo-arrow {
+        background-image: url($datebox_combo-arrow-background-image);
+        background-position: center center;
+        padding: 0 2px;
+        position: relative;
+        left: -4px;
+    }
+}
+.icon-flow {
+    background: url($calendar1_icon-flow-background) no-repeat center center;
+}
+.calendar-selected {
+    background-color: $calendar1-selected-background-color;
+    color: $calendar1-selected-color;
+    border: 0px solid $calendar1-selected-solid;
+    border-radius: 50%;
+}
+.calendar-header {
+    background: $calendar1-header-background;
+}
+.calendar-sunday, .calendar-saturday {
+    color: $calendar1-sunday-color;
+}
+.calendar-other-month {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.calendar-today {
+    background-color: $calendar1-today-background-color;
+    color: $calendar1-today-color;
+    border: 0px solid $calendar1-today-solid;
+    border-radius: 50%;
+}
+.calendar-body th:first-child, .calendar-body th:last-child {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+.calendar-hover {
+    border: 0px solid $calendar1-hover-solid;
+    padding: 0;
+    border-radius: 50%;
+    background-color: $calendar1-hover-background-color;
+    color: $calendar1-hover-color;
+}
+input[type="checkbox"] {
+    position: relative;
+    top: 2px;
+}
+.validatebox-invalid {
+    background-image: url($calendar1_validatebox-invalid) !important;
+}

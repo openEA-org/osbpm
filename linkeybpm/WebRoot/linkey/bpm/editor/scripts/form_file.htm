@@ -1,0 +1,142 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/form_file.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+	
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	realTime()
+	}	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	if (oSel.parentElement)	oEl=GetElement(oSel.parentElement(),"INPUT");
+	else oEl=GetElement(oSel.item(0),"INPUT");
+
+	if (oEl)
+		{
+		if(oEl.type=="file")
+			{
+			btnInsert.style.display="none";
+			btnApply.style.display="block";
+			btnOk.style.display="block";
+
+			if(oEl.NAME)inpName.value=oEl.NAME;	
+			if(oEl.name)inpName.value=oEl.name;	
+			}
+		}
+	else
+		{
+		btnInsert.style.display="block";
+		btnApply.style.display="none";
+		btnOk.style.display="none";
+
+		inpName.value="file1";	
+		}			
+	}
+
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+
+	dialogArguments.oUtil.obj.saveForUndo();
+
+	if (oSel.parentElement)	oEl=GetElement(oSel.parentElement(),"INPUT");
+	else oEl=GetElement(oSel.item(0),"INPUT");
+
+	if (oEl)
+		{
+		if(oEl.type=="file")
+			{
+			if(oEl.NAME) oEl.NAME=inpName.value;		
+			else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+				{
+				oEl.removeAttribute("name",0);
+				oEl.NAME=inpName.value;	
+				}
+			else oEl.NAME=inpName.value; 
+			}
+		}
+	else
+		{
+		oSel.execCommand("InsertInputFileUpload");
+		oSel = oEditor.document.selection.createRange()
+		oEl=GetElement(oSel.item(0),"INPUT");
+		
+		if(oEl.NAME) oEl.NAME=inpName.value;		
+		else if(oEl.name) //else if(oEl.name) oEl.name=inpName.value;	
+			{
+			oEl.removeAttribute("name",0);
+			oEl.NAME=inpName.value;	
+			}	
+		else oEl.NAME=inpName.value; 
+		}
+
+	realTime();
+	dialogArguments.realTime(dialogArguments.oUtil.oName);
+	dialogArguments.oUtil.obj.selectElement(0);
+	}				
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+		<td nowrap><span id=txtLang name=txtLang>Name</span>:&nbsp;&nbsp;</td>
+		<td width=100%><INPUT type="text" ID="inpName" NAME="inpName" style="width:100%" value="file1" class="inpTxt"></td>
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:6;" align="right">
+	<table cellpadding=1 cellspacing=0>
+	<td>
+	<input type=button name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnInsert id=btnInsert value="insert" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnApply id=btnApply value="apply" style="display:none" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	<td>
+	<input type=button name=btnOk id=btnOk value=" ok " style="display:none;" onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	</td>
+	</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

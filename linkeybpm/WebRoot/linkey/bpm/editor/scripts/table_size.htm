@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/table_size.js'></scr"+"ipt>");
+</script>
+<script language="JavaScript" src="color_picker.js"></script>
+<script>writeTitle()</script>
+<script language="JavaScript" src="table.js"></script>
+<script>
+function GetElement(oElement,sMatchTag)
+	{
+	while(oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+</script>
+</head>
+<body onload="loadTxt();" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+
+	<table width=100% height=100% cellpadding=2 cellspacing=0>
+	<tr>
+		<td><span id=txtLang name=txtLang>Insert Row</span>:</td>
+		<td width=10></td>
+		<td><span id=txtLang name=txtLang>Insert Column</span>:</td>
+	</tr>
+	<tr>
+	<td>
+		<input type="button" id=btnInsRowAbove value="" onclick="dialogArguments.oUtil.obj.saveForUndo();insertRow('Above');dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/ins_row_above.gif')" class="inpBtn">
+		<input type="button" id=btnInsRowBelow value="" onclick="dialogArguments.oUtil.obj.saveForUndo();insertRow('Below');dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/ins_row_below.gif')" class="inpBtn">
+	</td>
+	<td></td>
+	<td>
+		<input type="button" id=btnInsColLeft value="" onclick="dialogArguments.oUtil.obj.saveForUndo();insertCol('Left');dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/ins_column_left.gif')" class="inpBtn">
+		<input type="button" id=btnInsColRight value="" onclick="dialogArguments.oUtil.obj.saveForUndo();insertCol('Right');dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/ins_column_right.gif')" class="inpBtn">
+	</td>
+	</tr>
+	<tr>
+		<td><span id=txtLang name=txtLang>Rowspan</span>:</td>
+		<td></td>
+		<td><span id=txtLang name=txtLang>Colspan</span>:</td>
+	</tr>
+	<tr>
+	<td>
+		<input type="button" id=btnIncRowSpan value="" onclick="dialogArguments.oUtil.obj.saveForUndo();spanRow();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/inc_rowspan.gif')" class="inpBtn">
+		<input type="button" id=btnDecRowSpan value="" onclick="dialogArguments.oUtil.obj.saveForUndo();splitRow();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/dec_rowspan.gif')" class="inpBtn">
+	</td>
+	<td></td>
+	<td>
+		<input type="button" id=btnIncColSpan value="" onclick="dialogArguments.oUtil.obj.saveForUndo();spanCol();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/inc_colspan.gif')" class="inpBtn">
+		<input type="button" id=btnDecColSpan value="" onclick="dialogArguments.oUtil.obj.saveForUndo();splitCol();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/dec_colspan.gif')" class="inpBtn">
+	</td>
+	</tr>
+	<tr>
+		<td><span id=txtLang name=txtLang>Delete Row</span>:</td>
+		<td></td>
+		<td><span id=txtLang name=txtLang>Delete Column</span>:</td>
+	</tr>
+	<tr>
+	<td>
+		<input type="button" id=btnDelRow value="" onclick="dialogArguments.oUtil.obj.saveForUndo();delRow();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/del_row.gif')" class="inpBtn">
+	</td>
+	<td></td>
+	<td>
+		<input type="button" id=btnDelCol value="" onclick="dialogArguments.oUtil.obj.saveForUndo();delCol();dialogArguments.oUtil.obj.runtimeBorder(false);" unselectable=on style="width:36px;height:30;background:url('table/del_column.gif')" class="inpBtn">
+	</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" colspan=2 style="padding:6;" align="right">
+	<input type=button name=btnClose id=btnClose value=" close " onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

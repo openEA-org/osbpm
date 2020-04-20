@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/url.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function bodyOnLoad()
+	{
+	if(dialogArguments.oUtil.obj.cmdAssetManager!="")btnAsset.style.display="block";
+	}
+function openAsset()
+	{
+	inpValue.value=eval(dialogArguments.oUtil.obj.cmdAssetManager);	
+	}
+function modalDialogShow(url,width,height)
+	{
+	if(url.indexOf("?")==-1) url=url+"?ffilter=image";//no querystring
+	else url=url+"&ffilter=image";
+	
+	return window.showModalDialog(url,window,
+		"dialogWidth:"+width+"px;dialogHeight:"+height+"px;edge:Raised;center:Yes;help:No;Resizable:Yes;Maximize:Yes");
+	}
+function doApply()
+	{
+	window.returnValue=inpType.value+inpValue.value;
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="margin:0;overflow:hidden">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;padding-right:0;height:100%">
+<select ID="inpType" NAME="inpType" class="inpSel">
+	<option value=""></option>
+	<option value="http://">http://</option>
+	<option value="https://">https://</option>
+</select>
+</td>
+<td valign=top style="padding:4;padding-left:0;width:100%">
+	<table cellpadding="0" cellspacing="0" style="width:100%">
+	<tr>
+	<td style="width:100%">
+	<input type="text" id="inpValue" name="inpValue" style="width:100%">
+	</td>
+	<td><input type="button" value="" onclick="openAsset()" id="btnAsset" name="btnAsset" style="display:none;background:url('openAsset.gif');width:23px;height:18px;border:#a5acb2 1px solid;margin-left:1px;"></td>
+	</tr>
+	</table>	
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" colspan=2 style="padding:6;" align="right">
+	<input type=button name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type=button name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+
+
+</body>
+</html>

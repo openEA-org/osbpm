@@ -1,0 +1,100 @@
+@charset "UTF-8";
+.menu {
+    position: absolute;
+    margin: 0;
+    padding: 2px;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    background-color: $menu-background-color;   //detail 菜单背景颜色
+    border-color: $menu-border-color;           //detail 菜单边框颜色
+    color: $menu-color;   //detail //菜单栏字体颜色
+}
+.menu-item {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    _border-color: $menu-item_border-color;
+}
+.menu-text {
+    height: 20px;
+    line-height: 20px;
+    float: left;
+    padding-left: 28px;
+}
+.menu-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 2px;
+    top: 50%;
+    margin-top: -8px;
+}
+.menu-rightarrow {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    top: 50%;
+    margin-top: -8px;
+    background: url($menu-rightarrow-background) no-repeat -32px center;
+}
+.menu-line {
+  position: absolute;
+  left: 26px;
+  top: 0;
+  height: 2000px;
+  font-size: 1px;
+  border-left: 1px solid $menu-menu-line-border-left;  //detail 菜单栏竖直边框颜色
+  border-right: 1px solid $menu-menu-line-border-right; //detail 菜单栏竖直边框颜色
+  }
+
+.menu-sep {
+  margin: 3px 0px 3px 25px;
+  font-size: 1px;
+  border-top: 1px solid $menu-menu-line-border-left;  //detail 菜单栏竖直边框颜色
+  border-bottom: 1px solid $menu-menu-line-border-right;  //detail 菜单栏竖直边框颜色
+   }
+ 
+.menu-active {
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    border-color: $menu-active-border-color;  //detail 菜单边框颜色
+    color: $menu-menu-active-color;    //detail 被选中时颜色
+    background: $menu-menu-active-background;  //detail 被选中时背景颜色
+}
+.menu-item-disabled {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    cursor: default;
+}
+.menu-text,
+.menu-text span {
+    font-size: 12px;
+}
+.menu-shadow {
+    position: absolute;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+//  background: #ccc;
+//  -moz-box-shadow: 2px 2px 3px $menu-shadow-m-b-s;
+//  -webkit-box-shadow: 2px 2px 3px $menu-shadow-w-b-s;
+//  box-shadow: 2px 2px 3px $menu-shadow-b-s;
+//  filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);
+}
+.menu-content {
+    background: $menu-content-background;
+}
+.menu-active-disabled {
+    border-color: transparent;
+    background: transparent;
+    color: $menu-active-disabled-color;
+}

@@ -1,0 +1,50 @@
+@charset "UTF-8";
+@import "varables.scss";
+@import "_common/base.scss"; 
+         
+//easyui_theme 
+//----------------------------------  
+@import "_easyui_theme/calendar"; 
+@import "_easyui_theme/calendar1";    
+@import "_easyui_theme/combo";            
+@import "_easyui_theme/combobox";      
+@import "_easyui_theme/datagrid";       
+@import "_easyui_theme/datebox";          
+@import "_easyui_theme/dialog"; 
+@import "_easyui_theme/layout";
+//@import "_easyui_theme/linkbutton"; 
+@import "_easyui_theme/menu"; 
+@import "_easyui_theme/menubutton";   
+@import "_easyui_theme/messager";
+@import "_easyui_theme/pagination";
+@import "_easyui_theme/panel";
+@import "_easyui_theme/progressbar";
+@import "_easyui_theme/propertygrid";
+@import "_easyui_theme/searchbox";  
+@import "_easyui_theme/slider";     
+@import "_easyui_theme/spinner";    
+@import "_easyui_theme/splitbutton"; 
+@import "_easyui_theme/tabs"; 
+@import "_easyui_theme/tooltip";      
+@import "_easyui_theme/tree";  
+@import "_easyui_theme/validatebox";   
+@import "_easyui_theme/window"; 
+@import "_easyui_theme/easyui_custom";
+//@import "_easyui_theme/tree2"; 
+@import "_easyui_theme/linkbutton2";    
+@import "_easyui_theme/accordion"; 
+   
+  
+//common      
+//----------------------------------
+@import "_common/app_grid.scss";
+@import "_common/app_page_theme.scss";    
+@import "_common/app_page.scss";   
+@import "_common/engine_openform.scss";   
+@import "_common/app_openform.scss";       
+     
+//font-awesome   
+//---------------------------------- 
+@import "font-awesome-4.7.0/font-awesome.scss"; 
+  
+             

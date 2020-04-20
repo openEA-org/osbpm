@@ -1,0 +1,32 @@
+@charset "UTF-8";
+.m-btn-downarrow {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    _vertical-align: middle;
+    background: url($m-btn-downarrow-background) no-repeat 2px center;
+}
+a {
+    &.m-btn-active {
+        background-position: bottom right;
+        span {
+            &.l-btn-left {
+                background-position: bottom left;
+            }
+        }
+    }
+    &.m-btn-plain-active {
+        background: transparent;
+        padding: 0 5px 0 0;
+        border-width: 1px;
+        border-style: solid;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        border-color: $m-btn-plain-active-border-color;
+        background-color: $m-btn-plain-active-background-color;
+        color: $m-btn-plain-active-color;
+    }
+}

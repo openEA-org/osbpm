@@ -1,0 +1,174 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.sLangDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/search.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function bodyOnLoad()
+	{
+	var oEditor=dialogArguments.idSource;
+	oEditor.focus()
+	inpSearch.focus()
+	}
+function doSearch()
+	{	
+	var oEditor=dialogArguments.idSource;
+	var oSel=oEditor.document.selection.createRange();	
+	
+	if(chkMatchCase.checked && chkMatchWord.checked) sType=6;
+	else if(chkMatchCase.checked) sType=4;
+	else if(chkMatchWord.checked) sType=2;
+	else sType=0;
+	oSel.collapse(false)
+	if(oSel.findText(inpSearch.value,1000000000,sType)) oSel.select();
+	else
+		{
+		if(confirm(getTxt("Finished searching")))
+			{
+			oSel.expand("textedit");
+			oSel.collapse("true");
+			oSel.select();
+			doSearch();
+			}
+		}
+	}
+function doReplace()
+	{
+	var oEditor=dialogArguments.idSource;
+	var oSel=oEditor.document.selection.createRange();	
+	
+	if(oSel.text.toLowerCase()==inpSearch.value.toLowerCase())
+		{	
+		oSel.text=inpReplace.value;
+		doSearch();
+		}
+	else
+		{
+		doSearch();
+		}
+	}	
+var nReplaced=0;	
+function doReplaceAll()
+	{
+	var oEditor=dialogArguments.idSource;
+	var oSel=oEditor.document.selection.createRange();	
+	
+	if(chkMatchCase.checked && chkMatchWord.checked) sType=6;
+	else if(chkMatchCase.checked) sType=4;
+	else if(chkMatchWord.checked) sType=2;
+	else sType=0;
+		
+	oSel.expand("textedit");
+	oSel.collapse("true");
+	oSel.select();
+	
+	if(oSel.findText(inpSearch.value,1000000000,sType)) 
+		{
+		oSel.select();		
+		oSel.text=inpReplace.value;
+		nReplaced++;
+		oSel.select();
+		doReplaceAll2();
+		}
+	else
+		{		
+		alert(nReplaced+" occurrence(s) replaced.");
+		nReplaced=0;
+		return;
+		}
+	}
+function doReplaceAll2()
+	{
+	var oEditor=dialogArguments.idSource;
+	var oSel=oEditor.document.selection.createRange();	
+	
+	if(chkMatchCase.checked && chkMatchWord.checked) sType=6;
+	else if(chkMatchCase.checked) sType=4;
+	else if(chkMatchWord.checked) sType=2;
+	else sType=0;
+	
+	oSel.collapse(false)
+	
+	if(oSel.findText(inpSearch.value,1000000000,sType)) 
+		{
+		oSel.select();		
+		oSel.text=inpReplace.value;
+		nReplaced++;
+		oSel.select();
+		doReplaceAll2();
+		}
+	else
+		{
+		alert(nReplaced+" occurrence(s) replaced.");
+		nReplaced=0;
+		return;
+		}
+	}
+function doKeyUp()
+	{
+	if(inpSearch.value=="")
+		{
+		btnSearch.disabled=true;
+		btnReplace.disabled=true;
+		btnReplaceAll.disabled=true;
+		}
+	else 
+		{
+		btnSearch.disabled=false;
+		btnReplace.disabled=false;
+		btnReplaceAll.disabled=false;
+		}
+	}
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">Search</span>:</td>
+		<td width="100%">
+			<INPUT type="text" name="inpSearch" onkeyup="doKeyUp()" style="width:100%" class="inpTxt">
+		</td>
+		<td>
+			<input type=button name=btnSearch id=btnSearch disabled value="search next" onclick="doSearch()" style="width:75" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+	</tr>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">Replace</span>:</td>
+		<td width="100%">
+			<input type="text" name="inpReplace" style="width:100%" class="inpTxt">
+		</td>
+		<td>
+			<input type=button name=btnReplace id=btnReplace disabled value="replace" onclick="doReplace()" style="width:75" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+	</tr>
+	<tr>
+		<td nowrap colspan="2">
+		<input type="checkbox" name="chkMatchCase" class="inpChk"> <span id="txtLang" name="txtLang">Match case</span>&nbsp;&nbsp;
+		<input type="checkbox" name="chkMatchWord" class="inpChk"> <span id="txtLang" name="txtLang">Match whole word</span>
+		</td>
+		<td>
+			<input type=button name=btnReplaceAll id=btnReplaceAll disabled value="replace all" onclick="doReplaceAll()" style="width:75" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		</td>
+		<td>
+			<input type=button name=btnClose id=btnClose value="close" onclick="self.close()" style="width:75" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+		</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

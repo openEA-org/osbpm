@@ -1,0 +1,18 @@
+<?xml version = "1.0"?>
+<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+	<endpoint name="WF_RunProcessPort"
+		implementation="cn.linkey.ws.server.WF_RunProcess"
+		url-pattern="/WF_RunProcessPort">
+	</endpoint>
+	<endpoint name="WF_OpenProcessPort"
+		implementation="cn.linkey.ws.server.WF_OpenProcess"
+		url-pattern="/WF_OpenProcessPort">
+	</endpoint>
+	<endpoint name="WF_RunRulePort"
+		implementation="cn.linkey.ws.server.WF_RunRule"
+		url-pattern="/WF_RunRulePort">
+	</endpoint>
+	<endpoint name="WF_CallBackPort"
+		implementation="cn.linkey.ws.server.WF_CallBack"
+		url-pattern="/WF_CallBackPort">
+	</endpoint></endpoints>

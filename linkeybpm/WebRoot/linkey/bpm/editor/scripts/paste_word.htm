@@ -1,0 +1,587 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/paste_word.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function doCmd(sCmd,sOption)
+    {
+    var oSel=idSource.document.selection.createRange();
+    var sType=idSource.document.selection.type;
+    var oTarget=(sType=="None"?idSource.document:oSel);
+    oTarget.execCommand(sCmd,false,sOption);
+    }
+
+function bodyOnLoad()
+    {
+    idSource.document.body.innerHTML="";
+    idSource.document.body.style.cssText="overflow-x:scroll;overflow-y:scroll;white-space:nowrap";
+    idSource.document.body.contentEditable=true;
+    idSource.focus();
+    }
+
+function doInsert()
+    {
+    var oEditor=dialogArguments.oUtil.oEditor;
+    var oSel=oEditor.document.selection.createRange();
+    var obj = dialogArguments.oUtil.obj;
+
+    var sHTML=fixWord();
+    
+    var oDoc=idSource.document.open("text/html","replace");
+    oDoc.write(sHTML);
+    oDoc.close();
+    
+    //alert("Cleaned successfully.")
+    
+    var sHTML=recur(idSource.document.body,"");
+    
+    //alert("XHTML rules applied successfully.")
+    //alert(sHTML)
+    
+    //Fix HTML here
+    var htmlUtil = new HtmlTagUtil(sHTML);
+    sHTML = htmlUtil.fixHTML();
+    
+    //alert(sHTML);
+    //alert("Done.")
+
+    obj.insertHTML(sHTML)
+    
+    obj.cleanDeprecated();
+
+    //*** RUNTIME STYLES ***
+    obj.runtimeBorder(false);
+    obj.runtimeStyles();
+    //***********************
+    }
+
+function fixWord()
+    {
+    for (var i=0;i<idSource.document.body.all.length;i++)
+        {
+        idSource.document.body.all[i].removeAttribute("className","",0);
+        idSource.document.body.all[i].removeAttribute("style","",0);
+        }
+    var str=idSource.document.body.innerHTML;
+
+    str=String(str).replace(/<\\?\?xml[^>]*>/g,"");
+    str=String(str).replace(/<\/?o:p[^>]*>/g,"");
+    str=String(str).replace(/<\/?v:[^>]*>/g,"");
+    str=String(str).replace(/<\/?o:[^>]*>/g,"");
+    str=String(str).replace(/<\/?st1:[^>]*>/g,"");
+
+    str=String(str).replace(/&nbsp;/g,"");//<p>&nbsp;</p>
+
+    str=String(str).replace(/<\/?SPAN[^>]*>/g,"");
+    str=String(str).replace(/<\/?FONT[^>]*>/g,"");
+    str=String(str).replace(/<\/?STRONG[^>]*>/g,"");
+
+    str=String(str).replace(/<\/?H1[^>]*>/g,"");
+    str=String(str).replace(/<\/?H2[^>]*>/g,"");
+    str=String(str).replace(/<\/?H3[^>]*>/g,"");
+    str=String(str).replace(/<\/?H4[^>]*>/g,"");
+    str=String(str).replace(/<\/?H5[^>]*>/g,"");
+    str=String(str).replace(/<\/?H6[^>]*>/g,"");
+
+    str=String(str).replace(/<\/?P[^>]*><\/P>/g,"");
+    return str; 
+    }
+function lineBreak1(tag) //[0]<TAG>[1]text[2]</TAG>
+	{
+	arrReturn = ["\n","",""];
+	if(	tag=="A"||tag=="B"||tag=="CITE"||tag=="CODE"||tag=="EM"|| 
+		tag=="FONT"||tag=="I"||tag=="SMALL"||tag=="STRIKE"||tag=="BIG"||
+		tag=="STRONG"||tag=="SUB"||tag=="SUP"||tag=="U"||tag=="SAMP"||
+		tag=="S"||tag=="VAR"||tag=="BASEFONT"||tag=="KBD"||tag=="TT") 
+		arrReturn=["","",""];
+
+	if(	tag=="TEXTAREA"||tag=="TABLE"||tag=="THEAD"||tag=="TBODY"|| 
+		tag=="TR"||tag=="OL"||tag=="UL"||tag=="DIR"||tag=="MENU"|| 
+		tag=="FORM"||tag=="SELECT"||tag=="MAP"||tag=="DL"||tag=="HEAD"|| 
+		tag=="BODY"||tag=="HTML") 
+		arrReturn=["\n","","\n"];
+
+	if(	tag=="STYLE"||tag=="SCRIPT")
+		arrReturn=["\n","",""];
+
+	if(tag=="BR"||tag=="HR") 
+		arrReturn=["","\n",""];
+
+	return arrReturn;
+	}
+function fixAttr(s)
+    {
+    s = String(s).replace(/&/g, "&amp;");
+    s = String(s).replace(/</g, "&lt;");
+    s = String(s).replace(/"/g, "&quot;");
+    return s;
+    }
+function fixVal(s)
+    {
+    s = String(s).replace(/&/g, "&amp;");
+    s = String(s).replace(/</g, "&lt;");
+    return s;
+    }
+function recur(oEl,sTab)
+	{
+	var sHTML="";
+	for(var i=0;i<oEl.childNodes.length;i++)
+		{
+		var oNode=oEl.childNodes(i);
+		if(oNode.nodeType==1)//tag
+			{
+			var sTagName = oNode.nodeName;
+
+			var bDoNotProcess=false;
+			if(sTagName.substring(0,1)=="/")
+				{
+				bDoNotProcess=true;//do not process
+				}
+			else
+				{
+				/*** tabs ***/
+				var sT= sTab;
+				sHTML+= lineBreak1(sTagName)[0];	
+				if(lineBreak1(sTagName)[0] !="") sHTML+= sT;//If new line, use base Tabs
+				/************/
+				}
+
+			if(bDoNotProcess)
+				{
+				;//do not process
+				}
+			else if(sTagName=="OBJECT" || sTagName=="EMBED")
+				{		
+				s=oNode.outerHTML;
+
+				s=s.replace(/\"[^\"]*\"/ig,function(x){						
+						x=x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/\s+/ig,"#_#");
+						return x});
+				s=s.replace(/<([^ >]*)/ig,function(x){return x.toLowerCase()})						
+				s=s.replace(/ ([^=]+)=([^"' >]+)/ig," $1=\"$2\"");//new
+				s=s.replace(/ ([^=]+)=/ig,function(x){return x.toLowerCase()});
+				s=s.replace(/#_#/ig," ");
+				
+				s=s.replace(/<param([^>]*)>/ig,"\n<param$1 />").replace(/\/ \/>$/ig," \/>");//no closing tag
+
+				if(sTagName=="EMBED")
+					if(oNode.innerHTML=="")
+						s=s.replace(/>$/ig," \/>").replace(/\/ \/>$/ig,"\/>");//no closing tag
+				
+				s=s.replace(/<param name=\"Play\" value=\"0\" \/>/,"<param name=\"Play\" value=\"-1\" \/>")
+				
+				sHTML+=s;
+				}
+			else if(sTagName=="TITLE")
+				{
+				sHTML+="<title>"+oNode.innerHTML+"</title>";
+				}
+			else
+				{
+				if(sTagName=="AREA")
+					{
+					var sCoords=oNode.coords;
+					var sShape=oNode.shape;
+					}
+					
+				var oNode2=oNode.cloneNode();				
+				s=oNode2.outerHTML.replace(/<\/[^>]*>/,"");
+				
+				if(sTagName=="STYLE")
+					{
+					var arrTmp=s.match(/<[^>]*>/ig);
+					s=arrTmp[0];
+					}				
+
+				s=s.replace(/\"[^\"]*\"/ig,function(x){
+						//x=x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/\s+/ig,"#_#");
+						//x=x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\s+/ig,"#_#");
+						x=x.replace(/&/g, "&amp;").replace(/&amp;amp;/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\s+/ig,"#_#");
+						return x});
+						//info ttg: .replace(/&amp;amp;/g, "&amp;")
+						//ini karena '&' di (hanya) '&amp;' selalu di-replace lagi dgn &amp;.
+						//tapi kalau &lt; , &gt; tdk (no problem) => default behaviour
+		
+				s=s.replace(/<([^ >]*)/ig,function(x){return x.toLowerCase()})						
+				s=s.replace(/ ([^=]+)=([^" >]+)/ig," $1=\"$2\"");
+				s=s.replace(/ ([^=]+)=/ig,function(x){return x.toLowerCase()});
+				s=s.replace(/#_#/ig," ");
+				
+				//single attribute
+				s=s.replace(/[<hr]?(noshade)/ig,"noshade=\"noshade\"");
+				s=s.replace(/[<input]?(checked)/ig,"checked=\"checked\"");
+				s=s.replace(/[<select]?(multiple)/ig,"multiple=\"multiple\"");
+				s=s.replace(/[<option]?(selected)/ig,"selected=\"true\"");
+				s=s.replace(/[<input]?(readonly)/ig,"readonly=\"readonly\"");
+				s=s.replace(/[<input]?(disabled)/ig,"checked=\"disabled\"");
+				s=s.replace(/[<td]?(nowrap )/ig,"nowrap=\"nowrap\" ");
+				s=s.replace(/[<td]?(nowrap\>)/ig,"nowrap=\"nowrap\"\>");
+				
+				s=s.replace(/ contenteditable=\"true\"/ig,"");
+				
+				if(sTagName=="AREA")
+					{
+					s=s.replace(/ coords=\"0,0,0,0\"/ig," coords=\""+sCoords+"\"");
+					s=s.replace(/ shape=\"RECT\"/ig," shape=\""+sShape+"\"");
+					}
+					
+				var bClosingTag=true;
+				if(sTagName=="IMG"||sTagName=="BR"||
+					sTagName=="AREA"||sTagName=="HR"|| 
+					sTagName=="INPUT"||sTagName=="BASE"||
+					sTagName=="LINK")//no closing tag
+					{
+					s=s.replace(/>$/ig," \/>").replace(/\/ \/>$/ig,"\/>");//no closing tag
+					bClosingTag=false;			
+					}					
+				
+				sHTML+=s;				
+					
+				/*** tabs ***/
+				if(sTagName!="TEXTAREA")sHTML+= lineBreak1(sTagName)[1];
+				if(sTagName!="TEXTAREA")if(lineBreak1(sTagName)[1] !="") sHTML+= sT;//If new line, use base Tabs
+				/************/	
+				
+				if(bClosingTag)
+					{
+					/*** CONTENT ***/
+					s=oNode.outerHTML									
+					if(sTagName=="SCRIPT")
+						{
+						s = s.replace(/<script([^>]*)>[\n+\s+\t+]*/ig,"<script$1>");//clean spaces
+						s = s.replace(/[\n+\s+\t+]*<\/script>/ig,"<\/script>");//clean spaces
+						s = s.replace(/<script([^>]*)>\/\/<!\[CDATA\[/ig,"");
+						s = s.replace(/\/\/\]\]><\/script>/ig,"");
+						s = s.replace(/<script([^>]*)>/ig,"");
+						s = s.replace(/<\/script>/ig,"");					
+						s = s.replace(/^\s+/,'').replace(/\s+$/,'');						
+
+						sHTML+="\n"+
+							sT + "//<![CDATA[\n"+
+							sT + s + "\n" +
+							sT + "//]]>\n"+sT;
+
+						}
+					if(sTagName=="STYLE")
+						{				
+						s = s.replace(/<style([^>]*)>[\n+\s+\t+]*/ig,"<style$1>");//clean spaces
+						s = s.replace(/[\n+\s+\t+]*<\/style>/ig,"<\/style>");//clean spaces					
+						s = s.replace(/<style([^>]*)><!--/ig,"");
+						s = s.replace(/--><\/style>/ig,"");
+						s = s.replace(/<style([^>]*)>/ig,"");
+						s = s.replace(/<\/style>/ig,"");					
+						s = s.replace(/^\s+/,"").replace(/\s+$/,"");						
+						
+						sHTML+="\n"+
+							sT + "<!--\n"+
+							sT + s + "\n" +
+							sT + "-->\n"+sT;
+						}
+					if(sTagName=="DIV"||sTagName=="P")
+						{
+						if(oNode.innerHTML==""||oNode.innerHTML=="&nbsp;") 
+							{
+							sHTML+="&nbsp;";
+							}
+						else sHTML+=recur(oNode,sT+"\t");
+						}
+					else
+						{
+						sHTML+=recur(oNode,sT+"\t");	
+						}					
+						
+					/*** tabs ***/
+					if(sTagName!="TEXTAREA")sHTML+=lineBreak1(sTagName)[2];
+					if(sTagName!="TEXTAREA")if(lineBreak1(sTagName)[2] !="")sHTML+=sT;//If new line, use base Tabs
+					/************/
+						
+					sHTML+="</" + sTagName.toLowerCase() + ">";
+					}			
+				}			
+			}
+		else if(oNode.nodeType==3)//text
+			{
+			sHTML+= fixVal(oNode.nodeValue);
+			}
+		else if(oNode.nodeType==8)
+			{
+			if(oNode.outerHTML.substring(0,2)=="<"+"%")
+				{//server side script
+				sTmp=(oNode.outerHTML.substring(2))
+				sTmp=sTmp.substring(0,sTmp.length-2)
+				sTmp = sTmp.replace(/^\s+/,"").replace(/\s+$/,"");
+				
+				/*** tabs ***/
+				var sT= sTab;
+				/************/
+				
+				sHTML+="\n" +
+					sT + "<%\n"+
+					sT + sTmp + "\n" +
+					sT + "%>\n"+sT;
+				}
+			else
+				{//comments
+				sTmp=oNode.nodeValue;
+				sTmp = sTmp.replace(/^\s+/,"").replace(/\s+$/,"");
+				
+				sHTML+="\n" +
+					sT + "<!--\n"+
+					sT + sTmp + "\n" +
+					sT + "-->\n"+sT;
+				}
+			}
+		else
+			{
+			;//Not Processed
+			}
+		}
+	return sHTML;
+	}
+    
+//fix html utility
+function HtmlTagUtil(inpHtml) 
+	{
+	this.html = inpHtml;
+	this.fixHTML = fixHTML;
+
+	var reOpnStr = "<\\s*/@REP/((\\s[\\w=]+)*\\s*(\\s+\\w+\\s*=\\s*(['\"]).*?\\4\\s*)*(\\s[\\w=]+)*|\\s*)*>";
+	var reClsStr = "<\\s*\/\\s*/@REP/\\s*>";
+	var replList = new Object();
+
+	/**
+	Method untuk menghapus semua tag yang dipassing dalam argument
+	yang tidak memiliki closing tag. Hanya untuk tag inline.
+	*/
+	function fixHTML(tag) 
+		{
+		//fix P
+		var strHtml = restoreProtectedTag(convertToDiv(preserveProtectedTag(this.html, "p"), "p"));
+		//fix A
+		strHtml = restoreProtectedTag(convertToSpan(preserveProtectedTag(strHtml, "a"), "a"));
+		//fix li in u
+		strHtml = restoreProtectedTag(cleanFormatSurroundingLI(preserveProtectedTag(strHtml, "u"), "u"));
+		//fix li in i
+		strHtml = restoreProtectedTag(cleanFormatSurroundingLI(preserveProtectedTag(strHtml, "i"), "i"));
+		//fix li in b
+		strHtml = restoreProtectedTag(cleanFormatSurroundingLI(preserveProtectedTag(strHtml, "b"), "b"));
+		//fix li in font
+		strHtml = restoreProtectedTag(cleanFormatSurroundingLI(preserveProtectedTag(strHtml, "font"), "font"));
+		return strHtml;
+        }
+
+	/**
+	Method untuk mengganti bagian html yang ditemukan dalam [str]
+	oleh [re] yang mengandung [tag] dengan suatu id.
+	Bagian yang diganti akan disimpan dalam replList.
+	Argument:
+	-re  : regexp untuk mencari tag yang akan diganti
+	-str : input html
+	-tag : tag yang dicari. Jika bagian yang ditemukan re
+	mengandung tag makan bagian tersebut diganti dengan id.
+	*/
+	function replaceProtectedTag(re, str, tag) 
+		{
+		var counter = replList.lastCount == null ? 0 : replList.lastCount;
+		var reOpn = new RegExp( reOpnStr.replace("/@REP/", tag), "i");
+
+		//cari bagian html yang akan diganti
+		var rst = re.exec(str);
+		var result = str;
+		while (rst!=null) 
+			{
+			//check apakah bagian tersebut mengandung tag u
+			if ((rst[1] != tag) && reOpn.test(rst[0])) 
+				{
+				//ganti bagian html yang ditemukan dengan id (REPL_XXX)
+				result = result.replace(rst[0], "<REPL_" + counter+">");
+				//Simpan bagian html yang diganti dengan id sebagain key
+				replList["<REPL_" + counter++ + ">"] = rst[0];
+                }
+			rst = re.exec(str);
+            }
+		replList.lastCount = counter;
+            return result
+        }
+
+	/**
+	Method ini mengganti semua tag textarea, script, comment
+	server side script, dan tag html yang attributenya
+	mengandung literal tag u
+	*/
+	function preserveProtectedTag(str, tag) 
+		{
+		replList = new Object();
+            
+		//Ganti comment
+		var re = /<!--(\s*.*?\s*)*-->/gi;
+		var result = replaceProtectedTag(re, str, tag);
+
+		//Ganti textarea dan script
+		re = /<\s*(textarea|script)(?:\s*|\s*.*?\s*)>\s*.*?\s*<\s*\/\s*\1\s*>/gi;
+		result = replaceProtectedTag(re, result, tag);
+
+		//Ganti serverside script
+		re = /<\s*([%|\?])(\s*.*?\s*(['"])*\s*.*?\s*\3\s*.*?\s*)*\1>/gi;
+		result = replaceProtectedTag(re, result, tag);
+
+		//Ganti tag html lain yang attributenya mengandung tag u
+		re = /<\s*(\w+)((\s+[\w=]+)*\s*(\s+\w+\s*=\s*(['"]).*?\5\s*)(\s[\w=]+)*)+>/gi;
+		return replaceProtectedTag(re, result, tag);
+        }
+
+	/**
+	Method ini mengganti semua id dalam str dengan bagian html semula yang
+	disimpan dalam replList.
+	*/
+	function restoreProtectedTag(str) 
+		{
+		for (var i=0; i<replList.lastCount; i++) 
+			{
+			str = str.replace("<REPL_" + i + ">", replList["<REPL_" + i + ">"]);
+            }
+		return str;
+        }
+
+	/**
+	Method ini mengubah nested P menjadi div (p luar menjadi div).
+	*/
+	function convertToDiv(str, tag) 
+		{
+		var stack = new Array();
+		var reOpn = new RegExp( reOpnStr.replace("/@REP/", tag), "i");
+		var re = new RegExp(reOpnStr.replace("/@REP/", tag) + "|" + reClsStr.replace("/@REP/", tag), "gi");
+            
+		var rst = re.exec(str);
+		var result = "";
+		while(rst!=null) 
+			{
+			if (reOpn.test(rst[0])) 
+				{ //open tag
+				if (stack.length>0) stack[stack.length-1][0]=true;
+				stack[stack.length] = [false, rst.index, rst.lastIndex]; //0:mark the tag should be replace, 1:start index, 2:end index
+                } 
+			else 
+				{ //closing tag
+				if (stack[stack.length-1][0]) 
+					{
+					stack[stack.length] = [true, rst.index, rst.lastIndex];
+                    } 
+				else 
+					{
+					stack.length--;
+                    }
+                }
+			rst = re.exec(str);
+            }
+		result=""; var i=0;
+		for (i = 0; i < stack.length; i++) 
+			{
+			result += str.substring((i==0 ? 0:stack[i-1][2]), stack[i][1]);
+			result += str.substring(stack[i][1], stack[i][2]).replace(tag, "div");
+            }
+		return (result + (i<=0 ? str : str.substr(stack[i-1][2])));
+        }
+
+	/**
+	Method ini mengubah nested A menjadi span (a dalam menjadi span)
+	*/
+	function convertToSpan(str, tag) 
+		{
+		var stack = new Array();
+		var reOpn = new RegExp( reOpnStr.replace("/@REP/", tag), "i");
+		var re = new RegExp(reOpnStr.replace("/@REP/", tag) + "|" + reClsStr.replace("/@REP/", tag), "gi");
+		var level = 0;
+            
+		var rst = re.exec(str);
+		var result = "";
+		while(rst!=null) 
+			{
+			if (reOpn.test(rst[0])) 
+				{ //open tag
+				if (level>0) 
+					{ 
+					stack[stack.length] = [++level, rst.index, rst.lastIndex] 
+					} 
+				else {level++;} //0:tag level, 1:start index, 2:end index
+				} 
+			else 
+				{ //closing tag
+				if (level>1) { stack[stack.length] = [level--, rst.index, rst.lastIndex] } else {level--;}
+				}
+			rst = re.exec(str);
+			}
+		result=""; var i=0;
+		for (i = 0; i < stack.length; i++) 
+			{
+			result += str.substring((i==0 ? 0:stack[i-1][2]), stack[i][1]);
+			result += str.substring(stack[i][1], stack[i][2]).replace(tag, "span");
+			}
+		return (result + (i<=0 ? str : str.substr(stack[i-1][2])));        
+		}
+        
+	function cleanFormatSurroundingLI(str, tag) 
+		{
+		var stack = new Array();
+		var reOpn = new RegExp( reOpnStr.replace("/@REP/", tag), "i");
+		var reLi = new RegExp( reOpnStr.replace("/@REP/", "li"), "i"); 
+		var re = new RegExp(reOpnStr.replace("/@REP/", tag) + "|" + reClsStr.replace("/@REP/", tag), "gi");
+		var level = 0;
+            
+		var rst = re.exec(str);
+		var result = "";
+		while(rst!=null) 
+			{
+			if (reOpn.test(rst[0])) 
+				{ //open tag
+				stack[stack.length] = [true, rst.index, rst.lastIndex]; //0:is open tag, 1:start index, 2:end index
+				} 
+			else 
+				{ //closing tag
+				if (!stack[stack.length-1][0] || reLi.test(str.substring(stack[stack.length-1][2], rst.index))) 
+					{
+					stack[stack.length] = [false, rst.index, rst.lastIndex];
+					} 
+				else {stack.length--;}
+				}
+			rst = re.exec(str);
+			}
+            
+		result=""; var i=0;
+		for (i = 0; i < stack.length; i++) 
+			{
+			result += str.substring((i==0 ? 0:stack[i-1][2]), stack[i][1]);
+			}
+		return (result + (i<=0 ? str : str.substr(stack[i-1][2])));
+		}	
+	}    
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;margin:0;">
+
+<table width="100%" height="100%" align="center" cellpadding="0" cellspacing="0">
+<tr>
+<td nowrap>&nbsp;<span id=txtLang name=txtLang>Paste Word content here</span>:
+</td>
+</tr>
+<tr>
+<tr>
+<td style="height:100%">
+    <iframe style="width:100%;height:100%;" src="blank.gif" name="idSource" id="idSource" contentEditable="true"></iframe>      
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+    <input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+    <input type="button" name=btnOk id=btnOk value=" ok " onclick="doInsert();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

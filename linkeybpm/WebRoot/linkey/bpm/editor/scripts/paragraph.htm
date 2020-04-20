@@ -1,0 +1,324 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="style/editor.css" rel="stylesheet" type="text/css">
+<script>
+	var sLangDir=dialogArguments.oUtil.langDir;
+	document.write("<scr"+"ipt src='language/"+sLangDir+"/paragraph.js'></scr"+"ipt>");
+</script>
+<script>writeTitle()</script>
+<script>
+function GetElement(oElement,sMatchTag)
+	{
+	while (oElement!=null&&oElement.tagName!=sMatchTag)
+		{
+		if(oElement.tagName=="BODY")return null;
+		oElement=oElement.parentElement;
+		}
+	return oElement;
+	}
+	
+function doWindowFocus()
+	{
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	}
+function bodyOnLoad()
+	{	
+	window.onfocus=doWindowFocus;	
+	dialogArguments.oUtil.onSelectionChanged=new Function("realTime()");
+	
+	realTime()
+	}	
+function realTime()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	//~~~~~~
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement;
+		sTagName=oElement.tagName;
+		if(sTagName=="H1"||sTagName=="H2"||
+			sTagName=="H3"||sTagName=="H4"||
+			sTagName=="H5"||sTagName=="H6"||
+			sTagName=="PRE"||sTagName=="P"||
+			sTagName=="DIV"||sTagName=="TD"||
+			sTagName=="TABLE"||sTagName=="TEXTAREA"){;}
+		else return;
+		}
+	else
+		{
+		if (oSel.parentElement)	
+			{
+			oElement=oSel.parentElement();
+
+			while (oElement!=null&&
+				oElement.tagName!="H1"&&
+				oElement.tagName!="H2"&&
+				oElement.tagName!="H3"&&
+				oElement.tagName!="H4"&&
+				oElement.tagName!="H5"&&
+				oElement.tagName!="H6"&&
+				oElement.tagName!="PRE"&&
+				oElement.tagName!="P"&&
+				oElement.tagName!="DIV"&&
+				oElement.tagName!="TD")
+				{
+				if(oElement.tagName=="BODY")return;
+
+				oElement=oElement.parentElement;
+				}
+			
+			/*
+			var oSelRange = oEditor.document.body.createControlRange()
+			try
+				{
+				oSelRange.add(oElement);
+				oSelRange.select();
+				}
+			catch(e)
+				{
+				var oSelRange = oEditor.document.body.createTextRange();
+				try{oSelRange.moveToElementText(oElement);
+					oSelRange.select()
+					}catch(e){;}
+				}
+			*/			
+			}
+		else 
+			{
+			oElement=oSel.item(0);
+			sTagName=oElement.tagName;
+			if(sTagName=="H1"||sTagName=="H2"||
+				sTagName=="H3"||sTagName=="H4"||
+				sTagName=="H5"||sTagName=="H6"||
+				sTagName=="PRE"||sTagName=="P"||
+				sTagName=="DIV"||sTagName=="TD"||
+				sTagName=="TABLE"||sTagName=="TEXTAREA"){;}
+			else return;
+			}
+		}
+	//~~~~~~
+	
+	if(oElement)
+		{
+		var sTextAlign=oElement.style.textAlign;
+		var sTextIndent=oElement.style.textIndent;
+		var sWhiteSpace=oElement.style.whiteSpace;		
+		var sWordSpacing=oElement.style.wordSpacing;
+		var sLetterSpacing=oElement.style.letterSpacing;
+		var sLineHeight=oElement.style.lineHeight;
+		var sTextTransform=oElement.style.textTransform;
+
+		if(sTextAlign=="")inpAlign.value="";
+		else inpAlign.value=sTextAlign;
+		inpIndent.value=sTextIndent;
+		if(sWhiteSpace=="")inpWhtSpace.value="";
+		else inpWhtSpace.value=sWhiteSpace;		
+		inpWSpacing.value=sWordSpacing;
+		inpCSpacing.value=sLetterSpacing;
+		inpLineHeight.value=sLineHeight;
+		if(sTextTransform=="")inpTextCase.value="";
+		else inpTextCase.value=sTextTransform;
+		
+		//preview
+		divPreview.style.textAlign=oElement.style.textAlign;
+		divPreview.style.textIndent=oElement.style.textIndent;
+		divPreview.style.whiteSpace=oElement.style.whiteSpace;			
+		divPreview.style.wordSpacing=oElement.style.wordSpacing;
+		divPreview.style.letterSpacing=oElement.style.letterSpacing;
+		divPreview.style.lineHeight=oElement.style.lineHeight;
+		divPreview.style.textTransform=oElement.style.textTransform;
+		}
+	}
+function doPreview()
+	{
+	divPreview.style.textAlign=inpAlign.value;
+	divPreview.style.textIndent=inpIndent.value;
+	divPreview.style.whiteSpace=inpWhtSpace.value;
+	divPreview.style.wordSpacing=inpWSpacing.value;
+	divPreview.style.letterSpacing=inpCSpacing.value;
+	divPreview.style.lineHeight=inpLineHeight.value;
+	divPreview.style.textTransform=inpTextCase.value;
+	}
+function doApply()
+	{
+	if(!dialogArguments.oUtil.obj.checkFocus()){return;}//Focus stuff
+	var oEditor=dialogArguments.oUtil.oEditor;
+	var oSel=oEditor.document.selection.createRange();
+	
+	//~~~~~~
+	if(dialogArguments.oUtil.activeElement)
+		{
+		oElement=dialogArguments.oUtil.activeElement;
+		sTagName=oElement.tagName;
+		if(sTagName=="H1"||sTagName=="H2"||
+			sTagName=="H3"||sTagName=="H4"||
+			sTagName=="H5"||sTagName=="H6"||
+			sTagName=="PRE"||sTagName=="P"||
+			sTagName=="DIV"||sTagName=="TD"||
+			sTagName=="TABLE"||sTagName=="TEXTAREA"){;}
+		else return;
+		}
+	else
+		{
+		if (oSel.parentElement)	
+			{
+			oElement=oSel.parentElement();
+
+			while (oElement!=null&&
+				oElement.tagName!="H1"&&
+				oElement.tagName!="H2"&&
+				oElement.tagName!="H3"&&
+				oElement.tagName!="H4"&&
+				oElement.tagName!="H5"&&
+				oElement.tagName!="H6"&&
+				oElement.tagName!="PRE"&&
+				oElement.tagName!="P"&&
+				oElement.tagName!="DIV"&&
+				oElement.tagName!="TD")
+				{
+				if(oElement.tagName=="BODY")return;
+
+				oElement=oElement.parentElement;
+				}
+			
+			/*
+			var oSelRange = oEditor.document.body.createControlRange()
+			try
+				{
+				oSelRange.add(oElement);
+				oSelRange.select();
+				}
+			catch(e)
+				{
+				var oSelRange = oEditor.document.body.createTextRange();
+				try{oSelRange.moveToElementText(oElement);
+					oSelRange.select()
+					}catch(e){;}
+				}
+			*/			
+			}
+		else 
+			{
+			oElement=oSel.item(0);
+			sTagName=oElement.tagName;
+			if(sTagName=="H1"||sTagName=="H2"||
+				sTagName=="H3"||sTagName=="H4"||
+				sTagName=="H5"||sTagName=="H6"||
+				sTagName=="PRE"||sTagName=="P"||
+				sTagName=="DIV"||sTagName=="TD"||
+				sTagName=="TABLE"||sTagName=="TEXTAREA"){;}
+			else return;
+			}
+		}
+	//~~~~~~
+	
+	dialogArguments.oUtil.obj.saveForUndo();
+	
+	if(oElement)
+		{			
+		oElement.style.textAlign=inpAlign.value;
+		oElement.style.textIndent=inpIndent.value;
+		oElement.style.whiteSpace=inpWhtSpace.value;
+		oElement.style.wordSpacing=inpWSpacing.value;
+		oElement.style.letterSpacing=inpCSpacing.value;
+		oElement.style.lineHeight=inpLineHeight.value;
+		oElement.style.textTransform=inpTextCase.value;
+		realTime();
+		}
+	}				
+</script>
+</head>
+<body onload="loadTxt();bodyOnLoad()" style="overflow:hidden;">
+
+<table width=100% height=100% align=center cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top style="padding:5;height:100%">
+	<table width=100%>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">Alignment</span>:</td>
+		<td>
+			<select name="inpAlign" class="inpSel" onchange="doPreview()">
+				<option value="" id="optLang" name="optLang">Not Set</option>
+				<option value="left" id="optLang" name="optLang">Left</option>
+				<option value="right" id="optLang" name="optLang">Right</option>
+				<option value="center" id="optLang" name="optLang">Center</option>
+				<option value="justify" id="optLang" name="optLang">Justify</option>
+			</select>
+		</td>
+		<td>&nbsp;</td>
+		<td nowrap><span id="txtLang" name="txtLang">Indentation</span>:</td>
+		<td>
+			<input type="text" name="inpIndent" size=3 class="inpTxt" onkeyup="doPreview()">
+		</td>		
+	</tr>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">Word Spacing</span>:</td>
+		<td>
+			<input type="text" name="inpWSpacing" size=3 class="inpTxt" onkeyup="doPreview()">
+		</td>
+		<td>&nbsp;</td>
+		<td nowrap><span id="txtLang" name="txtLang">Character Spacing</span>:</td>
+		<td>
+			<input type="text" name="inpCSpacing" size=3 class="inpTxt" onkeyup="doPreview()">
+		</td>
+	</tr>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">Line Height</span>:</td>
+		<td>
+			<input type="text" name="inpLineHeight" size=3 class="inpTxt" onkeyup="doPreview()">
+		</td>
+		<td>&nbsp;</td>
+		<td nowrap><span id="txtLang" name="txtLang">Text Case</span>:</td>
+		<td>
+			<select name="inpTextCase" class="inpSel" onchange="doPreview()">
+				<option value="" id="optLang" name="optLang" selected>Not Set</option>
+				<option value="capitalize" id="optLang" name="optLang">Capitalize</option>
+				<option value="uppercase" id="optLang" name="optLang">Uppercase</option>
+				<option value="lowercase" id="optLang" name="optLang">Lowercase</option>
+				<option value="none" id="optLang" name="optLang">None</option>
+			</select>
+		</td>	
+	</tr>
+	<tr>
+		<td nowrap><span id="txtLang" name="txtLang">White Space</span>:</td>
+		<td>
+			<select name="inpWhtSpace" class="inpSel" onchange="doPreview()">
+				<option value="" id="optLang" name="optLang" selected>Not Set</option>
+				<option value="nowrap" id="optLang" name="optLang">No Wrap</option>
+				<option value="pre" id="optLang" name="optLang">pre</option>
+				<option value="normal" id="optLang" name="optLang">Normal</option>
+			</select>
+		</td>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="5">
+			<div style="padding:3;"></div>
+			<div id="divPreview" style="padding:3;padding-left:5;overflow:auto;border:1 dimgray solid;width:100%;height:75;background:#ffffff">
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  
+sed diam nonumy eirmod tempor invidunt ut labore et 
+dolore magna aliquyam erat, 
+sed diam voluptua. At vero eos et accusam et justo 
+duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+
+			</div>
+		</td>
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td class="dialogFooter" style="padding:13;padding-top:7;padding-bottom:7;" align="right">
+	<input type="button" name=btnCancel id=btnCancel value="cancel" onclick="self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnApply id=btnApply value="apply" onclick="doApply()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+	<input type="button" name=btnOk id=btnOk value=" ok " onclick="doApply();self.close()" class="inpBtn" onmouseover="this.className='inpBtnOver';" onmouseout="this.className='inpBtnOut'">
+</td>
+</tr>
+</table>
+
+</body>
+</html>

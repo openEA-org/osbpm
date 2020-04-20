@@ -1,0 +1,84 @@
+@charset "UTF-8";
+.searchbox {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    border-color: $searchbox-border-color;  //detail 搜索框边框颜色
+    background-color: $searchbox-background-color;        //detail 右边背景颜色
+    .searchbox-text {
+        font-size:$searchbox-text-font-size; 
+        color:$searchbox-text-font-color;                //detail 输入时文字颜色
+        border: 0;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+        height: 20px;
+        *margin-top: -1px;
+        *height: 18px;
+        *line-height: 18px;
+        _height: 18px;
+        _line-height: 18px;
+        vertical-align: baseline;
+    }
+    .searchbox-prompt {
+        font-size: 12px;
+        color: $searchbox-searchbox-prompt-color;         //detail 文字颜色      
+        background: $searchbox-background-color2;  //detail 视图搜索框左边背景
+    }
+    a {
+        &.l-btn-plain {
+            height: 20px;
+            border: 0;
+            padding: 0 6px 0 0;
+            vertical-align: top;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            -moz-border-radius: 0 0 0 0;
+            -webkit-border-radius: 0 0 0 0;
+            border-radius: 0 0 0 0;
+            background: #f3f3f3;
+            &:hover {
+                border: 0;
+                padding: 0 6px 0 0;
+                opacity: 1.0;
+                filter: alpha(opacity=100);
+                -moz-border-radius: 0 0 0 0;
+                -webkit-border-radius: 0 0 0 0;
+                border-radius: 0 0 0 0;
+            }
+        }
+        &.l-btn {
+            .l-btn-left {
+                padding: 0 0 0 4px;
+            }
+            .l-btn-text {
+                position: static;
+                vertical-align: top;
+            }
+        }
+        &.m-btn-plain-active {
+            -moz-border-radius: 0 0 0 0;
+            -webkit-border-radius: 0 0 0 0;
+            border-radius: 0 0 0 0;
+        }
+    }
+}
+.searchbox-button {
+    width: 18px;
+    height: 20px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    background: url($searchbox-button-background) no-repeat center center;
+}
+.searchbox-button-hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+}
