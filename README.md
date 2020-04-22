@@ -47,7 +47,11 @@
 
 接口文档：http://knowledge.linkey.cn:6660/showdoc/web/#/6?page_id=20
 
-​	
+知识百科(openEA_WIKI):  <http://www.openea.net/index.php/%E9%A6%96%E9%A1%B5>
+
+代码托管(openEA_GIT)	:  <http://git.openea.net/osbpm-develplatform/source-LinkeyBPM-enterprise>
+
+openEA_WIKI和openEA_GIT为专注于行业流程应用领域的知识百科和代码托管服务器；
 
 
 
@@ -69,7 +73,7 @@ LinkeyBPM应用开发平台已加入openEA定向开源计划，平台由广州�
 
 1、 扫码关注“openEA开源社区”公众号；
 
-![img](file:////tmp/wps-alibao/ksohtml/wps30hDYt.jpg) 
+![openEA开源社区二维码.jpg](./document/images/openEA开源社区二维码.jpg) 
 
 2、 公众号后台回复“数据库”，按照提示操作加入openEA定向开源计划，即可获取。
 
