@@ -21,7 +21,13 @@
 
 ![技术架构图](./document/images/技术架构图.png)
 
- 
+
+
+3、流程管理
+
+![流程管理](./document/images/流程管理.png) 
+
+
 
 #### 安装教程
 
@@ -39,7 +45,7 @@
 
 ​        资源下载地址：
 
-​        <http://git.openea.net/alibao/osbpm-Environment>
+​        http://knowledge.linkey.cn:8000/d/b981f1c1e6/
 
  
 
@@ -67,11 +73,57 @@ openEA_WIKI和openEA_GIT为专注于行业流程应用领域的知识百科和�
 
  
 
- 
+# 部分功能展示
+
+1、用户端首页【可以自定义，这个是默认首页】
+
+![平台首页](./document/images/首页.png)
+
+2、开发端后台
+
+![管理员后台](./document/images/管理员后台.png)
+
+
+
+3、平台监控
+
+![平台监控](./document/images/平台监控.png)
+
+
+
+4、流程建模
+
+![流程建模](./document/images/流程建模.png)
+
+![流程监控](./document/images/流程监控.png)
+
+
+
+5、表单建模
+
+![流程设计器](./document/images/表单设计器.png)
+
+![流程自定义](./document/images/表单自定义.png)
+
+
+
+6、在线规则
+
+![在线规则](./document/images/规则定义.png)
+
+
+
+7、还有各种模块功能，如组织架构、定时任务、Rest和SOA接口服务、系统集成等；
+
+
+
+
+
+
 
 #### 开源声明
 
-LinkeyBPM应用开发平台已加入openEA定向开源计划，平台由广州市联科软件有限公司自主研发未采用任何开源框架，严格遵照开源协议Mozilla Public License（MPL） 2.0开放源代码。您可通过代码托管平台（GitHub、码云、openEA_GIT）自由下载、学习、测试、使用等。
+LinkeyBPM应用开发平台已加入openEA定向开源计划，平台由广州市联科软件有限公司自主研发，底层未采用任何开源框架，严格遵照开源协议Mozilla Public License（MPL） 2.0开放源代码。您可通过代码托管平台（GitHub、码云、openEA_GIT）自由下载、学习、测试、使用等。
 
  
 
