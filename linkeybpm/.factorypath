@@ -1,3 +1,4 @@
 <factorypath>
-    <factorypathentry kind="VARJAR" id="MYECLIPSE_WS_TOOLS_HOME/webservices-tools.jar" enabled="true" runInBatchMode="true"/>
+    <factorypathentry kind="VARJAR" id="MYECLIPSE_WS_TOOLS_HOME/webservices-tools.jar" enabled="false" runInBatchMode="true"/>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
 </factorypath>
