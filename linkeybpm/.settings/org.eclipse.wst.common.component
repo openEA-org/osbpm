@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="osbpm_dev">
+    <wb-module deploy-name="osbpm">
         <wb-resource deploy-path="/" source-path="/WebRoot"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
-        <property name="java-output-path" value="/osbpm_dev/WebRoot/WEB-INF/classes"/>
-        <property name="context-root" value="/osbpm_dev"/>
+        <property name="context-root" value="/osbpm"/>
+        <property name="java-output-path" value="/osbpm/WebRoot/WEB-INF/classes"/>
     </wb-module>
 </project-modules>
