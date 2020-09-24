@@ -193,14 +193,20 @@ public class ProcessEngine {
         }
 
         //如果节点中配置了邮件发送的Action则不管是否归档都需要发送节点中配置的邮件
-        MessageImpl message = (MessageImpl) BeanCtx.getBean("Message");
-        message.sendActionMail(actionid);
+    	//        MessageImpl message = (MessageImpl) BeanCtx.getBean("Message");
+    	//        message.sendActionMail(actionid);
 
-        //6.存盘流程主文档
-        String saveDocMsg = saveDocument();
-        if (!saveDocMsg.equals("1")) {
-            return saveDocMsg;
-        } //存盘失败
+    	//6.存盘流程主文档
+    	String saveDocMsg = saveDocument();
+    	if (!saveDocMsg.equals("1")) {
+    		return saveDocMsg;
+    	} //存盘失败
+
+    	//如果节点中配置了邮件发送的Action则不管是否归档都需要发送节点中配置的邮件
+    	//20200823 调整节点发送邮件顺序，先保存主表单数据再发送
+    	MessageImpl message = (MessageImpl) BeanCtx.getBean("Message");
+    	message.sendActionMail(actionid);
+    	
 
         //7.如果运行了结束环节则需要结束整个流程并归档,归档要在所在环节运行结束后才从过程属性中去拿归档信息
         if (Tools.isNotBlank(this.getEndNodeid())) {
