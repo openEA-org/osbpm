@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="WF_DocCreated">2019-12-23 21:48:00</WFItem>
+    <WFItem name="TableType">1</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_OrUnid">ca7c0fb80fc7704dda08aec07d0472c025e6</WFItem>
+    <WFItem name="FieldConfig">{"total":11,"rows":[{"FdName":"WF_OrUnid","FdNull":"Y","FdType":"varchar","FdLen":"50","FdKey":"Y","FdRemark":"唯一编号"},{"FdName":"WF_DocCreated","FdNull":"N","FdType":"varchar","FdKey":"N","FdLen":"50","FdRemark":"创建时间"},{"FdName":"WF_LastModified","FdNull":"N","FdType":"varchar","FdKey":"N","FdLen":"50","FdRemark":"最后更新时间"},{"FdName":"WF_AddName","FdNull":"N","FdType":"varchar","FdLen":"50","FdKey":"N","FdRemark":"创建者id"},{"FdName":"WF_AddName_CN","FdNull":"N","FdType":"varchar","FdLen":"50","FdKey":"N","FdRemark":"创建者中文名"},{"FdName":"WF_AllReaders","FdNull":"N","FdType":"varchar","FdLen":"500","FdKey":"N","FdRemark":"读者域"},{"FdName":"WF_AllAuthors","FdNull":"N","FdType":"varchar","FdLen":"500","FdKey":"N","FdRemark":"作者域"},{"FdName":"XmlData","FdNull":"N","FdType":"xml","FdLen":"","FdKey":"N","FdRemark":"XML数据"},{"FdName":"fileName","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"文件名称"},{"FdName":"filePath","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"文件路径(包路径)"},{"FdName":"fileType","FdNull":"N","FdKey":"N","FdType":"char","FdLen":"1","Remark":"","FdVal":"1","FdRemark":"文件类型(1表示Class类，2表示Jar包)"},{"FdName":"score","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"提示排序，1表示最先"},{"FdName":"meta","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"所属分类"},{"FdName":"value","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"提示词的值"},{"FdName":"caption","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"提示的词"},{"FdName":"codeType","FdNull":"N","FdKey":"N","FdType":"char","FdLen":"1","Remark":"","FdVal":"","FdRemark":"类型(1 Java，2 JS)"},{"FdName":"field1","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"备用字段1"},{"FdName":"field2","FdNull":"N","FdKey":"N","FdType":"varchar","FdLen":"50","Remark":"","FdVal":"","FdRemark":"备用字段2"}]}</WFItem>
+    <WFItem name="WF_RuleFdName">TableRemark</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="InitData"/>
+    <WFItem name="WF_OrTableName">BPM_TableConfig</WFItem>
+    <WFItem name="WF_LastModified">2020-05-06 16:22:21</WFItem>
+    <WFItem name="wf_num">R_S001_B002</WFItem>
+    <WFItem name="WF_KeyFdName">TableName</WFItem>
+    <WFItem name="TableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="dataSourceid">default</WFItem>
+    <WFItem name="WF_Appid">S001</WFItem>
+    <WFItem name="WF_DocUnid">ca7c0fb80fc7704dda08aec07d0472c025e6</WFItem>
+    <WFItem name="WF_TableName">BPM_TableConfig</WFItem>
+    <WFItem name="WF_FormNumber">F_S001_A050</WFItem>
+    <WFItem name="TableRemark">代码提示配置</WFItem>
+    <WFItem name="CreateRdbTable">1</WFItem>
+    <WFItem name="WF_Action">undefined</WFItem>
+  </Items>
+</documents>

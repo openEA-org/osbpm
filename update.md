@@ -13,13 +13,16 @@
 
 
 
-# 开发版本更新
+# osbpm_12 正式版
 
 * 富文本编辑器审批状态下图片不见
 * 编辑器插入图片自适应大小
 * 邮件发送第一个节点无流程数据
 
-
+* fix-aceupdate在线IDE修复
+* optimize-SysAppPath 应用路径优化
+* optimize-osflow 新版流程设计器
+* 角色嵌套嵌套性能优化
 
 
 

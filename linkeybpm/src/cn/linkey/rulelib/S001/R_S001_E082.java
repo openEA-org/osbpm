@@ -23,7 +23,7 @@ final public class R_S001_E082 implements LinkeyRule {
         //获取事件运行参数
         Document formDoc = (Document) params.get("FormDoc"); //表单配置文档
         Document doc = (Document) params.get("DataDoc"); //数据主文档
-        String eventName = (String) params.get("EventName");//事件名称
+        String eventName = (String) params.get("EventName");//事件名称 
         if (eventName.equals("onFormOpen")) {
             String readOnly = (String) params.get("ReadOnly"); //1表示只读，0表示编辑
             return onFormOpen(doc, formDoc, readOnly);

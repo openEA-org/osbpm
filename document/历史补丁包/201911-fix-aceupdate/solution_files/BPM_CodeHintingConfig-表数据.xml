@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="WF_DocCreated">2020-05-03 00:19:45</WFItem>
+    <WFItem name="fileName">测试打印输出</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_GridNum">V_S001_E021</WFItem>
+    <WFItem name="codeType">1</WFItem>
+    <WFItem name="WF_AllReaders"/>
+    <WFItem name="WF_OrUnid">1681b3a6037f204bbe096380c2da6f072c9e</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="filePath"/>
+    <WFItem name="caption">dayin</WFItem>
+    <WFItem name="WF_OrTableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="WF_LastModified">2020-05-03 00:19:45</WFItem>
+    <WFItem name="score">1</WFItem>
+    <WFItem name="field1"/>
+    <WFItem name="meta">alibao</WFItem>
+    <WFItem name="WF_AllAuthors"/>
+    <WFItem name="WF_ParentDocUnid"/>
+    <WFItem name="value">System.out.println();</WFItem>
+    <WFItem name="field2"/>
+    <WFItem name="fileType">3</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_DocCreated">2020-05-03 00:43:58</WFItem>
+    <WFItem name="fileName">新增http包</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_GridNum">V_S001_E021</WFItem>
+    <WFItem name="codeType">1</WFItem>
+    <WFItem name="WF_AllReaders"/>
+    <WFItem name="WF_OrUnid">5b3c0320006ef04664097c10a12d69464736</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="filePath">org.apache.http</WFItem>
+    <WFItem name="caption"/>
+    <WFItem name="WF_OrTableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="WF_LastModified">2020-05-03 00:43:58</WFItem>
+    <WFItem name="score">1</WFItem>
+    <WFItem name="field1"/>
+    <WFItem name="meta">apache</WFItem>
+    <WFItem name="WF_AllAuthors"/>
+    <WFItem name="WF_ParentDocUnid"/>
+    <WFItem name="value"/>
+    <WFItem name="field2"/>
+    <WFItem name="fileType">2</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_DocCreated">2019-12-24 16:38:12</WFItem>
+    <WFItem name="fileName">文件工具类</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_GridNum">V_S001_E021</WFItem>
+    <WFItem name="codeType">1</WFItem>
+    <WFItem name="WF_AllReaders"/>
+    <WFItem name="WF_OrUnid">8baf8f8903d0b04a730b5d40c6856eb4c201</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="filePath">org.apache.commons.io.FileUtils</WFItem>
+    <WFItem name="caption"/>
+    <WFItem name="WF_OrTableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="WF_LastModified">2019-12-24 17:20:30</WFItem>
+    <WFItem name="score">1</WFItem>
+    <WFItem name="field1"/>
+    <WFItem name="meta">apache</WFItem>
+    <WFItem name="WF_AllAuthors"/>
+    <WFItem name="WF_ParentDocUnid"/>
+    <WFItem name="value"/>
+    <WFItem name="field2"/>
+    <WFItem name="fileType">1</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_DocCreated">2019-12-25 16:37:05</WFItem>
+    <WFItem name="fileName">打印输出JS</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_GridNum">V_S001_E021</WFItem>
+    <WFItem name="codeType">2</WFItem>
+    <WFItem name="WF_AllReaders"/>
+    <WFItem name="WF_OrUnid">dabe580203644041f30a1970973675de7447</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="filePath"/>
+    <WFItem name="caption">cons</WFItem>
+    <WFItem name="WF_OrTableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="WF_LastModified">2020-05-02 23:53:55</WFItem>
+    <WFItem name="score">1</WFItem>
+    <WFItem name="field1"/>
+    <WFItem name="meta">alibao</WFItem>
+    <WFItem name="WF_AllAuthors"/>
+    <WFItem name="WF_ParentDocUnid"/>
+    <WFItem name="value">console.log();</WFItem>
+    <WFItem name="field2"/>
+    <WFItem name="fileType">3</WFItem>
+  </Items>
+  <Items>
+    <WFItem name="WF_DocCreated">2019-12-24 16:07:15</WFItem>
+    <WFItem name="fileName">打印输出</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_GridNum">V_S001_E021</WFItem>
+    <WFItem name="codeType">1</WFItem>
+    <WFItem name="WF_AllReaders"/>
+    <WFItem name="WF_OrUnid">f6ce89150189e04d4208a2b0293deec27660</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="filePath"/>
+    <WFItem name="caption">sysout</WFItem>
+    <WFItem name="WF_OrTableName">BPM_CodeHintingConfig</WFItem>
+    <WFItem name="WF_LastModified">2020-05-01 17:41:03</WFItem>
+    <WFItem name="score">1</WFItem>
+    <WFItem name="field1"/>
+    <WFItem name="meta">alibao</WFItem>
+    <WFItem name="WF_AllAuthors"/>
+    <WFItem name="WF_ParentDocUnid"/>
+    <WFItem name="value">System.out.println();</WFItem>
+    <WFItem name="field2"/>
+    <WFItem name="fileType">3</WFItem>
+  </Items>
+</documents>

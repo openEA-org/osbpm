@@ -1,0 +1,7 @@
+设计系统核心代码，请做好备份与记录，方便以后更新修改。
+
+问题：网关没有默认缺省保存处理；
+
+分析：修改R_S002_B011规则，添加缺省保存方案
+
+方案：将solution_files中的 R_S002_B011.class 覆盖到WEB-INF/classes/cn/linkey/rulelib/S002文件底下。

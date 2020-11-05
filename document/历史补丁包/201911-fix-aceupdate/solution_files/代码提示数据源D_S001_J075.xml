@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="CacheFlag">0</WFItem>
+    <WFItem name="SqlTableName">bpm_codehintingconfig</WFItem>
+    <WFItem name="PageSize">30</WFItem>
+    <WFItem name="FormatJson">{"total":#Total,"rows":[#JsonData]}</WFItem>
+    <WFItem name="SelectColList">*</WFItem>
+    <WFItem name="WF_OrUnid">0f9b6e550b84b0474d0b1c60b6efb071176a</WFItem>
+    <WFItem name="JsonConfig">{"total":19,"rows":[{"JsonName":"","FdName":"WF_AddName","IsString":"Y","Remark":"创建者id"},{"JsonName":"","FdName":"WF_AddName_CN","IsString":"Y","Remark":"创建者中文名"},{"JsonName":"","FdName":"WF_AllAuthors","IsString":"Y","Remark":"作者域"},{"JsonName":"","FdName":"WF_AllReaders","IsString":"Y","Remark":"读者域"},{"JsonName":"","FdName":"WF_DocCreated","IsString":"Y","Remark":"创建时间"},{"JsonName":"","FdName":"WF_LastModified","IsString":"Y","Remark":"最后更新时间"},{"JsonName":"","FdName":"WF_OrUnid","IsString":"Y","Remark":"唯一编号"},{"JsonName":"","FdName":"XmlData","IsString":"Y","Remark":"XML数据"},{"JsonName":"","FdName":"fileName","IsString":"Y","Remark":"文件名称"},{"JsonName":"","FdName":"filePath","IsString":"Y","Remark":"文件路径(包路径)"},{"JsonName":"","FdName":"fileType","IsString":"Y","Remark":"文件类型(1表示Class类，2表示Jar包)"},{"JsonName":"","FdName":"meta","IsString":"Y","Remark":"所属分类"},{"JsonName":"","FdName":"score","IsString":"Y","Remark":"提示排序，1表示最先"},{"JsonName":"","FdName":"value","IsString":"Y","Remark":"提示词的值"},{"JsonName":"","FdName":"caption","IsString":"Y","Remark":"提示的词"},{"JsonName":"","FdName":"codeType","IsString":"Y","Remark":"类型(1 Java，2 JS)"},{"JsonName":"","FdName":"field1","IsString":"Y","Remark":"备用字段1"},{"JsonName":"","FdName":"field2","IsString":"Y","Remark":"备用字段2"}]}</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="WF_OrTableName">BPM_DataSourceList</WFItem>
+    <WFItem name="wf_num">R_S001_B002</WFItem>
+    <WFItem name="DataName">代码提示数据源</WFItem>
+    <WFItem name="WF_DocUnid">0f9b6e550b84b0474d0b1c60b6efb071176a</WFItem>
+    <WFItem name="DefaultSearchField">WF_AddName,fileName,filePath,fileType,meta</WFItem>
+    <WFItem name="DataType">1</WFItem>
+    <WFItem name="AclFdName">WF_AllReaders</WFItem>
+    <WFItem name="DataSourceid">default</WFItem>
+    <WFItem name="WF_Action">undefined</WFItem>
+    <WFItem name="Status">1</WFItem>
+    <WFItem name="OrderFieldName">WF_LastModified</WFItem>
+    <WFItem name="WF_Version">1.0</WFItem>
+    <WFItem name="WF_DocCreated">2019-12-23 22:06:59</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_RuleFdName">DataName</WFItem>
+    <WFItem name="InReaders"/>
+    <WFItem name="SqlDirection">DESC</WFItem>
+    <WFItem name="Roles"/>
+    <WFItem name="WF_LastModified">2020-05-02 02:34:16</WFItem>
+    <WFItem name="EventRuleNum"/>
+    <WFItem name="WF_KeyFdName">Dataid</WFItem>
+    <WFItem name="WF_Appid">S001</WFItem>
+    <WFItem name="Dataid">D_S001_J075</WFItem>
+    <WFItem name="OutSql"/>
+    <WFItem name="AutoRoleFlag"/>
+    <WFItem name="WF_TableName">BPM_DataSourceList</WFItem>
+    <WFItem name="WF_FormNumber">F_S001_A002</WFItem>
+    <WFItem name="WF_NoUpdate"/>
+    <WFItem name="SqlWhere"><![CDATA[codeType <> '{notCodeType}']]></WFItem>
+    <WFItem name="UseJsonColumnFlag">1</WFItem>
+  </Items>
+</documents>

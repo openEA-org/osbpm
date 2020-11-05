@@ -1,0 +1,36 @@
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+A {	COLOR: white; TEXT-DECORATION: none}
+A:hover { COLOR: red; TEXT-DECORATION: underline }
+td { FONT-SIZE: 9pt;}
+body,font,fieldset,td{line-height:13px;font-size:9pt;font-family:"微软雅黑","宋体";}
+body {margin:10px}
+.linkeytable{border-collapse:collapse;border: 2px solid #D5D5D5;}
+.linkeytable td{border-collapse:collapse;}
+
+.ltd{border-left:medium none;border-bottom:1px solid #none;border-top:1px solid none;border-bottom:1px solid none;} /*最后一个阶段的图形框td*/
+.rtd{border-bottom:1px solid none;border-top:1px solid none;border-right:medium none;cursor:e-resize;border-left:2px dashed;width:5px;} /*阶段拉到的虚线*/
+.rtdxx{border-right:1px dashed}
+.nresize{height:1px;border-top: 1px solid #D5D5D5;border-bottom: 1px solid none;} /*部门拉线*/
+.lasttr{height:1px;border-top: 1px solid none;border-bottom: 1px solid #D5D5D5;} /*最后一根拉线*/
+.eresize{cursor:e-resize}
+.DeptTd{background:#eeeeee;border-right:1px solid;border-top:1px solid none;border-bottom:1px solid none;border-right:1px solid;font-weight:bold;writing-mode=tb-rl;text-align:center;height:120px;width:40px;line-height:30px;cursor:default} /*第一列的部门名称*/
+.TopTr{background:#eeeeee;text-align:center;height:40px} /*阶段名称第一行*/
+.lastTd{border-left:2px dashed;width:5px;cursor:e-resize;border-top:1px solid none;border-bottom:1px solid none;} /*最后一列从第二行开始*/
+.TopTd{border-left:medium none;border-right:medium none;cursor:default;border-bottom:1px solid;width:22px;background-image: url(hxjd.gif);background-repeat:no-repeat !important;} /*带图的阶段>符号*/
+.TopTdOne{border-left:medium none;border-right:medium none;cursor:default;border-bottom:1px solid;width:20px;}/*左上角第一个空方格*/
+.TopTdBody{border-left:medium none;border-right:medium none;cursor:default;border-bottom:1px solid;font-weight:bold;white-space:nowrap;} /*第一行的阶段名称*/
+.BodyTd{width:*;border-left:medium none;border-top: 1px solid none;border-bottom: 1px solid none;} /*非最后一个的图形框td*/
+
+.zx_jd{width:40px;background:#eeeeee;font-weight:bold;writing-mode=tb-rl;text-align:center;border-top:none;border-bottom:none;border-right: 1px solid #D5D5D5;} /*纵向阶段*/
+.zx_jdonexx{width:40px;height:22px;background:#eeeeee;writing-mode=tb-rl;text-align:center;border-top:none;border-bottom:none;border-right: 1px solid #D5D5D5;background-image: url(zxjd.gif);background-repeat:no-repeat !important;} /*纵向阶段虚线*/
+.zx_lastjd{width:40px;height:22px;background:#eeeeee;writing-mode=tb-rl;text-align:center;border-top:none;border-right: 1px solid #D5D5D5;;width:20px;background-image: url(zxjd.gif);background-repeat:no-repeat !important;border-left: 1px solid #d5d5d5;} /*纵向阶段最后*/
+.zx_DeptId{height:40px;background:#eeeeee;text-align:center;border-bottom: 1px solid #D5D5D5;font-weight:bold;border-left: 1px solid #D5D5D5;border-right: 1px solid none;} /*部门 */
+.zx_DeptAndJd{border-right: 1px solid #D5D5D5;background:#eeeeee;border-bottom:medium none;border-left: 1px solid #D5D5D5;}
+.zx_DeptTd{border-right: 1px solid #D5D5D5;border-left: 1px solid none;width:1px;} /*部门分隔线*/
+.zx_jd_xx{height:5px;border-top:2px dashed;border-bottom:medium none;border-left: 1px solid #D5D5D5;border-right: 1px solid none;}/*阶段中间虚线*/
+.zx_body_td{height:120px;border-top:medium none;} /*图形内容*/
+.zx_body_td1{height:120px;border-top: none;border-left: 1px solid #D5D5D5;border-right: 1px solid none;} /*图形内容*/
+.zx_lasttd{border-left: 1px solid none;width:1px;}

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="ShowPageBar">1</WFItem>
+    <WFItem name="CacheFlag">0</WFItem>
+    <WFItem name="ColumnConfig">{"total":11,"rows":[{"FdName":"fileName","ColName":"文件名称","ColWidth":"100","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":"11","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"meta","ColName":"所属分类","ColWidth":"100","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":"13","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"fileType","ColName":"类型(1Class类|3自定义)","ColWidth":"180","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":"16","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"codeType","RowNum":"1","Remark":"","ColWidth":"150","Sort":"Y","Mobile":"N","SortNum":"17","ColName":"类型(1Java|2JS)","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"caption","RowNum":"1","Remark":"","ColWidth":"100","Sort":"Y","Mobile":"N","SortNum":"18","ColName":"提示词","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"value","RowNum":"1","Remark":"","ColWidth":"200","Sort":"Y","Mobile":"N","SortNum":"19","ColName":"对应值","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"filePath","ColName":"文件路径(包路径)","ColWidth":"200","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":"20","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"score","ColName":"提示排序","ColWidth":"50","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":"20","Align":"","Format":"","FormatFun":"","EditorCtlid":"V_S029_C001","CtlParams":"","dataoptions":""},{"FdName":"WF_AddName_CN","ColName":"创建人","ColWidth":"50","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":21,"Align":"","Format":"","FormatFun":"","EditorCtlid":"","CtlParams":"","dataoptions":""},{"FdName":"WF_DocCreated","ColName":"创建时间","ColWidth":"100","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":24,"Align":"","Format":"","FormatFun":"","EditorCtlid":"","CtlParams":"","dataoptions":""},{"FdName":"WF_LastModified","ColName":"最后更新","ColWidth":"100","RowNum":"1","Sort":"Y","Mobile":"N","SortNum":25,"Align":"","Format":"","FormatFun":"","EditorCtlid":"","CtlParams":"","dataoptions":""}]}</WFItem>
+    <WFItem name="WF_OrUnid">01d7e46d07a2e044d10bc0e027c9c709c02b</WFItem>
+    <WFItem name="GroupField"/>
+    <WFItem name="RowClick">RowClick</WFItem>
+    <WFItem name="WF_OrTableName">BPM_GridList</WFItem>
+    <WFItem name="SortName"/>
+    <WFItem name="GridType">2</WFItem>
+    <WFItem name="fit"/>
+    <WFItem name="GridNum">V_S001_E021</WFItem>
+    <WFItem name="WF_Action">undefined</WFItem>
+    <WFItem name="Status">1</WFItem>
+    <WFItem name="border"/>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="autoHeight"/>
+    <WFItem name="ToolbarConfig">{"total":4,"rows":[{"btnid":"btnNew","btnName":"新增","clickEvent":"insertRow()","hidden":"","iconCls":"icon-add","sortNum":"2"},{"btnid":"btnDel","btnName":"删除[删除后点击保存]","clickEvent":"removeSelectedRow()","hidden":"","iconCls":"icon-remove","sortNum":"3","RoleNumber":"","hiddenfd":""},{"btnid":"btnsync","btnName":"保存更新","clickEvent":"updateHint()","icons":"cmp.gif","sortNum":"1","RoleNumber":"","hiddenfd":"","iconCls":"icon-cmp"},{"btnid":"btnBack","btnName":"关闭","clickEvent":"closeWin()","icons":"cmp.gif","sortNum":"5","RoleNumber":"","hiddenfd":"","iconCls":"icon-field"}]}</WFItem>
+    <WFItem name="WF_RuleFdName">GridName</WFItem>
+    <WFItem name="DataSourceParams"/>
+    <WFItem name="RowContextMenu">stopEditRow</WFItem>
+    <WFItem name="Roles"/>
+    <WFItem name="MutliSelect">1</WFItem>
+    <WFItem name="EventRuleNum"/>
+    <WFItem name="DataSource">D_S001_J075</WFItem>
+    <WFItem name="dataoptions">nowrap:false</WFItem>
+    <WFItem name="WF_Appid">S001</WFItem>
+    <WFItem name="fitColumns">1</WFItem>
+    <WFItem name="PageSize">25</WFItem>
+    <WFItem name="RemoteSort">1</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="JsHeader"><![CDATA[function saveEditorGrid(){
+    //获得所有修改的数据
+    stopEditRow();
+    EditorGridSave($('#dg'));
+
+}
+
+function insertRow(){
+    //插入新行
+    stopEditRow();
+    var i=$('#dg').datagrid('getData').rows.length;
+	$('#dg').datagrid('insertRow',{index:i,row:{}});
+}
+
+function removeSelectedRow(){
+    //删除选中行
+    stopEditRow();
+    var rows = $('#dg').datagrid('getSelections');
+    if (!rows || rows.length == 0) {
+        $.messager.alert('提示', '请选择要删除的数据!', 'info');
+        return;
+    }
+	$.messager.confirm('Confirm','您确定要删除选中记录吗?',function(r){if (r){
+		var dg=$('#dg');
+		$.each(rows, function (i, row) {
+        	var index=dg.datagrid('getRowIndex',row);
+        	dg.datagrid('deleteRow',index);
+    	});
+	}});
+	
+}
+
+var lastIndex;
+function RowClick(rowIndex){
+    //单击进行修改
+	$("#dg").datagrid('unselectAll');
+	$("#dg").datagrid('selectRow',rowIndex);
+	if (lastIndex != rowIndex){
+		$('#dg').datagrid('endEdit', lastIndex);
+		$('#dg').datagrid('beginEdit', rowIndex);
+	}
+	lastIndex = rowIndex;
+}
+
+function stopEditRow(){
+	$('#dg').datagrid('endEdit', lastIndex);
+	lastIndex=undefined;
+}
+
+/**
+ * 更新代码提示
+ **/
+function updateHint(){
+    
+    //保存修改结果
+    mask();
+    stopEditRow();
+    
+    var delRow = JSON.stringify($("#dg").datagrid('getChanges', 'deleted'));
+    var newRow = JSON.stringify($("#dg").datagrid('getChanges', 'inserted'));
+    var editRow = JSON.stringify($("#dg").datagrid('getChanges', 'updated'));
+    var parentDocUnid = $("#WF_DocUnid").val();
+    if (parentDocUnid == "" || parentDocUnid == undefined) {
+        parentDocUnid = GetUrlArg("wf_docunid");
+    }
+
+    
+    $.post("editoraction", {
+        WF_ParentDocUnid: parentDocUnid,
+        WF_Action: 'saveEditor',
+        wf_num: GridNum,
+        delRow: delRow,
+        newRow: newRow,
+        editRow: editRow
+    }, function (data) {
+        data = eval('(' + data + ')');
+        if (data.Status == "error") {
+            alert(data.msg);
+        }
+        else {
+            $("#dg").datagrid('reload');
+            //保存修改结果
+            mask();
+            $.ajax({
+    			type: "get",
+    			url: "rule?wf_num=R_S001_B084",
+    			success: function(res) {
+    				// console.log(res);
+    				unmask();
+    				res = eval('(' + res + ')');
+    				$.messager.confirm('重载确认','保存成功，即将重新加载父页面以更新配置……',function(r){
+                        if (r){
+    				       try{
+    				           parent.location.reload(); 
+    				       }catch{}
+                        }
+                    });
+    				
+    			},
+    			error: function(res){
+    			    unmask();
+    				alert("更新失败！\n * 如果是添加jar更新失败，请检查控制台报错，将对应jar复制到lib下！");
+    				console.error(res)
+    			}
+		    })
+            
+        }
+        unmask();
+    });
+   
+}
+
+/**
+ * 关闭当前窗口
+ **/
+function closeWin(){
+    
+    try{
+    parent.$('#win').window('close');
+    
+    }catch{}
+    
+    try{
+    window.close();
+    }catch{}
+}]]></WFItem>
+    <WFItem name="ShowSearchBar">1</WFItem>
+    <WFItem name="wf_num">R_S001_B002</WFItem>
+    <WFItem name="WF_DocUnid">01d7e46d07a2e044d10bc0e027c9c709c02b</WFItem>
+    <WFItem name="UIType">3</WFItem>
+    <WFItem name="GridName">代码提示视图</WFItem>
+    <WFItem name="RowDblClick">stopEditRow</WFItem>
+    <WFItem name="isRollBack">1</WFItem>
+    <WFItem name="NewFormNum"/>
+    <WFItem name="ShowRowNumber">1</WFItem>
+    <WFItem name="WF_DocCreated">2019-12-23 22:10:30</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="SortOrder"/>
+    <WFItem name="WF_LastModified">2020-05-06 17:59:41</WFItem>
+    <WFItem name="WF_CacheFlag"/>
+    <WFItem name="refresh_random">1588759110721</WFItem>
+    <WFItem name="WF_KeyFdName">GridNum</WFItem>
+    <WFItem name="WF_TableName">BPM_GridList</WFItem>
+    <WFItem name="multiSort">1</WFItem>
+    <WFItem name="WF_FormNumber">F_S001_A016</WFItem>
+    <WFItem name="PageList">[20,25,30,40,60]</WFItem>
+    <WFItem name="ShowCheckBox">1</WFItem>
+    <WFItem name="WF_NoUpdate"/>
+  </Items>
+</documents>

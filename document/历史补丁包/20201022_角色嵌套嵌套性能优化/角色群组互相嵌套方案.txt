@@ -1,0 +1,35 @@
+
+解决角色、部门、岗位不能互相嵌套问题；
+
+主要修改内容：LinkeyUser.java 中的getRolesByUserid和getParentRoles方法，详情见源码sound_code文件夹里
+
+
+//202010 Oracle 优化处理，将递归放到数据库中遍历=====================start
+//select * from (select * from BPM_OrgRoleMembers) start with MEMBER='xieliang 14734' connect by prior RoleNumber=MEMBER
+if ("ORACLE".equalsIgnoreCase(Rdb.getDbType())) {
+	String sql2 = "select RoleNumber from (select * from BPM_OrgRoleMembers) start with MEMBER='" + roleNumber
+			+ "' connect by prior RoleNumber=MEMBER";
+	return Rdb.getValueSetBySql(sql2);
+}
+
+// with temp (MEMBER,RoleNumber,MEMBERNAME) as (select MEMBER,RoleNumber,MEMBERNAME from BPM_OrgRoleMembers where MEMBER='admin' union all  select a.MEMBER, a.RoleNumber,a.MEMBERNAME from BPM_OrgRoleMembers a inner join temp on a.[MEMBER] = temp.[RoleNumber]) select * from temp
+	if ("MSSQL".equalsIgnoreCase(Rdb.getDbType())) {
+		String sql3 = "with temp (MEMBER,RoleNumber,MEMBERNAME) as (select MEMBER,RoleNumber,MEMBERNAME from BPM_OrgRoleMembers where MEMBER='" + roleNumber + "' union all  select a.MEMBER, a.RoleNumber,a.MEMBERNAME from BPM_OrgRoleMembers a inner join temp on a.[MEMBER] = temp.[RoleNumber]) select RoleNumber from temp";
+		return Rdb.getValueSetBySql(sql3);
+	}
+
+
+//==================================================================end
+
+
+
+
+// 202010 add by alibao 支持角色、岗位(群组)互相嵌套==============start
+/*if (roleNum.startsWith("RS")) {
+	userRoles.addAll(getParentRoles(roleNum)); //获得此角色的所有上级角色
+}*/
+HashSet<String> subSet = getParentRoles(roleNum);
+if (!subSet.isEmpty()) {
+	userRoles.addAll(subSet);
+}
+//================================================================end

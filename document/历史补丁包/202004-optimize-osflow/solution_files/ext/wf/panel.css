@@ -1,0 +1,130 @@
+﻿#header{
+   border:0 none;
+   background:#FFFFFF;
+   padding-top:0px;
+   padding-left:0px;
+}
+.docs-header .x-panel-body {
+    background:transparent;
+}
+.loading-indicator {
+    font-size:11px;
+    background-image:url('/linkey/bpm/images/loading.gif');
+    background-repeat: no-repeat;
+    background-position:top left;
+    padding-left:20px;
+	height:18px;
+	text-align:left;
+}
+
+#doc-body .loading-indicator {
+    font:bold 13px  Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    position:absolute;
+    top:35%;
+    left:43%;
+    color:#444;
+    background-image:url(linkey/bpm/ext/resources/images/default/shared/large-loading.gif);
+    background-repeat: no-repeat;
+    background-position:left 5px;
+    padding:10px 10px 10px 38px;
+	text-align:left;
+}
+#loading-mask{
+	position:absolute;
+	left:0;
+	top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    background-color:white;
+}
+#loading{
+	position:absolute;
+	left:45%;
+	top:40%;
+	padding:2px;
+	z-index:20001;
+    height:auto;
+}
+#loading img {
+    margin-bottom:5px;
+}
+#loading .loading-indicator{
+	background:white;
+	color:#555;
+	font:bold 13px tahoma,arial,helvetica;
+	padding:10px;
+	margin:0;
+    text-align:center;
+    height:auto;
+}
+#api-tree a span {
+    font-family:font-size:9pt;font-family:"微软雅黑","宋体";
+    font-size:11px;
+}
+.cls a:hover span {
+    color:blue
+}
+#api-tree .x-panel-body {
+    background-color:white;
+    position:relative;
+    padding:3px;
+}
+.cls{
+    border:1px solid #fff;
+}
+
+.x-tree-selected {
+    border:1px dotted #a3bae9;
+    background:#DFE8F6;
+	color:red
+}
+.x-tree-node .x-tree-selected a span{
+	background:transparent;
+	color:#1E4176;
+    font-weight:bold;
+}
+
+.submenu{
+    padding-bottom:3px;
+}
+.x-tree-node div.menunode{
+    background:#eee url(linkey/bpm/images/icons/fam/cmp-bg.gif) repeat-x;
+    margin-top:1px;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ccc;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-left:10px;
+}
+.menunode .x-tree-node-icon {
+    display:none;
+}
+
+.res-block {
+    padding-top:5px;
+    background:transparent url(linkey/bpm/images/icons/fam/block-top.gif) no-repeat;
+    width:210px;
+    margin-bottom:15px;
+}
+.res-block-inner {
+    padding:6px 11px;
+    background:transparent url(linkey/bpm/images/icons/fam/block-bottom.gif) no-repeat left bottom;
+}
+
+.res-block h3 {
+    font: font-size:9pt;font-family:"微软雅黑","宋体";
+    color:#555;
+    margin-bottom:8px;
+}
+
+.res-block ul {
+    list-style-type: disc;
+    margin-left:15px;
+    font: font-size:9pt;font-family:"微软雅黑","宋体";
+    color:#555;
+}
+
+.res-block ul li {
+    margin:0 0 5px 3px;
+}

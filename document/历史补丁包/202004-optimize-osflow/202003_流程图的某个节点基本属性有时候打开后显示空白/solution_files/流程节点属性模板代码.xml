@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="WF_Version">12.0</WFItem>
+    <WFItem name="WF_DocCreated">2014-04-30 11:12</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_OrUnid">8DD3134D0EF150409A0B14E04955BB6FDAF1</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="WF_OrTableName">BPM_DevDefaultCode</WFItem>
+    <WFItem name="WF_LastModified">2020-03-08 00:30:04</WFItem>
+    <WFItem name="Remark">节点属性模板代码</WFItem>
+    <WFItem name="CodeNo">1</WFItem>
+    <WFItem name="WF_Appid">S001</WFItem>
+    <WFItem name="DefaultCode"><![CDATA[<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {NodeName}
+        </title>
+        <meta charset="utf-8">
+            <link href="linkey/bpm/easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css">
+                <link href="linkey/bpm/easyui/themes/icon.css" rel="stylesheet" type="text/css">
+                    <link href="linkey/bpm/css/app_openform.css" rel="stylesheet" type="text/css">
+                        <script src="linkey/bpm/easyui/jquery.min.js" type="text/javascript">
+                        </script>
+                        <script src="linkey/bpm/easyui/jquery.easyui.min.js" type="text/javascript">
+                        </script>
+                        <script src="linkey/bpm/jscode/sharefunction.js" type="text/javascript">
+                        </script>
+                        <script src="linkey/bpm/jscode/app_openform.js" type="text/javascript">
+                        </script>
+                        <script>
+                            function formonload() {}
+							function myBrowser() {
+							    var userAgent = navigator.userAgent;
+							    var isOpera = userAgent.indexOf("Opera") > -1;
+							    if (isOpera) {
+							        return "Opera"
+							    };
+							    if (userAgent.indexOf("Firefox") > -1) {
+							        return "FF";
+							    }
+							    if (userAgent.indexOf("Chrome") > -1) {
+							        return "Chrome";
+							    }
+							    if (userAgent.indexOf("Safari") > -1) {
+							        return "Safari";
+							    }
+							    if (!!window.ActiveXObject || "ActiveXObject" in window) {
+							        if (navigator.appVersion.split(";")[1].replace(/[ ]/g, "") == "MSIE10.0") {
+							            return "IE10"
+							        }
+							        return "IE"
+							    };
+							}
+
+							function SaveDocument(btnAction) {
+							    var postData = "Processid={processid}&Nodeid={Nodeid}&QryNodeType={ExtNodeType}";
+							    $("iframe").each(function(i) {
+							        if ($(this).attr("src") != "about:blank") {
+							            var id = $(this).attr("id");
+							            if (id != undefined) {
+							                if (myBrowser().indexOf("IE") != -1) {
+							                    postData += "&" + window.frames[id].serializeForm();
+							                } else {
+							                    postData += "&" + window.frames[id].contentWindow.serializeForm();
+							                }
+							            }
+							        }
+							    });
+							    mask();
+							    $.post("rule?wf_num=R_S002_B003", postData, function(data) {
+							        unmask();
+							        data = eval("(" + data + ")");
+							        if (data.Status == "error") {
+							            $.messager.alert("Info", data.msg, "Error");
+							        } else {
+							            var NodeName = window.frames[0].$("#NodeName").val();
+							            var Nodeid = GetUrlArg("Nodeid");
+							            if (Nodeid != "Process") {
+							                if (opener) {
+							                    opener.SetPropertyVal(Nodeid, NodeName);
+							                } else {
+							                    window.dialogArguments.SetPropertyVal(Nodeid, NodeName);
+							                }
+							            }
+							            if (btnAction == "quit") {
+							                window.close();
+							            }
+							        }
+							    });
+							}
+							$(function() {
+							    $("#tabs").tabs({
+							        onSelect: loadUrl
+							    });
+							    loadUrl();
+							});
+
+							function loadUrl() {
+							    var tab = $('#tabs').tabs('getSelected');
+							    if (tab == null) {
+							        return false;
+							    }
+							    var url = tab.attr("url");
+							    var id = tab.attr("id");
+							    if ($("#iframe_" + id).attr("src") == "about:blank") {
+							        $("#iframe_" + id).attr("src", url);
+							    }
+							}
+                        </script>
+                    </link>
+                </link>
+            </link>
+        </meta>
+
+        <style>
+        	.tabs-panels-right{
+        		display: contents;
+        	}
+        </style>
+    </head>
+    <body style="margin:0px;overflow:hidden">
+        <div class="easyui-layout" fit="true" id="panel" style="width:100%;">
+            <div border="false" data-options="region:'north',split:false" style="height:31px;overflow:hidden">
+                <div class="toptoolbar" id="toptoolbar">
+                    |
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-save'" href="#" onclick="SaveDocument('quit')" plain="true">
+                        保存退出
+                    </a>
+                    |
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-save'" href="#" onclick="SaveDocument()" plain="true">
+                        保存
+                    </a>
+                    |
+                    <a class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'" href="#" onclick="window.close();">
+                        关闭
+                    </a>
+                </div>
+            </div>
+            <div border="false" fit="false" region="center">
+                <div class="easyui-tabs" data-options="showHeader:true,tabHeight:30" fit="true" id="tabs" tabposition="left">
+                    {TabHtml}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>]]></WFItem>
+    <WFItem name="Country">CN</WFItem>
+    <WFItem name="CodeType">ProcessNodeAtrrEditor</WFItem>
+    <WFItem name="WF_NoUpdate">0</WFItem>
+  </Items>
+</documents>

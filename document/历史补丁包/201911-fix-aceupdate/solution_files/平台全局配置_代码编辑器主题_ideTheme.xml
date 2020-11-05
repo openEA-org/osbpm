@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<documents>
+  <Items>
+    <WFItem name="WF_Version">8.0</WFItem>
+    <WFItem name="ConfigValue">eclipse</WFItem>
+    <WFItem name="WF_DocCreated">2020-05-01 15:57:28</WFItem>
+    <WFItem name="WF_AddName_CN">admin</WFItem>
+    <WFItem name="WF_OrUnid">92ac16060e8dd04f4e08bed0b5fec5efbff7</WFItem>
+    <WFItem name="WF_AddName">admin</WFItem>
+    <WFItem name="WF_OrTableName">BPM_SystemConfig</WFItem>
+    <WFItem name="Folderid">001</WFItem>
+    <WFItem name="WF_CacheFlag">1</WFItem>
+    <WFItem name="WF_LastModified">2020-05-03 14:22:25</WFItem>
+    <WFItem name="Remark">eclipse、github、ambianc、chaos、chrome、clouds、merbivore_soft、mono_industrial、monokai、sqlserver、terminal</WFItem>
+    <WFItem name="WF_Appid">S001</WFItem>
+    <WFItem name="ConfigName">代码编辑器主题</WFItem>
+    <WFItem name="Configid">ideTheme</WFItem>
+    <WFItem name="ConfigType"/>
+    <WFItem name="WF_NoUpdate"/>
+  </Items>
+</documents>
