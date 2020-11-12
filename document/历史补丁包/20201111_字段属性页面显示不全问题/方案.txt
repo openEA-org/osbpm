@@ -1,0 +1,7 @@
+问题：字段属性页面显示不全，原因滚动条未显示
+
+处理：修改form_fieldconfig.jsp页面body滚动条属性；
+
+方案
+===================================================
+将solution_files/form_fieldconfig.jsp文件复制到 根目录designer文件夹中替换
