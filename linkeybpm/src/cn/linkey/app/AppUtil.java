@@ -118,7 +118,7 @@ public class AppUtil {
 			BeanCtx.print("{\"Status\":\"error\",\"msg\":\"" + BeanCtx.getMsg("Designer", "DifferentRuleNum") + "\"}");
 			return false;
 		}
-
+		
 		return true;
 	}
 
@@ -322,6 +322,7 @@ public class AppUtil {
 						x++;
 					} else {
 						String sql = "select WF_OrUnid from " + tableName + " where WF_OrUnid='" + wf_orunid + "'";
+						
 						if (Rdb.hasRecord(sql)) {
 							//覆盖旧的文档
 							if (replaceFlag.equals("2")) {
@@ -339,6 +340,12 @@ public class AppUtil {
 							i++;
 						}
 					}
+					// 20200616 add by feiyilin ================= start
+					// 导入实时运行的规则元素时自动保存编译
+					if (Tools.isNotBlank(indoc.g("RuleNum")) && Tools.isNotBlank(indoc.g("RuleCode")) && "0".equals(indoc.g("CompileFlag"))) {
+						autosaveRuleCodeAndCompile(indoc.g("WF_OrUnid"));
+					}
+					// 20200616 add by feiyilin ================== end
 				}
 			} else {
 				return filePath.replace("\\", "/") + " does not exist!";
@@ -453,6 +460,12 @@ public class AppUtil {
 						i++;
 					}
 				}
+				// 20200616 add by feiyilin ================= start
+				// 导入实时运行的规则元素时自动保存编译
+				if (Tools.isNotBlank(indoc.g("RuleNum")) && Tools.isNotBlank(indoc.g("RuleCode")) && "0".equals(indoc.g("CompileFlag"))) {
+					autosaveRuleCodeAndCompile(indoc.g("WF_OrUnid"));
+				}
+				// 20200616 add by feiyilin ================== end
 			}
 			String msg = "应用安装信息:成功导入(" + i + ")个设计,跳过(" + j + ")个设计,不符要求的记录(" + x + "),创建(" + t + ")个数据库表!";
 			BeanCtx.userlog("--", "安装应用", "安装应用(" + appid + ")" + msg);
@@ -887,6 +900,12 @@ public class AppUtil {
 						i++;
 					}
 				}
+				// 20200616 add by feiyilin ================= start
+				// 导入实时运行的规则元素时自动保存编译
+				if (Tools.isNotBlank(indoc.g("RuleNum")) && Tools.isNotBlank(indoc.g("RuleCode")) && "0".equals(indoc.g("CompileFlag"))) {
+					autosaveRuleCodeAndCompile(indoc.g("WF_OrUnid"));
+				}
+				// 20200616 add by feiyilin ================== end
 			}
 			String msg = "应用安装信息:成功导入(" + i + ")个设计,跳过(" + j + ")个设计,不符要求的记录(" + x + "),创建(" + t + ")个数据库表!";
 			BeanCtx.userlog("--", "安装应用", "安装应用(" + appid + ")" + msg);
@@ -894,5 +913,53 @@ public class AppUtil {
 		} else {
 			return filePath + " does not exist!";
 		}
-	}  
+	}
+	
+	
+	/** 20200616 add by feiyilin
+	  *  导入规则元素自动保存编译
+	 * @param docUnid
+	 */
+	public static void autosaveRuleCodeAndCompile(String docUnid) {
+        // 更新规则库中的规则代码并进行编译
+        Document ruleDoc = AppUtil.getDocByUnid("BPM_RuleList", docUnid);
+        String ruleNum = ruleDoc.g("RuleNum");
+        String appid = ruleDoc.g("WF_Appid");
+        String ruleCode = ruleDoc.g("RuleCode");
+        String classPath = "";
+        if (ruleDoc.g("RuleType").equals("7")) {
+            classPath = ruleDoc.g("ClassPath"); //javabean可以直接指定任何路径
+        }
+        else {
+            classPath = "cn.linkey.rulelib." + appid + "." + ruleNum;
+        }
+
+        String ruleType = ruleDoc.g("RuleType");
+        if (!ruleType.equals("7")) {
+            // 检测规则代码是否符合要求,javabean不进行检测
+            if (AppUtil.checkRuleCode(ruleCode, ruleDoc.g("WF_Appid"), ruleNum) == false) {
+                return;
+            }
+        }
+
+        ruleDoc.s("ClassPath", classPath);
+        ruleDoc.s("RuleCode", ruleCode);
+        int i = ruleDoc.save();
+        if (i < 1) {
+            return;
+        }
+        
+        /* 开始编译 */
+        try {
+        	BeanCtx.jmcode(ruleCode, classPath, true);
+		} catch (Exception e) {
+		}
+        
+        //编译完了再更新一次编译时间,用来比较编译的文件与编译时间的比较,只有编译成功后才更新编译时间
+        ruleDoc.s("CompileDate", DateUtil.getNow("yyyy-MM-dd HH:mm:ss")); //编译时间
+        ruleDoc.save();
+
+        //清除系统中的设计缓存
+        RdbCache.remove("TempCache", ruleNum);
+    }
 }

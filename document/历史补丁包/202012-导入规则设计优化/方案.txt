@@ -1,0 +1,6 @@
+问题：导入实时运行的规则元素时，不会自动保存编译成对应的class
+
+分析：在AppUtil.java中新增一个用于自动保存编译规则元素的方法，导入设计元素时，遍历找出实时运行的规则，调用该方法，使之生成对应的class文件
+        （适配于xml方式导入和zip方式导入）
+
+方案：将solution_files中的AppUtil.class文件覆盖到WEB-INF\classes\cn\linkey\app目录下
