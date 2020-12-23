@@ -2392,9 +2392,9 @@ textarea {
 
 /*engine_openform*/
 /*==============================================*/
-address, caption, cite, code, dfn, em, strong, th, var {
+/* address, caption, cite, code, dfn, em, strong, th, var {
   font-style: normal;
-  font-weight: normal; }
+  font-weight: normal; } */
 
 .fieldShow {
   color: blue; }

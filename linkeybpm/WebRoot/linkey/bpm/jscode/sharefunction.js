@@ -250,7 +250,7 @@ var initEditor = {
                         });
                         initEditor.initStack.length = 0;
                         unmask();
-                    }, 1000);
+                    }, 500);
                 });
             });
         });
@@ -271,7 +271,7 @@ var initEditor = {
                         });
                         initEditor.initStack2.length = 0;
                         unmask();
-                    }, 1000);
+                    }, 500);
                 });
             });
         });
