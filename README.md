@@ -125,6 +125,20 @@ openEA_WIKI和openEA_GIT为专注于行业流程应用领域的知识百科和�
 
 
 
+#### 相关项目
+
+osbpm流程引擎已经独立抽离出来，开源为如下项目，方便快速集成到其他项目中；
+
+[osflow-engine](https://gitee.com/openEA/osflow-engine)：独立的流程引擎jar；
+
+[osflow-designer](https://gitee.com/openEA/osflow-designer)：流程定义工具，是**FlowDesigner**含后台表数据的升级版本；
+
+[osflow-server](https://gitee.com/openEA/osflow-server)：基于SpringBoot的流程微服务项目
+
+
+
+
+
 # osbpm开源声明
 
 ​	osbpm 基于 LINKEY 的流程应用产品,完全自主研发,独立设计。以流程应用开发为基础,松耦合各个模块组合,包括组织架构、流程引擎、门户组件、移动端组件、表单设计器、流程设计器等,拥有快速扩展各功能组件和业务实例的能力。经过十多年发展,在国内几百家大中型企业得到验证,包括深圳华为、新华三、成都飞机、广东移动、云南移动、广东联通、四川电信、广州石化等等。
@@ -134,7 +148,7 @@ openEA_WIKI和openEA_GIT为专注于行业流程应用领域的知识百科和�
 因此,在安装部署平台前,您还需要加入 openEA 定向开源计划获取数据库文件,平台支持多种数据库类型(MySQL、ORACLE、SQL Server、MariaDB),此次免费开源 MySQL 版本。
 
 ​	获取数据库步骤如下:
-	1、 扫码关注“openEA 开源周刊”公众号;
+​	1、 扫码关注“openEA 开源周刊”公众号;
 
 ![img](./document/images/openEA开源周刊.png) 
 
